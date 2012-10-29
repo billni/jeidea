@@ -1,5 +1,6 @@
 body {
     margin: 0px;
+    background-color: #333333;
 }
 
 div {
@@ -22,237 +23,39 @@ div {
     background-color: transparent;
 }
 
-.u0 {
+#u0 {
     position:absolute;
-    left:21px;
-    top:12px;
-    width:107px;
-    height:84px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
+    left:8px;
+    top:20px;
+    width:912px;
+    height:685px
 }
 
-.u1 {
-    position:absolute;
-    left:778px;
-    top:26px;
-    width:224px;
-    height:18px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
+.u1_normal {
+    background-image: url('../bossteach_files/u1_normal.png');
 }
 
-#u2 {
-    position:absolute;
-    left:154px;
-    top:47px;
-    width:505px;
-    height:31px
-}
-
-.u3_normal {
-    background-image: url('../bossteach_files/u3_normal.png');
-}
-
-.u3_container {
+.u1_container {
     position:absolute;
     left:0px;
     top:0px;
-    width:100px;
-    height:26px;
+    width:907px;
+    height:94px;
 }
 
-#u3_img {
+#u1_img {
     position:absolute;
     left:-3px;
     top:-3px;
-    width:106px;
-    height:32px;
+    width:913px;
+    height:100px;
 }
 
-.u4 {
+.u2 {
     position:absolute;
     left:2px;
     top:2px;
-    width:96px;
-    height:21px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u5_normal {
-    background-image: url('../bossteach_files/u3_normal.png');
-}
-
-.u5_container {
-    position:absolute;
-    left:100px;
-    top:0px;
-    width:100px;
-    height:26px;
-}
-
-#u5_img {
-    position:absolute;
-    left:-3px;
-    top:-3px;
-    width:106px;
-    height:32px;
-}
-
-.u6 {
-    position:absolute;
-    left:2px;
-    top:2px;
-    width:96px;
-    height:21px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u7_normal {
-    background-image: url('../bossteach_files/u3_normal.png');
-}
-
-.u7_container {
-    position:absolute;
-    left:200px;
-    top:0px;
-    width:100px;
-    height:26px;
-}
-
-#u7_img {
-    position:absolute;
-    left:-3px;
-    top:-3px;
-    width:106px;
-    height:32px;
-}
-
-.u8 {
-    position:absolute;
-    left:2px;
-    top:2px;
-    width:96px;
-    height:21px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u9_normal {
-    background-image: url('../bossteach_files/u3_normal.png');
-}
-
-.u9_container {
-    position:absolute;
-    left:300px;
-    top:0px;
-    width:100px;
-    height:26px;
-}
-
-#u9_img {
-    position:absolute;
-    left:-3px;
-    top:-3px;
-    width:106px;
-    height:32px;
-}
-
-.u10 {
-    position:absolute;
-    left:2px;
-    top:2px;
-    width:96px;
-    height:21px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u11_normal {
-    background-image: url('../bossteach_files/u3_normal.png');
-}
-
-.u11_container {
-    position:absolute;
-    left:400px;
-    top:0px;
-    width:100px;
-    height:26px;
-}
-
-#u11_img {
-    position:absolute;
-    left:-3px;
-    top:-3px;
-    width:106px;
-    height:32px;
-}
-
-.u12 {
-    position:absolute;
-    left:2px;
-    top:2px;
-    width:96px;
-    height:21px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u13_normal {
-    background-image: url('../bossteach_files/u13_normal.png');
-}
-
-.u13_container {
-    position:absolute;
-    left:92px;
-    top:106px;
-    width:812px;
-    height:501px;
-}
-
-#u13_img {
-    position:absolute;
-    left:0px;
-    top:0px;
-    width:812px;
-    height:501px;
-}
-
-.u14 {
-    position:absolute;
-    left:2px;
-    top:242px;
-    width:808px;
+    width:903px;
     height:16px;
     ;
     ;
@@ -262,9 +65,255 @@ div {
     word-wrap:break-word;
 }
 
+.u3_normal {
+    background-image: url('../bossteach_files/u3_normal.png');
+}
+
+.u3_container {
+    position:absolute;
+    left:0px;
+    top:94px;
+    width:907px;
+    height:550px;
+}
+
+#u3_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:913px;
+    height:556px;
+}
+
+.u4 {
+    position:absolute;
+    left:2px;
+    top:2px;
+    width:903px;
+    height:16px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u5_normal {
+    background-image: url('../bossteach_files/u5_normal.png');
+}
+
+.u5_container {
+    position:absolute;
+    left:0px;
+    top:644px;
+    width:907px;
+    height:36px;
+}
+
+#u5_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:913px;
+    height:42px;
+}
+
+.u6 {
+    position:absolute;
+    left:2px;
+    top:2px;
+    width:903px;
+    height:16px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+#u7 {
+    position:absolute;
+    left:108px;
+    top:66px;
+    width:505px;
+    height:31px
+}
+
+.u8_normal {
+    background-image: url('../bossteach_files/u8_normal.png');
+}
+
+.u8_container {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100px;
+    height:26px;
+}
+
+#u8_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:106px;
+    height:32px;
+}
+
+.u9 {
+    position:absolute;
+    left:2px;
+    top:4px;
+    width:96px;
+    height:18px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u10_normal {
+    background-image: url('../bossteach_files/u8_normal.png');
+}
+
+.u10_container {
+    position:absolute;
+    left:100px;
+    top:0px;
+    width:100px;
+    height:26px;
+}
+
+#u10_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:106px;
+    height:32px;
+}
+
+.u11 {
+    position:absolute;
+    left:2px;
+    top:4px;
+    width:96px;
+    height:18px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u12_normal {
+    background-image: url('../bossteach_files/u8_normal.png');
+}
+
+.u12_container {
+    position:absolute;
+    left:200px;
+    top:0px;
+    width:100px;
+    height:26px;
+}
+
+#u12_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:106px;
+    height:32px;
+}
+
+.u13 {
+    position:absolute;
+    left:2px;
+    top:4px;
+    width:96px;
+    height:18px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u14_normal {
+    background-image: url('../bossteach_files/u8_normal.png');
+}
+
+.u14_container {
+    position:absolute;
+    left:300px;
+    top:0px;
+    width:100px;
+    height:26px;
+}
+
+#u14_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:106px;
+    height:32px;
+}
+
 .u15 {
     position:absolute;
+    left:2px;
+    top:4px;
+    width:96px;
+    height:18px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u16_normal {
+    background-image: url('../bossteach_files/u8_normal.png');
+}
+
+.u16_container {
+    position:absolute;
     left:400px;
+    top:0px;
+    width:100px;
+    height:26px;
+}
+
+#u16_img {
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    width:106px;
+    height:32px;
+}
+
+.u17 {
+    position:absolute;
+    left:2px;
+    top:4px;
+    width:96px;
+    height:18px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u18 {
+    position:absolute;
+    left:338px;
     top:633px;
     width:247px;
     height:21px;
@@ -276,19 +325,19 @@ div {
     word-wrap:break-word;
 }
 
-#u16 {
+#u19 {
     position:absolute;
-    left:48px;
-    top:710px;
-    width:894px;
+    left:143px;
+    top:680px;
+    width:589px;
     height:25px
 }
 
-.u17_normal {
-    background-image: url('../bossteach_files/u17_normal.png');
+.u20_normal {
+    background-image: url('../bossteach_files/u20_normal.png');
 }
 
-.u17_container {
+.u20_container {
     position:absolute;
     left:0px;
     top:0px;
@@ -296,7 +345,7 @@ div {
     height:20px;
 }
 
-#u17_img {
+#u20_img {
     position:absolute;
     left:-3px;
     top:-3px;
@@ -304,7 +353,7 @@ div {
     height:26px;
 }
 
-.u18 {
+.u21 {
     position:absolute;
     left:2px;
     top:2px;
@@ -318,11 +367,11 @@ div {
     word-wrap:break-word;
 }
 
-.u19_normal {
-    background-image: url('../bossteach_files/u19_normal.png');
+.u22_normal {
+    background-image: url('../bossteach_files/u22_normal.png');
 }
 
-.u19_container {
+.u22_container {
     position:absolute;
     left:161px;
     top:0px;
@@ -330,7 +379,7 @@ div {
     height:20px;
 }
 
-#u19_img {
+#u22_img {
     position:absolute;
     left:-3px;
     top:-3px;
@@ -338,7 +387,7 @@ div {
     height:26px;
 }
 
-.u20 {
+.u23 {
     position:absolute;
     left:2px;
     top:2px;
@@ -352,87 +401,19 @@ div {
     word-wrap:break-word;
 }
 
-.u21_normal {
-    background-image: url('../bossteach_files/u19_normal.png');
+.u24_normal {
+    background-image: url('../bossteach_files/u24_normal.png');
 }
 
-.u21_container {
+.u24_container {
     position:absolute;
     left:312px;
-    top:0px;
-    width:151px;
-    height:20px;
-}
-
-#u21_img {
-    position:absolute;
-    left:-3px;
-    top:-3px;
-    width:157px;
-    height:26px;
-}
-
-.u22 {
-    position:absolute;
-    left:2px;
-    top:2px;
-    width:147px;
-    height:16px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u23_normal {
-    background-image: url('../bossteach_files/u23_normal.png');
-}
-
-.u23_container {
-    position:absolute;
-    left:463px;
-    top:0px;
-    width:154px;
-    height:20px;
-}
-
-#u23_img {
-    position:absolute;
-    left:-3px;
-    top:-3px;
-    width:160px;
-    height:26px;
-}
-
-.u24 {
-    position:absolute;
-    left:2px;
-    top:2px;
-    width:150px;
-    height:16px;
-    ;
-    ;
-    ;
-    font-family:Arial;
-    text-align:left;
-    word-wrap:break-word;
-}
-
-.u25_normal {
-    background-image: url('../bossteach_files/u25_normal.png');
-}
-
-.u25_container {
-    position:absolute;
-    left:617px;
     top:0px;
     width:144px;
     height:20px;
 }
 
-#u25_img {
+#u24_img {
     position:absolute;
     left:-3px;
     top:-3px;
@@ -440,7 +421,7 @@ div {
     height:26px;
 }
 
-.u26 {
+.u25 {
     position:absolute;
     left:2px;
     top:2px;
@@ -454,19 +435,19 @@ div {
     word-wrap:break-word;
 }
 
-.u27_normal {
-    background-image: url('../bossteach_files/u27_normal.png');
+.u26_normal {
+    background-image: url('../bossteach_files/u26_normal.png');
 }
 
-.u27_container {
+.u26_container {
     position:absolute;
-    left:761px;
+    left:456px;
     top:0px;
     width:128px;
     height:20px;
 }
 
-#u27_img {
+#u26_img {
     position:absolute;
     left:-3px;
     top:-3px;
@@ -474,11 +455,73 @@ div {
     height:26px;
 }
 
-.u28 {
+.u27 {
     position:absolute;
     left:2px;
     top:2px;
     width:124px;
+    height:16px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u28 {
+    position:absolute;
+    left:8px;
+    top:20px;
+    width:106px;
+    height:84px;
+    ;
+    ;
+    ;
+    font-family:Arial;
+    text-align:left;
+    word-wrap:break-word;
+}
+
+.u29 {
+    position:absolute;
+    left:701px;
+    top:66px;
+    width:157px;
+    height:25px;
+    ;
+    background-color:#333333;;
+    text-align: left;;
+    font-family:'Arial';
+    font-size: 13px;
+    color:#FFFFFF;
+    font-style:normal;
+    font-weight:normal;
+    text-decoration:none;
+    
+}
+
+.u30_container {
+    position:absolute;
+    left:8px;
+    top:114px;
+    width:907px;
+    height:509px;
+}
+
+#u30_img {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:907px;
+    height:509px;
+}
+
+.u31 {
+    position:absolute;
+    left:2px;
+    top:246px;
+    width:903px;
     height:16px;
     ;
     ;

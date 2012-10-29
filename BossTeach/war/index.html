@@ -1,4 +1,5 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <title>Untitled Document</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -86,6 +87,18 @@
                 }
 
                 initialize();
+                $('#outerContainer').splitter({
+                    //outline: true,
+                    sizeLeft: 250
+                });
+                $('#leftPanel').width(250);
+
+                $(window).resize(function () {
+                    resizeContent();
+                });
+
+                //                $('#outerContainer').resize(function() { return false; });
+
                 $('#maximizePanelContainer').hide();
 
                 initializeLogo();
@@ -222,7 +235,25 @@
 
 </head>
 <body scroll="no">
-    <div id="outerContainer">       
+    <div id="outerContainer">
+
+        <div id="leftPanel">
+            <div id="interfaceControlFrame">
+                <div id="interfaceControlFrameMinimizeContainer">
+                    <a title="Collapse Controls" id="interfaceControlFrameMinimizeButton" onclick="collapse();">&nbsp;</a>
+                </div>
+                <div id="interfaceControlFrameLogoContainer">
+                    <div id="interfaceControlFrameLogoImageContainer"></div>
+                    <div id="interfaceControlFrameLogoCaptionContainer"></div>
+                </div>
+                <div id="interfaceControlFrameHeaderContainer">
+                    <ul id="interfaceControlFrameHeader">
+                    </ul>
+                </div>
+                <div id="interfaceControlFrameContainer">
+                </div>
+            </div>
+        </div>
         <div id="rightPanel">
             <iframe id="mainFrame" width="100%" height="100%" src="" frameborder="0"></iframe>
         </div>
