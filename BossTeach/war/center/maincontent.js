@@ -1,3 +1,3 @@
 $(function(){
-	$('.item').corner(200);
+	$('.item').corner(300);
 });
