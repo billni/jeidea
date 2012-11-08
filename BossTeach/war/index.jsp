@@ -12,7 +12,7 @@
 		}
 	</style>
 </head>
-<body class="easyui-layout" >
+<body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height:130px;width:100%">    
     	<div class="easyui-layout">     	 
     		<div data-options="region:'north',border:false" style="height:100px;width:100%">
@@ -25,7 +25,7 @@
      		<div data-options="region:'center',border:false" class="north-center"></div>
      	</div>
     </div>    
-     <div data-options="region:'center',border:false" style="width:1024px">
+     <div data-options="region:'center',border:false">
      	<div class="easyui-layout" data-options="fit:true">     		
      		<div data-options="region:'west',border:false,href:'center/about.jsp'" style="width:200px"></div> 
      		<div data-options="region:'center',border:false,href:'center/maincontent.jsp'"></div>     		 	

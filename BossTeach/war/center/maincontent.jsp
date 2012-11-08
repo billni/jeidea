@@ -10,7 +10,7 @@
 		padding:10px;
 		margin:10px;
 		display: inline;
-		filter: alpha(style=1,opacity=25,finishOpacity=100,startX=50,finishX=100,startY=50,finishY=100);
+		filter: alpha(style=1,opacity=25,finishOpacity=100,startX=100,finishX=50,startY=100,finishY=50);
 		background-color: skyblue;			
 	}
 </style>
@@ -20,4 +20,6 @@
 	<div class="item">服务</div>
 	<div class="item">咨询</div>	
 	<div class="item">知识管理</div>	
+	<div class="item"></div>
+	<div class="item"></div>				
 </div>
