@@ -3,14 +3,6 @@
 <title>Boss Teach and Boss Teacher</title>
 <head>
 	<%@ include file="js/commonHeaderFiles.jsp" %>
-	<style type="text/css">	
-		.north-center {
-			height:30px;
-			background-image:url(img/bg.jpg);
-			background-repeat:repeat;
-			filter: alpha( style=1,opacity=25,finishOpacity=100,startX=10,finishX=50,startY=50,finishY=100);																
-		}
-	</style>
 </head>
 <body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height:130px;width:100%">    

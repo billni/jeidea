@@ -1,0 +1,31 @@
+.north-center {
+	height:30px;
+	background-image:url(../img/bg.jpg);
+	background-repeat:repeat;
+	filter: alpha( style=1,opacity=25,finishOpacity=100,startX=10,finishX=50,startY=50,finishY=100);																
+}
+
+.slogan li{
+		font-family: sans-serif;		
+		font-weight:900;	
+	    list-style-type: none;
+    	display: inline;
+    	font-size:18;
+}
+
+.bottom li {
+    list-style-type: none;
+   	display: inline;	
+   	padding:10px;
+}
+
+/*maincontent.jsp item style*/
+.item {
+	width:200px;
+	height:200px;
+	padding:10px;
+	margin:10px;
+	display: inline;
+	filter: alpha(style=1,opacity=25,finishOpacity=100,startX=100,finishX=50,startY=100,finishY=50);
+	background-color: skyblue;			
+}
