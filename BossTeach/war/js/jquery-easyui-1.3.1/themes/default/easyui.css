@@ -893,7 +893,7 @@ a.m-btn-plain-active{
 }
 .panel-body{
 	overflow:auto;
-	border:0x solid #fff; //modify for layout
+	border:1px solid #99BBE8;
 	border-top-width:0px;
 }
 .panel-body-noheader{
