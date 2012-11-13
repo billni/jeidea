@@ -9,9 +9,5 @@
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception" result="systemException" />
 		</global-exception-mappings>
-		
-		<action name="">
-			<result>/index.jsp</result>
-		</action>
 	</package>
 </struts>
