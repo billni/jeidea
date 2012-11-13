@@ -1,3 +1,3 @@
 $(function(){
-	$('.item').corner("round");
+	$('.item').corner("tlr 15px");	
 });

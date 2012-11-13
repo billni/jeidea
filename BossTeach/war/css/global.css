@@ -16,16 +16,29 @@
 .bottom li {
     list-style-type: none;
    	display: inline;	
-   	padding:10px;
+   	padding:2px;
 }
 
 /*maincontent.jsp item style*/
-.item {
+.item{
 	width:200px;
 	height:200px;
 	padding:5px;
-	margin:10px;
+	margin:5px;
 	display: inline;
-	filter: alpha(style=1,opacity=25,finishOpacity=100,startX=15,finishX=50,startY=15,finishY=50);
 	background-color: skyblue;	
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=5);/*ie*/
+	-moz-box-shadow: 2px 2px 5px #909090;/*firefox*/
+	-webkit-box-shadow: 2px 2px 5px #909090;/*safari或chrome*/
+	box-shadow:2px 2px 5px #909090;/*opera或ie9*/
+	/*filter: alpha(style=2,opacity=25,finishOpacity=100,startX=95,finishX=10,startY=95,finishY=15);*/	
+}
+
+#sloganDiv {
+	width:90%;	
+	padding:40px 5px 0px 0px;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=115,strength=3);/*ie*/
+	-moz-box-shadow: 2px 2px 10px #909090;/*firefox*/
+	-webkit-box-shadow: 2px 2px 10px #909090;/*safari或chrome*/
+	box-shadow:2px 2px 10px #909090;/*opera或ie9*/		
 }

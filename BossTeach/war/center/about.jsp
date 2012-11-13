@@ -10,9 +10,6 @@
        easyui save your time and scales while developing your products. 
        easyui is very easy but powerful. 
     </p>
-    <p>
-    	联系电话: 13611111111
-    <p>
-       <a href="mailto:example@phplamp.com?subject=请与我联系">bossteach2012@gmail.com</a>
-    <p>
+    <p>联系电话: 13611111111</p>
+    <p>邮件:<a href="mailto:example@phplamp.com?subject=请与我联系">bossteach2012@gmail.com</a></p>
 </div> 
