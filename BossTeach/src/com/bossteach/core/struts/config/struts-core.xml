@@ -5,13 +5,13 @@
 
 <struts>
 
-
-    <package name="bossteach-default" namespace="/" extends="json-default">        
-        <default-interceptor-ref name="defaultInterceptorStack"/>
-        
-        <global-exception-mappings>
-           <exception-mapping exception="java.lang.Exception" result="systemException"/>           
-        </global-exception-mappings>
-
-   </package>
+	<package name="bossteach-default" namespace="/" extends="json-default">
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="systemException" />
+		</global-exception-mappings>
+		
+		<action name="">
+			<result>/index.jsp</result>
+		</action>
+	</package>
 </struts>
