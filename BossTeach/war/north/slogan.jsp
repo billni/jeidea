@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/global.css">
-
-
-<div id="sloganDiv" align="center">
+<div style="width:100%; padding:40px 5px 0px 0px;" align="center">
 	<ul class="slogan">  		
          <li>信义</li>
          <li>&nbsp;&nbsp;</li>

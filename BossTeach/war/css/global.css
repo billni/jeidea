@@ -1,8 +1,29 @@
-.north-center {
+* {
+	margin:0; padding:0;
+}
+
+#hat {
+	background:url(../img/header_bg.gif) top left repeat-x; 
+	padding:10px; 
+	color:#ffffff;
+}
+
+#eye {	
+	background:url(../img/header_bg.jpg) top left; no-repeat;	
+	color:#ffffff;
+	height:200px;		
+}
+#necklace {
 	height:30px;
 	background-image:url(../img/top_bg.jpg);
 	background-repeat:repeat;
 	filter: alpha( style=1,opacity=25,finishOpacity=100,startX=15,finishX=75,startY=50,finishY=100);																
+}
+
+#beard{
+	background:#FFFFFF url(../img/footer_bg.gif) top left repeat-x;
+	padding:10px;
+	height:100px
 }
 
 .south_bottom_div_ul li{
