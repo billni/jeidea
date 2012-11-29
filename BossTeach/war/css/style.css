@@ -9,7 +9,8 @@
 }
 
 
-a:hover{text-decoration:none;}
+a {text-decoration:none;}
+
 
 a img { border:0;}
 img {vertical-align:top;}
@@ -63,7 +64,7 @@ a {color:#3d6f92; font-size:12px;}
 #middle { width:100%;}
 
 
-#footer .indent {padding:23px 0 0 17px; color:#868686; font-size:12px;}
+#footer .indent {padding:12px 0 0 17px; color:#868686; font-size:12px; text-align: center}
 #footer a {color:#444444; font-weight:bold; text-decoration:none}
 
 
@@ -104,6 +105,15 @@ li a {color:#3d6f92; font-size:11px;}
 #index #middle .columns2 .column1 .p1 {padding:7px 0 15px 0;}
 #index #middle .columns2 .column2 .content {padding:10px 0 15px 0;}
 #index #middle .columns2 .column2 .p1 {padding:2px 0 1px 0;}
+
+.all{
+	background:url('../img/click_here.gif') no-repeat;
+	width:66px;
+	height:30px;
+	padding:4px;
+	text-align:center;
+	color: #fff;
+}
 
 
 /* index-1 */
@@ -211,8 +221,27 @@ form .row1 {height:34px;}
 .input {width:230px; height:18px; border:1px solid #a4a4a4; background:none; padding:0 0 0 5px; font-family:tahoma; line-height:13px; color:#a4a4a4;}
 textarea {width:600px; height:68px; border:1px solid #a4a4a4; background:none; padding:0 0 0 5px; overflow:auto; font-family:tahoma; line-height:13px; color:#a4a4a4;}
 form .div {text-align:right; padding:6px 0 0 0;}
-
+form .button {
+	cursor:hand;
+	background-image: url('../img/click_here.gif');
+	width: 71px;
+	height: 22px;
+	border-style: solid;
+	border-width:0;
+	color: white;
+}
 /* index-6 */
 
 #index_6 #middle .indent {padding:33px 15px 17px 17px;}
 #index_6 #middle .p1 {padding:6px 0 0 0;}
+#resetMessage {
+	background: url(../img/clear.gif);
+	width:53px;
+	height:25px;	
+}
+
+#footer li{
+    list-style-type: none;
+   	display: inline;	
+   	margin:25px;
+}
