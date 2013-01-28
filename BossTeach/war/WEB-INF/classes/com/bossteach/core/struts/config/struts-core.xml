@@ -6,8 +6,10 @@
 <struts>
 
 	<package name="bossteach-default" namespace="/" extends="json-default">
+	<!-- 
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception" result="systemException" />
 		</global-exception-mappings>
+		 -->
 	</package>
 </struts>

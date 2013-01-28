@@ -8,10 +8,10 @@
 	<meta name="keywords" content="北京博胜天成管理咨询有限公司,博胜天成,管理咨询,consultant,boss,teach,service"/>	 
 	<meta name="description" content="boss teach and boss teacher"/>
 
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<link href="css/layout.css" rel="stylesheet" type="text/css" />	
-	<script type="text/javascript" src="js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="js/footer.js"></script>	
+	<link type="text/css" href="<%=request.getContextPath()%>/css/style.css"/>
+	<link type="text/css" href="<%=request.getContextPath()%>/css/layout.css"/>	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/footer.js"></script>	
 </head>
 
 <body id="index_5">
@@ -133,29 +133,13 @@
 								<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus.</strong><br />
 								Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra mnec accumsan malesuada orci. Donec sit amet eros.<br class="clear" />
 							</p>
-							<form id="form" action="<%=request.getContextPath()%>/messagemanager/addMessage.action" method="post">
-								<div class="column1">
-									<div class="row">
-										<input type="text" class="input" value='<s:property value="visitor.name"/>'/>
-									</div>
-									<div class="row">
-										<input type="text" class="input" value='<s:property value="visitor.email"/>'/>
-									</div>
-									<div class="row">
-										<input type="text" class="input" value='<s:property value="visitor.fax"/>'/>
-									</div>
-								</div>
-								<div class="column2">
-									<div class="">
-										<textarea cols="1" rows="1"><s:property value="visitor.message.content"/></textarea><br/>
-										<div class="div">
-											<input type="reset" value="重置" class="button"></input>&nbsp;
-											<input type="submit" value="提交" class="button"></input>
-										</div>
-									</div>
-								</div>
-								<div class="clear"></div>
-							</form>
+						<fieldset>
+						<table id="inoutput">
+						  <tr height="30">  
+						    <td><s:property value="visitor.message.content"/></td>
+						  </tr>
+						</table>
+						</fieldset>							
 						</div>
 					</div>
 				</div>
