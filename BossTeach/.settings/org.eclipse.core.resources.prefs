@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/log4j.properties=UTF-8
+encoding//war/index-5.jsp=UTF-8
 encoding//war/north/search.jsp=UTF-8
 encoding/<project>=UTF-8
+separateDerivedEncodings=true

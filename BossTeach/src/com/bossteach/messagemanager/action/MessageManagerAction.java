@@ -8,7 +8,7 @@ public class MessageManagerAction extends BaseActionSupport{
 	private static final long serialVersionUID = 2229507497640458151L;
 
 	/**
-	 * 增加一个留言
+	 * add messge by visitor
 	 * @return
 	 * @throws Exception
 	 */
