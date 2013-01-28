@@ -5,5 +5,6 @@
 
 <struts>
 	<include file="com/bossteach/core/struts/config/struts-core.xml" />
+	<include file="com/bossteach/messagemanager/config/struts-messagemanager.xml" />
 </struts>
 
