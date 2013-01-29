@@ -7,8 +7,11 @@
 
    <package name="messagemanager" extends="bossteach-default" namespace="/messagemanager">
    	   <action name="addMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="addMessage">
+           <result name="success">/messagemanager/listMessage.action</result>	
+       </action>
+   	   <action name="listMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="addMessage">
            <result name="success">/messagemanager/listMessage.jsp</result>	
-       </action>    			
+       </action>       	
    </package>
 
 </struts>

@@ -2,7 +2,7 @@ package com.bossteach.model;
 
 import java.util.Date;
 
-public class Message {
+public class Message{
 	private Long messageId;
 	private String content;
 	private Visitor visitor;
