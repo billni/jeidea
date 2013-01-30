@@ -26,13 +26,12 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	 * @throws Exception
 	 */
 	public String addMessage() throws Exception {
-		logger.info("8888888888888888888888888888");
+		logger.info("To add message by visitor: " + visitor.getName());
 		Entity message = new Entity("Message");
 		message.setProperty("visitor", visitor.getName());
 		message.setProperty("content", visitor.getMessage().getContent());
 		message.setProperty("createDate", new Date());
-		datastore.put(message);
-		logger.info("8888888888888888888888888888");
+		datastore.put(message);		
 		return SUCCESS;
 	}
 

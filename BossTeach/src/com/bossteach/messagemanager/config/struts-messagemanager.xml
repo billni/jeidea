@@ -9,7 +9,7 @@
    	   <action name="addMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="addMessage">
            <result name="success">/messagemanager/listMessage.action</result>	
        </action>
-   	   <action name="listMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="addMessage">
+   	   <action name="listMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="listMessage">
            <result name="success">/messagemanager/listMessage.jsp</result>	
        </action>       	
    </package>
