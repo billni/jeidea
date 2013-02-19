@@ -1,9 +1,17 @@
 package com.bossteach.model;
 
+import com.google.appengine.api.datastore.Key; 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Message{
-	private Long messageId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key messageId;
 	private String content;
 	private Visitor visitor;
 	private Date createDate;
@@ -12,10 +20,10 @@ public class Message{
 	public Message() {	
 	}
 	
-	public Long getMessageId() {
+	public Key getMessageId() {
 		return messageId;
 	}
-	public void setMessageId(Long messageId) {
+	public void setMessageId(Key messageId) {
 		this.messageId = messageId;
 	}
 	public String getContent() {

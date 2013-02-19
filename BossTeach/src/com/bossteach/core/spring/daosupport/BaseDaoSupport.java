@@ -17,8 +17,5 @@ public class BaseDaoSupport {
 		
 	public EntityManager getManager(){
 		return entityManagerFactory.createEntityManager();
-	}
-	
-	
-		
+	}		
 }

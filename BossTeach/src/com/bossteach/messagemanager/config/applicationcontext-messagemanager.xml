@@ -10,9 +10,13 @@
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd         
            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
   
-  <!--  
-	<bean id="test_accountdao" class="dao.Test_AccountDAO">  
+   
+	<bean id="messageManagerService" class="com.bossteach.messagemanager.service.impl.MessageManagerServiceImpl">  
 		<property name="entityManagerFactory" ref="entityManagerFactory" />    
 	</bean>
-  --> 
+	   
+	<bean id="messageManagerAction" class="com.bossteach.messagemanager.action.MessageManagerAction">  
+		<property name="messageManagerService" ref="messageManagerService" />    
+	</bean>
+   
 </beans>

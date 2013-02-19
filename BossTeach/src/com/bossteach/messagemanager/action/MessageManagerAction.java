@@ -1,21 +1,10 @@
 package com.bossteach.messagemanager.action;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.bossteach.model.Message;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 
@@ -29,23 +18,16 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	 * @throws Exception
 	 */
 	public String addMessage() throws Exception {
-		logger.info("To add message by visitor: " + visitor.getName());
-		Entity message = new Entity("Message");
-		message.setProperty("visitor", visitor.getName());
-		message.setProperty("content", visitor.getMessage().getContent());
-		message.setProperty("createDate", new Date());
-		datastore.put(message);		
+		Message message = new Message();
+		message.setContent(visitor.getMessage().getContent());
+		message.setVisitor(visitor);
+		message.setCreateDate(new Date());
+		messageManagerService.save(message);
+		logger.info("Visitor" + visitor.getName() + "的留言已经保存.");
 		return SUCCESS;
 	}
 
-	public String listMessage() throws Exception {
-		Filter createDateMinFilter = new FilterPredicate("createDate", FilterOperator.GREATER_THAN_OR_EQUAL, DateFormat.getInstance().parseObject("2013-1-1"));
-		Filter createDateMaxFilter = new FilterPredicate("createDate",	FilterOperator.LESS_THAN_OR_EQUAL, DateFormat.getInstance().parseObject("2013-12-1")); // Use
-		Filter createDateRangeFilter =   CompositeFilterOperator.and(createDateMinFilter, createDateMaxFilter);
-		Query q = new Query("Message").setFilter(createDateRangeFilter); 
-		List<Entity> messageEntitys = datastore.prepare(q).asList(FetchOptions.Builder.withDefaults());		
-
-		
+	public String listMessage() throws Exception {		
 		return SUCCESS;
 	}
 }
