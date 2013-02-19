@@ -1,11 +1,14 @@
 package com.bossteach.messagemanager.action;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.bossteach.model.Message;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
@@ -40,7 +43,9 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 		Filter createDateMaxFilter = new FilterPredicate("createDate",	FilterOperator.LESS_THAN_OR_EQUAL, DateFormat.getInstance().parseObject("2013-12-1")); // Use
 		Filter createDateRangeFilter =   CompositeFilterOperator.and(createDateMinFilter, createDateMaxFilter);
 		Query q = new Query("Message").setFilter(createDateRangeFilter); 
-		messages = datastore.prepare(q).asList(FetchOptions.Builder.withDefaults());		
+		List<Entity> messageEntitys = datastore.prepare(q).asList(FetchOptions.Builder.withDefaults());		
+
+		
 		return SUCCESS;
 	}
 }

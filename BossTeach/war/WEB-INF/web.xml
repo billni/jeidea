@@ -2,7 +2,8 @@
 	<display-name>Boss Teach</display-name>
 	<filter>
 		<filter-name>encoding</filter-name>
-		<filter-class>com.bossteach.core.struts.web.filter.FilterEncoding</filter-class>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
@@ -24,6 +25,14 @@
 	<listener>
 		<listener-class>com.bossteach.core.struts.web.listener.StrutsAppEngineAdapter</listener-class>
 	</listener>	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext*.xml</param-value>
+	</context-param>	
 	<!-- google auto add, can delete for deploy -->
 	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>
