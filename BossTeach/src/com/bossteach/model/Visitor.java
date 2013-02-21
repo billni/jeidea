@@ -2,7 +2,6 @@ package com.bossteach.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.google.appengine.api.datastore.Key;
@@ -10,7 +9,7 @@ import com.google.appengine.api.datastore.Key;
 @Entity
 public class Visitor {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "uuidGenerator")
 	private Key visitorId;
 	private String name;
 	private String mail;

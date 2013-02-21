@@ -2,30 +2,20 @@ package com.bossteach.messagemanager.service.impl;
 
 import com.bossteach.core.spring.daosupport.BaseDaoSupport;
 import com.bossteach.messagemanager.service.MessageManagerService;
+import com.bossteach.model.Message;
+import com.google.appengine.api.datastore.Key;
 
 public class MessageManagerServiceImpl extends BaseDaoSupport implements MessageManagerService {
 	
-	public void save(Object object){
-		getManager().persist(object);
+	public void createMessage(Message message){
+		getBaseDaoSupport().persist(message);
 	}
+		
+	public void findMessage(Key key){
+		getBaseDaoSupport().find(Message.class, key);
+	}	
 	
-	public void update(Object object){
-		getManager().refresh(object);
-	}
-	
-	public void find(Class<?> entity, Object key){
-		getManager().find(entity, key);
-	}
-	
-	public void flush(){
-		getManager().flush();
-	}
-	
-	public void delete(Object object){
-		getManager().remove(object);
-	}
-	
-	public void merge(Object object){
-		getManager().merge(object);
+	public void deleteMessage(Message message){
+		deleteMessage(message);
 	}
 }

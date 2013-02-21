@@ -22,12 +22,13 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 		message.setContent(visitor.getMessage().getContent());
 		message.setVisitor(visitor);
 		message.setCreateDate(new Date());
-		messageManagerService.save(message);
+		messageManagerService.createMessage(message);
 		logger.info("Visitor" + visitor.getName() + "的留言已经保存.");
 		return SUCCESS;
 	}
 
-	public String listMessage() throws Exception {		
+	public String listMessage() throws Exception {
+		
 		return SUCCESS;
 	}
 }

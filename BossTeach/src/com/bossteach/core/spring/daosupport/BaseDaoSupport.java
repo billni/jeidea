@@ -1,21 +1,17 @@
 package com.bossteach.core.spring.daosupport;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import org.springframework.orm.jpa.JpaTemplate;
 
-public class BaseDaoSupport {
-			
-	private static EntityManagerFactory entityManagerFactory;
-	 
-	public static EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public static void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+public class BaseDaoSupport extends JpaTemplate{
+		
+	protected static EntityManagerFactory entityManagerFactory;
+				
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 		BaseDaoSupport.entityManagerFactory = entityManagerFactory;
 	}
-		
-	public EntityManager getManager(){
-		return entityManagerFactory.createEntityManager();
-	}		
+
+	public BaseDaoSupport getBaseDaoSupport() {
+		return (BaseDaoSupport)new JpaTemplate(BaseDaoSupport.entityManagerFactory);
+	}			
 }
