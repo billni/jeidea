@@ -20,7 +20,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/messagemanager/*</url-pattern>		
 	</filter-mapping>
 	<listener>
 		<listener-class>com.bossteach.core.struts.web.listener.StrutsAppEngineAdapter</listener-class>

@@ -139,7 +139,7 @@
 										<input name="visitor.name" type="text" class="input" value=''/>
 									</div>
 									<div class="row">
-										<input name="visitor.email" type="text" class="input" value=''/>
+										<input name="visitor.mail" type="text" class="input" value=''/>
 									</div>
 									<div class="row">
 										<input name="visitor.fax" type="text" class="input" value=''/>

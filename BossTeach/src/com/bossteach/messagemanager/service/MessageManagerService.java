@@ -1,5 +1,7 @@
 package com.bossteach.messagemanager.service;
 
+import java.util.List;
+
 import com.bossteach.model.Message;
 import com.google.appengine.api.datastore.Key;
 
@@ -22,4 +24,9 @@ public interface MessageManagerService {
 	 * @param object
 	 */
 	public void deleteMessage(Message object);
+	
+	/**
+	 * list messages
+	 */
+	public List<Message> listMessage();
 }

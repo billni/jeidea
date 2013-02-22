@@ -4,12 +4,19 @@ import com.google.appengine.api.datastore.Key;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({ 
+    @NamedQuery(name="listMessage",query="SELECT m FROM Message u"), 
+    @NamedQuery(name="findMessageWithId",query="SELECT m FROM Message m WHERE m.messageId = :messageId")      
+})
 public class Message{
 	@Id	
-	@GeneratedValue(generator = "uuidGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key messageId;
 	private String content;
 	private Visitor visitor;
@@ -49,6 +56,4 @@ public class Message{
 	public void setEchoDate(Date echoDate) {
 		this.echoDate = echoDate;
 	}
-	
-	
 }

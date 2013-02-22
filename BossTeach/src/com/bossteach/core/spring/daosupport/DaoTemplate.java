@@ -3,15 +3,19 @@ package com.bossteach.core.spring.daosupport;
 import javax.persistence.EntityManagerFactory;
 import org.springframework.orm.jpa.JpaTemplate;
 
-public class BaseDaoSupport extends JpaTemplate{
+public class DaoTemplate extends JpaTemplate{
 		
 	protected static EntityManagerFactory entityManagerFactory;
 				
-	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-		BaseDaoSupport.entityManagerFactory = entityManagerFactory;
+	public EntityManagerFactory getEntityManagerFactory() {
+		return entityManagerFactory;
 	}
 
-	public BaseDaoSupport getBaseDaoSupport() {
-		return (BaseDaoSupport)new JpaTemplate(BaseDaoSupport.entityManagerFactory);
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+		DaoTemplate.entityManagerFactory = entityManagerFactory;
+	}
+
+	public DaoTemplate getDaoTemplate() {
+		return (DaoTemplate)new JpaTemplate(DaoTemplate.entityManagerFactory);
 	}			
 }
