@@ -1,5 +1,7 @@
 package com.bossteach.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +13,8 @@ import com.google.appengine.api.datastore.Key;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="findVisitorWithId",query="SELECT m FROM Visitor m WHERE m.visitorId = :visitorId")      
+    @NamedQuery(name="findVisitorWithId",query="SELECT v FROM Visitor v WHERE v.visitorId = :visitorId"),
+    @NamedQuery(name="findVisitorWithMail",query="SELECT v FROM Visitor v WHERE v.mail = :mail")    
 })
 public class Visitor {
 	@Id
@@ -19,12 +22,42 @@ public class Visitor {
 	private Key visitorId;
 	private String name;
 	private String mail;
-	private String fax;
-	private Message message;
+	private String fax;	
+	private Boolean active;
+	private Date createdDate;
+	private Date bannedDate;
 	
 	public Visitor() {	
 	}
-		
+	
+	
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getBannedDate() {
+		return bannedDate;
+	}
+
+	public void setBannedDate(Date bannedDate) {
+		this.bannedDate = bannedDate;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	/**
+	 *  set visitor account status. 1 means active , 0 means inactive.
+	 * @param active
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}	
 	public Key getVisitorId() {
 		return visitorId;
 	}
@@ -48,13 +81,5 @@ public class Visitor {
 	}
 	public void setFax(String fax) {
 		this.fax = fax;
-	}
-	public Message getMessage() {
-		return message;
-	}
-	public void setMessage(Message message) {
-		this.message = message;
-	}
-	
-	
+	}	
 }

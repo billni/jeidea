@@ -3,7 +3,8 @@ package com.bossteach.messagemanager.action;
 import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.bossteach.model.Message;
+
+import com.bossteach.model.Visitor;
 
 public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 
@@ -16,13 +17,12 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	 * @throws Exception
 	 */
 	public String addMessage() throws Exception {
-		
-		Message message = new Message();
-		message.setContent(visitor.getMessage().getContent());
-		message.setVisitor(visitor);
-		message.setCreateDate(new Date());
+		Visitor visitor = message.getVisitor();
+		visitor.setActive(true);
+		visitor.setCreatedDate(new Date());
+		message.setCreatedDate(new Date());
 		messageManagerService.createMessage(message);
-		logger.info("Visitor" + visitor.getName() + "的留言已经保存.");
+		logger.info("Visitor" + message.getVisitor().getName() + "的留言已经保存.");
 		return NONE;
 	}
 

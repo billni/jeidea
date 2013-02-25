@@ -2,12 +2,16 @@ package com.bossteach.model;
 
 import com.google.appengine.api.datastore.Key; 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 @Entity
 @NamedQueries({ 
@@ -19,8 +23,10 @@ public class Message{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key messageId;
 	private String content;
+	
+	@OneToOne(cascade= {CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.LAZY)
 	private Visitor visitor;
-	private Date createDate;
+	private Date createdDate;
 	private Date echoDate;
 	
 	public Message() {	
@@ -44,11 +50,11 @@ public class Message{
 	public void setVisitor(Visitor visitor) {
 		this.visitor = visitor;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 	public Date getEchoDate() {
 		return echoDate;

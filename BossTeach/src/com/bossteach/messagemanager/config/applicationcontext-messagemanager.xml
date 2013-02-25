@@ -18,5 +18,9 @@
 	<bean id="messageManagerAction" class="com.bossteach.messagemanager.action.MessageManagerAction">  
 		<property name="messageManagerService" ref="messageManagerService" />    
 	</bean>
+			
+	<bean id="visitorManagerComponentInterface" class="com.bossteach.messagemanager.ci.impl.VisitorManagerComponentInterfaceImpl">
+	   <property name="visitorManagerService" ref="visitorManagerService" />    
+	</bean>
    
 </beans>

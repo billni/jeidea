@@ -15,7 +15,7 @@ public class DaoTemplate extends JpaTemplate{
 		DaoTemplate.entityManagerFactory = entityManagerFactory;
 	}
 
-	public DaoTemplate getDaoTemplate() {
-		return (DaoTemplate)new JpaTemplate(DaoTemplate.entityManagerFactory);
+	public JpaTemplate getDaoTemplate() {
+		return new JpaTemplate(DaoTemplate.entityManagerFactory);
 	}			
 }

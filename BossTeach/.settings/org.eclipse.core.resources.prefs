@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/com/bossteach/core/spring/applicationsupport/ApplicationContextSupport.java=UTF-8
 encoding//src/log4j.properties=UTF-8
 encoding//war/messagemanager/message.jsp=UTF-8
 encoding//war/north/search.jsp=UTF-8

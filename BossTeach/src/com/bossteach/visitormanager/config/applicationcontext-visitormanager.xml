@@ -13,5 +13,5 @@
    
 	<bean id="visitorManagerService" class="com.bossteach.visitormanager.service.impl.VisitorManagerServiceImpl">  
 		<property name="entityManagerFactory" ref="entityManagerFactory" />    
-	</bean>   
+	</bean> 
 </beans>

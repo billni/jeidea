@@ -136,18 +136,18 @@
 							<form id="form" action="<%=request.getContextPath()%>/messagemanager/addMessage.action" method="post">
 								<div class="column1">
 									<div class="row">
-										<input name="visitor.name" type="text" class="input" value=''/>
+										<input name="message.visitor.name" type="text" class="input" value=''/>
 									</div>
 									<div class="row">
-										<input name="visitor.mail" type="text" class="input" value=''/>
+										<input name="message.visitor.mail" type="text" class="input" value=''/>
 									</div>
 									<div class="row">
-										<input name="visitor.fax" type="text" class="input" value=''/>
+										<input name="message.visitor.fax" type="text" class="input" value=''/>
 									</div>
 								</div>
 								<div class="column2">
 									<div class="">
-										<textarea cols="1" rows="1" name="visitor.message.content"></textarea><br/>
+										<textarea cols="1" rows="1" name="message.content"></textarea><br/>
 										<div class="div">
 											<input type="reset" value="重置" class="button"></input>&nbsp;
 											<input type="submit" value="提交" class="button"></input>
