@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @NamedQueries({ 
-    @NamedQuery(name="listMessage",query="SELECT m FROM Message u"), 
+    @NamedQuery(name="listMessage",query="SELECT m FROM Message m"), 
     @NamedQuery(name="findMessageWithId",query="SELECT m FROM Message m WHERE m.messageId = :messageId")      
 })
 public class Message{

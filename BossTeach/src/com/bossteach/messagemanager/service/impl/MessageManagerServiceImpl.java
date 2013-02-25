@@ -24,6 +24,7 @@ public class MessageManagerServiceImpl extends DaoTemplate implements MessageMan
 	 * list messages
 	 */
 	public List listMessage() {				
-		return getDaoTemplate().getEntityManager().createNamedQuery("listMessage").setMaxResults(1000).getResultList();				
+		return getDaoTemplate().getEntityManagerFactory().createEntityManager().
+				createNamedQuery("listMessage").getResultList();				
 	}
 }

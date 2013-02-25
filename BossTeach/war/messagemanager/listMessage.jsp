@@ -15,14 +15,13 @@
 </head>
 <body>
 <table class="tableother" id="inoutput">
-  <tr height="30">  
   	<s:iterator id="messages" value="messages" status="status">
+  <tr height="30">
     <td>&nbsp;
-	    <s:property value="content"/>
-	    <s:property value="messageId"/>	     
-	 </td>
-	 </s:iterator>       
+	    <s:property value="messageId"/> : <s:property value="content"/>	    	     
+	 </td>	 
   </tr>
+  </s:iterator>       
 </table>
 </body>
 </html>

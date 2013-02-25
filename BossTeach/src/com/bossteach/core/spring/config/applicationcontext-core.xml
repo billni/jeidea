@@ -22,7 +22,7 @@
 
 	<!-- Transactions involved in the timing -->
 	<aop:config proxy-target-class="true">
-	    <aop:pointcut id="serviceMethod" expression="execution(* com.bossteach.*.service.*.*(..))"/> 
+		<aop:pointcut id="serviceMethod" expression="execution(* com.bossteach.*.service.*Service.*(..))"/> 
         <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
 	</aop:config>
 	
