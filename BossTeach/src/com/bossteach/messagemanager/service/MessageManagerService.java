@@ -3,6 +3,7 @@ package com.bossteach.messagemanager.service;
 import java.util.List;
 
 import com.bossteach.model.Message;
+import com.bossteach.model.Visitor;
 import com.google.appengine.api.datastore.Key;
 
 public interface MessageManagerService {
@@ -28,5 +29,5 @@ public interface MessageManagerService {
 	/**
 	 * list messages
 	 */
-	public List<Message> listMessage();
+	public List<Message> listMessage();	
 }

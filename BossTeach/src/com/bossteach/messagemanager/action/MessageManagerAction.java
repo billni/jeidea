@@ -16,9 +16,10 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	 * @throws Exception
 	 */
 	public String addMessage() throws Exception {
+		
 		Message message = new Message();
 		message.setContent(visitor.getMessage().getContent());
-//		message.setVisitor(visitor);
+		message.setVisitor(visitor);
 		message.setCreateDate(new Date());
 		messageManagerService.createMessage(message);
 		logger.info("Visitor" + visitor.getName() + "的留言已经保存.");
