@@ -4,10 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import com.google.appengine.api.datastore.Key;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="findVisitorWithId",query="SELECT m FROM Visitor m WHERE m.visitorId = :visitorId")      
+})
 public class Visitor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
