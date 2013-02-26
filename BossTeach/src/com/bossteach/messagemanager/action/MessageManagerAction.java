@@ -1,9 +1,11 @@
 package com.bossteach.messagemanager.action;
 
 import java.util.Date;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import com.bossteach.core.util.ci.ComponentInterfaceFactory;
+import com.bossteach.messagemanager.ci.VisitorManagerCI;
 import com.bossteach.model.Visitor;
 
 public class MessageManagerAction extends AbstrtactMesssageManagerAction {
@@ -17,9 +19,15 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	 * @throws Exception
 	 */
 	public String addMessage() throws Exception {
-		Visitor visitor = message.getVisitor();
-		visitor.setActive(true);
-		visitor.setCreatedDate(new Date());
+		VisitorManagerCI visitorManagerCI =(VisitorManagerCI)ComponentInterfaceFactory.getComponentInteface("visitorManagerCI");
+		List<Visitor> visitors = visitorManagerCI.findVisitor(message.getVisitor().getMail().trim());		
+		if (visitors != null && visitors.size()>0) {			
+			message.setVisitor(visitors.get(0));
+		} else {
+			Visitor visitor = message.getVisitor();
+			visitor.setCreatedDate(new Date());
+			visitor.setActive(true);						
+		}
 		message.setCreatedDate(new Date());
 		messageManagerService.createMessage(message);
 		logger.info("Visitor" + message.getVisitor().getName() + "的留言已经保存.");

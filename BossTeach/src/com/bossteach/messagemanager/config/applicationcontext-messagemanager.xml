@@ -19,7 +19,7 @@
 		<property name="messageManagerService" ref="messageManagerService" />    
 	</bean>
 			
-	<bean id="visitorManagerComponentInterface" class="com.bossteach.messagemanager.ci.impl.VisitorManagerComponentInterfaceImpl">
+	<bean id="visitorManagerCI" class="com.bossteach.messagemanager.ci.impl.VisitorManagerCIImpl">
 	   <property name="visitorManagerService" ref="visitorManagerService" />    
 	</bean>
    

@@ -1,10 +1,11 @@
 package com.bossteach.messagemanager.ci.impl;
 
-import com.bossteach.messagemanager.ci.VisitorManagerComponentInterface;
+import java.util.List;
+import com.bossteach.messagemanager.ci.VisitorManagerCI;
 import com.bossteach.model.Visitor;
 import com.bossteach.visitormanager.service.VisitorManagerService;
 
-public class VisitorManagerComponentInterfaceImpl implements  VisitorManagerComponentInterface{
+public class VisitorManagerCIImpl implements  VisitorManagerCI{
 	
 	private VisitorManagerService visitorManagerService;
 
@@ -22,6 +23,10 @@ public class VisitorManagerComponentInterfaceImpl implements  VisitorManagerComp
 	 */
 	public void createVisitor(Visitor visitor){
 		visitorManagerService.createVisitor(visitor);
+	}
+	
+	public List<Visitor> findVisitor(String mail) {		
+		return visitorManagerService.findVisitor(mail);		
 	}
 	
 

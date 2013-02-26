@@ -47,5 +47,6 @@
         class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor">
     </bean>
 
+	<bean class="com.bossteach.core.util.ci.ComponentInterfaceFactory"/>
 	
 </beans>

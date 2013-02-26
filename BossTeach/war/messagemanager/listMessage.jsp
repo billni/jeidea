@@ -14,12 +14,13 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/footer.js"></script>	
 </head>
 <body>
-<table class="tableother" id="inoutput">
+<table border="1">
   	<s:iterator id="messages" value="messages" status="status">
   <tr height="30">
-    <td>&nbsp;
-	    <s:property value="messageId"/> : <s:property value="content"/>	    	     
-	 </td>	 
+    <td><s:property value="messageId"/></td>
+    <td><s:property value="content"/></td>
+    <td><s:property value="visitor.mail"/></td>
+    <td><s:property value="visitor.visitorId"/></td>	 
   </tr>
   </s:iterator>       
 </table>
