@@ -3,7 +3,7 @@
 }
 
 #footer{
-	background:#FFFFFF url(../img/footer_bg.gif) top left repeat-x;
+	background:#FFFFFF url(/img/footer_bg.gif) top left repeat-x;
 	padding:10px;
 	height:100px
 }
@@ -37,26 +37,26 @@ a {color:#3d6f92; font-size:12px;}
 /*main layout */
 .h_logo{ height:92px; width:100%;}
 
-#header_tall {background:url(../img/header_tall.gif) top repeat-x;}
+#header_tall {background:url(/img/header_tall.gif) top repeat-x;}
 
 #main { margin:0 auto;}
 
 #header .left {padding:26px 0 0 0;}
 #header .right {padding:46px 11px 0 0;}
-#header .right a {color:#868686; font-family:arial; font-size:12px; background:url(../img/RSS.gif) no-repeat top right; padding:0 29px 2px 0;}
+#header .right a {color:#868686; font-family:arial; font-size:12px; background:url(/img/RSS.gif) no-repeat top right; padding:0 29px 2px 0;}
 
-#menu {background:url(../img/menu_tall.gif) top repeat-x; height:65px;}
-#menu .rightbg {background:url(../img/menu_right.gif) top right no-repeat;}
-#menu .leftbg {background:url(../img/menu_left.gif) top left no-repeat; width:100%; height:65px;}
+#menu {background:url(/img/menu_tall.gif) top repeat-x; height:65px;}
+#menu .rightbg {background:url(/img/menu_right.gif) top right no-repeat;}
+#menu .leftbg {background:url(/img/menu_left.gif) top left no-repeat; width:100%; height:65px;}
 #menu .padding {padding:9px 0;}
-#menu li {float:left; width:150px; background:url(../img/menu_libg.gif) top right repeat-y; font-size:12px; text-align:center;  display:block;}
+#menu li {float:left; width:150px; background:url(/img/menu_libg.gif) top right repeat-y; font-size:12px; text-align:center;  display:block;}
 #menu li a {color:#919191; text-decoration:none; font-weight:normal; font-size:12px; display:block; padding:8px 0 5px 0;}
 #menu li span{ display:block; padding:8px 0 5px 0;}
 #menu li a:hover {color:#000000; text-decoration:underline;}
 #menu li span {color:#000000; text-decoration:underline;}
 #menu .last {background:none;}
 
-#header .content {background:url(../img/header_bg.jpg) top left repeat-x; padding:45px 60px 28px 414px; color:#ffffff;}
+#header .content {background:url(/img/header_bg.jpg) top left repeat-x; padding:45px 60px 28px 414px; color:#ffffff;}
 #header .content .text {padding:2px 0 33px 2px;}
 #header .content a div {float:right;}
 
@@ -68,29 +68,29 @@ a {color:#3d6f92; font-size:12px;}
 #footer a {color:#444444; font-weight:bold; text-decoration:none}
 
 
-.border {background:url(../img/border_tall.gif) top repeat-x;}
-.border .btall {background:url(../img/border_tall.gif) bottom repeat-x;}
-.border .ltall {background:url(../img/border_tall.gif) left repeat-y;}
-.border .rtall {background:url(../img/border_tall.gif) right repeat-y;}
-.border .tleft {background:url(../img/border_tl.gif) top left no-repeat;}
-.border .tright {background:url(../img/border_tr.gif) top right no-repeat;}
-.border .bleft {background:url(../img/border_bl.gif) bottom left no-repeat;}
-.border .bright {background:url(../img/border_br.gif) bottom right no-repeat; width:100%;}
+.border {background:url(/img/border_tall.gif) top repeat-x;}
+.border .btall {background:url(/img/border_tall.gif) bottom repeat-x;}
+.border .ltall {background:url(/img/border_tall.gif) left repeat-y;}
+.border .rtall {background:url(/img/border_tall.gif) right repeat-y;}
+.border .tleft {background:url(/img/border_tl.gif) top left no-repeat;}
+.border .tright {background:url(/img/border_tr.gif) top right no-repeat;}
+.border .bleft {background:url(/img/border_bl.gif) bottom left no-repeat;}
+.border .bright {background:url(/img/border_br.gif) bottom right no-repeat; width:100%;}
 .border .ind {padding:4px 4px 15px 2px;}
 .border a img {float:right;}
 .border a div {float:right;}
 
 
-.h_text {padding:0px 2px 2px 0px; background:url(../img/h_text_bg.gif) bottom repeat-x;text-align:right;}
+.h_text {padding:0px 2px 2px 0px; background:url(/img/h_text_bg.gif) bottom repeat-x;text-align:right;}
 .more {text-align:right;}
-.more a{background:url(../img/more_bg.gif) top right no-repeat; padding-right:13px; color:#000000; font-weight:bold;}
+.more a{background:url(/img/more_bg.gif) top right no-repeat; padding-right:13px; color:#000000; font-weight:bold;}
 
-.date {background:url(../img/date_bg.gif) no-repeat 0 0; padding:2px 0 2px 22px; color:#444444;}
+.date {background:url(/img/date_bg.gif) no-repeat 0 0; padding:2px 0 2px 22px; color:#444444;}
 
 li { color:#3d6f92;}
 li a {color:#3d6f92; font-size:11px;}
 
-.bot_line {background:url(../img/h_text_bg.gif) bottom repeat-x;}
+.bot_line {background:url(/img/h_text_bg.gif) bottom repeat-x;}
 .b_text {color:#3d6f92;}
 /* index */
 
@@ -107,7 +107,7 @@ li a {color:#3d6f92; font-size:11px;}
 #index #middle .columns2 .column2 .p1 {padding:2px 0 1px 0;}
 
 .all{
-	background:url('../img/click_here.gif') no-repeat;
+	background:url('/img/click_here.gif') no-repeat;
 	width:66px;
 	height:30px;
 	padding:4px;
@@ -223,7 +223,7 @@ textarea {width:600px; height:68px; border:1px solid #a4a4a4; background:none; p
 form .div {text-align:right; padding:6px 0 0 0;}
 form .button {
 	cursor:hand;
-	background-image: url('../img/click_here.gif');
+	background-image: url('/img/click_here.gif');
 	width: 71px;
 	height: 22px;
 	border-style: solid;
@@ -235,7 +235,7 @@ form .button {
 #index_6 #middle .indent {padding:33px 15px 17px 17px;}
 #index_6 #middle .p1 {padding:6px 0 0 0;}
 #resetMessage {
-	background: url(../img/clear.gif);
+	background: url(/img/clear.gif);
 	width:53px;
 	height:25px;	
 }

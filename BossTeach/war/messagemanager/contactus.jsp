@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.form.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/messagemanager/message.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
 </head>
 
 
@@ -22,22 +23,17 @@
 			<!--header -->
 			<div id="header">
 				<div class="h_logo">
-					<div class="left">
-						<img alt="" src="img/logo.jpg" /><br />
-					</div>
-					<div class="right"><a href="#">RSS</a></div>
-					<div class="clear"></div>
 				</div>
 				<div id="menu">
 					<div class="rightbg">
 						<div class="leftbg">
 							<div class="padding">
 								<ul>
-									<li><a href="index.html">首页</a></li>
-									<li><a href="index-1.html">新闻中心</a></li>
-									<li><a href="index-2.html">博胜学院</a></li>
-									<li><a href="index-3.html">咨询服务</a></li>
-									<li><a href="index-4.html">产品研发</a></li>	
+									<li><a href="/index.html">首页</a></li>
+									<li><a href="/index-1.html">新闻中心</a></li>
+									<li><a href="/index-2.html">博胜学院</a></li>
+									<li><a href="/index-3.html">咨询服务</a></li>
+									<li><a href="/index-4.html">产品研发</a></li>	
 									<li class="last"><span>联系我们</span></li>
 								</ul>
 								<br class="clear" />
@@ -45,16 +41,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="content">
-						<img alt="" src="img/header_t1.jpg" /><br />
-						<img alt="" src="img/header_t2.jpg" /><br />
-						<div class="text">
-							博胜天成管理咨询的特色是基于企业实际，把握企业内外环境，融会先进的管理思想与丰富的管理实践，从发展战略入手，为企业提供个性化、可操作的管理咨询方案。
-						</div>
-						<a href="#">
-							<div style="background:url('img/header_click_here.jpg') no-repeat;width:100px;height:50px;padding:7px 0px 0px 25px;">立即联系</div>
-						</a>
-						<div class="clear"></div>
+				<div id="companycontent" class="content">
 				</div>
 			</div>
 			<!--header end-->
@@ -72,7 +59,7 @@
 														<div class="bright">
 															<div class="ind">
 																<div class="h_text">
-																	<img alt="" src="img/6-t1.jpg" /><br />
+																	<img alt="" src="/img/6-t1.jpg" /><br />
 																</div>
 																<div class="padding">
 																	<strong>北京博胜天成管理咨询有限公司</strong><br />
@@ -107,7 +94,7 @@
 														<div class="bright">
 															<div class="ind">
 																<div class="h_text">
-																	<img alt="" src="img/6-t2.jpg" /><br />
+																	<img alt="" src="/img/6-t2.jpg" /><br />
 																</div>
 																<div class="padding">
 																	<strong>Argentina</strong><br />
@@ -130,7 +117,7 @@
 					</div>
 					<div class="columns2">
 						<div class="padding">
-							<img alt="" src="img/6-t3.gif" /><br />
+							<img alt="" src="/img/6-t3.gif" /><br />
 							<p class="p1">
 								<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus.</strong><br />
 								Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra mnec accumsan malesuada orci. Donec sit amet eros.<br class="clear" />
