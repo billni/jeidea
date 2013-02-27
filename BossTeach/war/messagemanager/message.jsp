@@ -11,8 +11,29 @@
 	<link href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="<%=request.getContextPath()%>/css/layout.css" rel="stylesheet" type="text/css" />	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.form.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/footer.js"></script>	
+	<script type="text/javascript">
+		$(function(){
+			   $("#submit").click(function(){				      
+					$.ajax({ 
+						type: "post",
+						data: $("form").formSerialize(),
+						url: "<%=request.getContextPath()%>/messagemanager/addMessage.action",
+						success:function(t){
+							alert("Your message sent successfully!");
+							$("form").clearForm();
+						}
+					}); 				   
+			   });
+			   
+			   $("input[name*='message.']").focus(function(){				   
+				   $(this).clearFields();
+			   }); 
+		})				
+	</script>
 </head>
+
 
 <body id="index_5">
 	<div id="header_tall">
@@ -133,16 +154,16 @@
 								<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus.</strong><br />
 								Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra mnec accumsan malesuada orci. Donec sit amet eros.<br class="clear" />
 							</p>
-							<form id="form" action="<%=request.getContextPath()%>/messagemanager/addMessage.action" method="post">
+							<form id="form">
 								<div class="column1">
 									<div class="row">
-										<input name="message.visitor.name" type="text" class="input" value=''/>
+										<input name="message.visitor.name" type="text" class="input" value='Name:'/>
 									</div>
 									<div class="row">
-										<input name="message.visitor.mail" type="text" class="input" value=''/>
+										<input name="message.visitor.mail" type="text" class="input" value='Email:'/>
 									</div>
 									<div class="row">
-										<input name="message.visitor.fax" type="text" class="input" value=''/>
+										<input name="message.visitor.fax" type="text" class="input" value='Fax:'/>
 									</div>
 								</div>
 								<div class="column2">
@@ -150,7 +171,7 @@
 										<textarea cols="1" rows="1" name="message.content"></textarea><br/>
 										<div class="div">
 											<input type="reset" value="重置" class="button"></input>&nbsp;
-											<input type="submit" value="提交" class="button"></input>
+											<input id="submit" type="button" value="提交" class="button"></input>
 										</div>
 									</div>
 								</div>
