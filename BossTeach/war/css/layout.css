@@ -14,7 +14,7 @@
 #index .columns1 .column3 {width:290px;}
 #index .columns1 .indent_column {width:15px;}
 
-#index .ver_line { background:url(../img/ver_line.gif) repeat-y 493px 0; width:100%;}
+#index .ver_line { background:url(/img/ver_line.gif) repeat-y 493px 0; width:100%;}
 #index .columns2 .column1 {width:493px;}
 #index .columns2 .column2 {width:400px;}
 
@@ -34,9 +34,9 @@
 #index_2 .columns1 .column2 {width:400px;}
 #index_2 .columns1 .indent_column {width:7px;}
 
-#index_2 .ver_line { background:url(../img/ver_line.gif) repeat-y 493px 0; width:100%;}
+#index_2 .ver_line { background:url(/img/ver_line.gif) repeat-y 493px 0; width:100%;}
 #index_2 .columns2 .column1 {width:493px;}
-#index_2 .columns2 .column2 {width:400px; background:url(../img/ver_line.gif) left repeat-y;}
+#index_2 .columns2 .column2 {width:400px; background:url(/img/ver_line.gif) left repeat-y;}
 
 /* index-3 */
 
