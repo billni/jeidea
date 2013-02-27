@@ -12,26 +12,8 @@
 	<link href="<%=request.getContextPath()%>/css/layout.css" rel="stylesheet" type="text/css" />	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.form.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/footer.js"></script>	
-	<script type="text/javascript">
-		$(function(){
-			   $("#submit").click(function(){				      
-					$.ajax({ 
-						type: "post",
-						data: $("form").formSerialize(),
-						url: "<%=request.getContextPath()%>/messagemanager/addMessage.action",
-						success:function(t){
-							alert("Your message sent successfully!");
-							$("form").clearForm();
-						}
-					}); 				   
-			   });
-			   
-			   $("input[name*='message.']").focus(function(){				   
-				   $(this).clearFields();
-			   }); 
-		})				
-	</script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/messagemanager/message.js"></script>
 </head>
 
 

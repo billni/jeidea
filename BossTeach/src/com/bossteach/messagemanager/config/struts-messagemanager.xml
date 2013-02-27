@@ -13,7 +13,7 @@
        </action>
               	
    	   <action name="contactus" class="com.bossteach.messagemanager.action.MessageManagerAction" method="contactus">
-           <result name="success">/messagemanager/message.jsp</result>	
+           <result name="success">/messagemanager/contactus.jsp</result>	
        </action>         
    </package>
 
