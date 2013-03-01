@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>	   
+			 		<!--  
+				 <ref bean="policySubmitTrigger" />		           						 			     
+			     <ref bean="uploadTransfixFileTrigger" />
+			   
+			     <ref bean="policyStatusFileDownloadTrigger" />				     
+			     <ref bean="analyzeInfoFileTrigger" />	-->
+		    
+			</list> 
+		</property>
+
+	</bean>
+
+	<!-- add by gongfw for submit policy to core system -->
+		<bean name="policySubmitTrigger"
+			class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="policySubmitJobDetail" />
+			<property name="cronExpression" value="0 0/10 * * * ?" />
+
+		</bean>
+				
+		<bean id="policySubmitJobDetail"
+			class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			<property name="targetObject" ref="policySubmitObject" />
+			<property name="targetMethod" value="doJob" />
+			<property name="concurrent" value="false" />
+		</bean>
+	
+		<bean id="policySubmitObject" class="com.ulic.ults.job.PolicySubmitJob">
+			
+		</bean>
+
+	<!-- add by gongfw for download policy status file from core system -->
+		<bean name="policyStatusFileDownloadTrigger"
+			class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="policyStatusFileDownloadJobDetail" />
+			<property name="cronExpression" value="0 0/5 * * * ?" />
+
+		</bean>
+				
+		<bean id="policyStatusFileDownloadJobDetail"
+			class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			<property name="targetObject" ref="policyStatusFileDownloadObject" />
+			<property name="targetMethod" value="doJob" />
+			<property name="concurrent" value="false" />
+		</bean>
+	
+		<bean id="policyStatusFileDownloadObject" class="com.ulic.ults.job.DownloadInfoFileJob">
+			  <property name="insurPolicyManageService" ref="insurPolicyManageService" />  
+		</bean>
+
+	
+	<!-- add by gongfw for Analyze InfoFile-->
+		<bean name="analyzeInfoFileTrigger"
+			class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="analyzeInfoFileJobDetail" />
+			<property name="cronExpression" value="0 0/8 * * * ?" />
+
+		</bean>
+				
+		<bean id="analyzeInfoFileJobDetail"
+			class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			<property name="targetObject" ref="analyzeInfoFileObject" />
+			<property name="targetMethod" value="doJob" />
+			<property name="concurrent" value="false" />
+		</bean>
+	
+		<bean id="analyzeInfoFileObject" class="com.ulic.ults.job.AnalyzeInfoFileJob">
+			  <property name="insurPolicyManageService" ref="insurPolicyManageService" />  
+		</bean>
+	
+	<!-- add by gongfw for upload  Transfix  File-->
+		<bean name="uploadTransfixFileTrigger"
+			class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="uploadTransfixFileJobDetail" />
+			<property name="cronExpression" value="0 0/6 * * * ?" />
+
+		</bean>
+				
+		<bean id="uploadTransfixFileJobDetail"
+			class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			<property name="targetObject" ref="uploadTransfixFileObject" />
+			<property name="targetMethod" value="doJob" />
+			<property name="concurrent" value="false" />
+		</bean>
+	
+		<bean id="uploadTransfixFileObject" class="com.ulic.ults.job.UploadTransfixFileJob">
+		
+		</bean>
+</beans>
