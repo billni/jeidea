@@ -3,9 +3,9 @@ package com.bossteach.job.taobao;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,9 +22,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import com.bossteach.job.CrawlTaoBaoJob;
-import com.bossteach.job.service.TaoBaoTransactionService;
 import com.bossteach.model.HongKangInsuranceTransaction;
 
 
@@ -36,6 +34,7 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	private static final String PROXY_PASSWORD= "nY111111";
 	private static final String PROXY_WORKSTATION= "isa06";
 	private static final String PROXY_DOMAIN= "ulic";
+	private static Long PageCount=0l;
 	
     public DefaultHttpClient getHttpClient(DefaultHttpClient httpClient){
         NTCredentials credentials = new NTCredentials(PROXY_USERNAME ,PROXY_PASSWORD , PROXY_WORKSTATION, PROXY_DOMAIN);	        
@@ -81,9 +80,8 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	        return sw.toString();  
 	    }
 	    
-	    public void analyseHtml(){
+	    public void analyseTransactionRecordsHtml(String html){
 	    	HongKangInsuranceTransaction tbt = null;
-	    	  String html = getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0&callback=mycallback");
 	        if (html!= null && !"".equals(html)) {	        	
 	            Document doc = Jsoup.parse(html);  
 	            Elements trs = doc.select("tbody tr");
@@ -113,9 +111,26 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	        } 
 	    }
 	    
+	    public void analyseTransactionCountHtml(String html){
+	        if (html!= null && !"".equals(html)) {	        	
+	            Document doc = Jsoup.parse(html);  
+	            Elements trs = doc.select("ul.tab-bar  li:not(.sel)");
+	            Pattern p = Pattern.compile("m>(.*)件");
+	            Matcher m = p.matcher(trs.html());
+	            if (m.find()){
+		            PageCount = Long.parseLong(m.group().replace("m>", "").replace("件", ""))/10;
+		            System.out.println(m.group().replace("m>", "").replace("件", "") + "件,共" + PageCount + "页");
+	            }
+	        } 
+	    }
+	    
 	    public static void main(String[] args) throws Exception {
 	    	CrawlHongKangInsuranceTransaction job = new CrawlHongKangInsuranceTransaction();
-	    	job.analyseHtml();
+	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/item.htm?spm=a220m.1000858.1000725.1.lMZiU8&id=17305541936&is_b=1&cat_id=2&q=%BA%EB%BF%B5&rn=859d895e481ccf0569738ec7a55d28a3");
+//	    	System.out.println(html);
+	    	job.analyseTransactionCountHtml(html);
+//	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0&callback=mycallback");
+//	    	job.analyseTransactionRecordsHtml(html);
 //	    	job.poolRequest();
 //	    	job.transformToJsonObject();
 		}
