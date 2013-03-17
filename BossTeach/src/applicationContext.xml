@@ -16,4 +16,5 @@
 	<import resource="com/bossteach/core/spring/config/applicationcontext-core.xml"/>
 	<import resource="com/bossteach/visitormanager/config/applicationcontext-visitormanager.xml"/>
 	<import resource="com/bossteach/messagemanager/config/applicationcontext-messagemanager.xml"/>
+	<import resource="com/bossteach/messagemanager/config/applicationcontext-job.xml"/>
 </beans>
