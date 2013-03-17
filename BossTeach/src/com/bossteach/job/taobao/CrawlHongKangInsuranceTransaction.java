@@ -2,6 +2,8 @@ package com.bossteach.job.taobao;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -16,13 +18,20 @@ import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.bossteach.job.CrawlTaoBaoJob;
+import com.bossteach.job.baidu.GetThread;
 import com.bossteach.model.HongKangInsuranceTransaction;
 
 
@@ -35,6 +44,7 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	private static final String PROXY_WORKSTATION= "isa06";
 	private static final String PROXY_DOMAIN= "ulic";
 	private static Long PageCount=0l;
+	private static String HongKangTransactionUrl = "http://baoxian.taobao.com/json/PurchaseList.do";
 	
     public DefaultHttpClient getHttpClient(DefaultHttpClient httpClient){
         NTCredentials credentials = new NTCredentials(PROXY_USERNAME ,PROXY_PASSWORD , PROXY_WORKSTATION, PROXY_DOMAIN);	        
@@ -124,12 +134,60 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	        } 
 	    }
 	    
+	    
+	    public void pooledGetHtmlByUrl() throws Exception{
+	    	SchemeRegistry schemeRegistry = new SchemeRegistry();
+	    	schemeRegistry.register(new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
+	    	ClientConnectionManager cm = new PoolingClientConnectionManager(schemeRegistry);
+//	    	DefaultHttpClient httpClient = getHttpClient(new DefaultHttpClient(cm));
+	    	DefaultHttpClient httpClient = new DefaultHttpClient(cm);
+	    	
+	    	// URIs to perform GETs on
+	    	String[] urisToGet = {
+	    	   
+	    	};
+
+	    	// create a thread for each URI
+	    	GetThread[] threads = new GetThread[urisToGet.length];
+	    	for (int i = 0; i < threads.length; i++) {
+	    	    HttpGet httpGet = new HttpGet(urisToGet[i]);
+	    	    threads[i] = new GetThread(httpClient, httpGet);
+	    	}
+
+	    	// start the threads
+	    	for (int j = 0; j < threads.length; j++) {
+	    	    threads[j].start();
+	    	}
+
+	    	// join the threads
+	    	for (int j = 0; j < threads.length; j++) {
+	    	    threads[j].join();
+	    	}
+	    }
+	    
+	    public URI initUrl(){
+	    	URIBuilder builder;
+	    	URI ret = null;
+			try {
+				builder = new URIBuilder(HongKangTransactionUrl);
+				ret =  builder.addParameter("page", "1")
+ 	           .addParameter("itemid", "17305541936")
+ 	           .addParameter("sellerId", "1128953583")
+ 	           .addParameter("callback", "mycallback")
+ 	           .addParameter("sold_total_num","0")
+ 	          .addParameter("callback", "mycallback").build();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+			return ret;
+	    }
 	    public static void main(String[] args) throws Exception {
 	    	CrawlHongKangInsuranceTransaction job = new CrawlHongKangInsuranceTransaction();
+	    	System.out.println(job.initUrl());
 	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/item.htm?spm=a220m.1000858.1000725.1.lMZiU8&id=17305541936&is_b=1&cat_id=2&q=%BA%EB%BF%B5&rn=859d895e481ccf0569738ec7a55d28a3");
 //	    	System.out.println(html);
 	    	job.analyseTransactionCountHtml(html);
-//	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0&callback=mycallback");
+//	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0");
 //	    	job.analyseTransactionRecordsHtml(html);
 //	    	job.poolRequest();
 //	    	job.transformToJsonObject();
