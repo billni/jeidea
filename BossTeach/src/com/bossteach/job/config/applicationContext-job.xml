@@ -91,7 +91,13 @@
 			<property name="concurrent" value="false" />
 		</bean>
 	
-		<bean id="uploadTransfixFileObject" class="com.ulic.ults.job.UploadTransfixFileJob">
+		<bean id="uploadTransfixFileObject" class="com.ulic.ults.job.UploadTransfixFileJob"/>
 		
+		<bean id="taoBaoTransactionService" class="com.bossteach.job.service.impl.TaoBaoTransactionServiceImpl">
+				<property name="entityManagerFactory" ref="entityManagerFactory" />    
+		</bean>
+		
+		<bean id="crawlTaoBaoJob" class="com.bossteach.job.CrawlTaoBaoJob">  
+				<property name="taoBaoTransactionService" ref="taoBaoTransactionService" />    
 		</bean>
 </beans>

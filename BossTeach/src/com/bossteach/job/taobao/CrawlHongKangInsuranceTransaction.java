@@ -4,11 +4,8 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,18 +23,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.bossteach.job.CrawlTaoBaoJob;
+import com.bossteach.job.service.TaoBaoTransactionService;
 import com.bossteach.model.HongKangInsuranceTransaction;
 
 
-public class CrawlHongKangInsuranceTransactionRecords {
-	private Log logger = LogFactory.getLog(CrawlHongKangInsuranceTransactionRecords.class);
+public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
+	private Log logger = LogFactory.getLog(CrawlHongKangInsuranceTransaction.class);
 	private static final String PROXY_HOST= "10.18.8.108";
 	private static final int PROXY_PORT = 8008;
 	private static final String PROXY_USERNAME= "niyong";
 	private static final String PROXY_PASSWORD= "nY111111";
 	private static final String PROXY_WORKSTATION= "isa06";
 	private static final String PROXY_DOMAIN= "ulic";
-
 	
     public DefaultHttpClient getHttpClient(DefaultHttpClient httpClient){
         NTCredentials credentials = new NTCredentials(PROXY_USERNAME ,PROXY_PASSWORD , PROXY_WORKSTATION, PROXY_DOMAIN);	        
@@ -83,9 +81,8 @@ public class CrawlHongKangInsuranceTransactionRecords {
 	        return sw.toString();  
 	    }
 	    
-	    public List analyseHtml(){
+	    public void analyseHtml(){
 	    	HongKangInsuranceTransaction tbt = null;
-	    	List<HongKangInsuranceTransaction> list = new ArrayList<HongKangInsuranceTransaction>();
 	    	  String html = getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0&callback=mycallback");
 	        if (html!= null && !"".equals(html)) {	        	
 	            Document doc = Jsoup.parse(html);  
@@ -111,14 +108,13 @@ public class CrawlHongKangInsuranceTransactionRecords {
 	            	tbt.setCount(Long.parseLong(tr.select("td:eq(3)").html()));
 	            	tbt.setTransactionDate(tr.select("td:eq(4)").html());
 	            	tbt.setStatus(tr.select("td:eq(5)").html());
-	            	list.add(tbt);
+	            	taoBaoTransactionService.createHongKangInsuranceTransaction(tbt);
 	            }  
 	        } 
-	        return list;
 	    }
 	    
 	    public static void main(String[] args) throws Exception {
-	    	CrawlHongKangInsuranceTransactionRecords job = new CrawlHongKangInsuranceTransactionRecords();
+	    	CrawlHongKangInsuranceTransaction job = new CrawlHongKangInsuranceTransaction();
 	    	job.analyseHtml();
 //	    	job.poolRequest();
 //	    	job.transformToJsonObject();
