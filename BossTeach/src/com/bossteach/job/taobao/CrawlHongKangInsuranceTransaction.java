@@ -5,7 +5,9 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
@@ -43,10 +45,9 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	private static final String PROXY_PASSWORD= "nY111111";
 	private static final String PROXY_WORKSTATION= "isa06";
 	private static final String PROXY_DOMAIN= "ulic";
-	private static Long PageCount=0l;
-	private static String HongKangTransactionUrl = "http://baoxian.taobao.com/json/PurchaseList.do";
-	
-    public DefaultHttpClient getHttpClient(DefaultHttpClient httpClient){
+	private static String HongKangTransactionUrl = "http://baoxian.taobao.com/json/PurchaseList.do";	
+ 
+	public DefaultHttpClient getHttpClient(DefaultHttpClient httpClient){
         NTCredentials credentials = new NTCredentials(PROXY_USERNAME ,PROXY_PASSWORD , PROXY_WORKSTATION, PROXY_DOMAIN);	        
         httpClient.getCredentialsProvider().setCredentials(new AuthScope(PROXY_HOST, PROXY_PORT), credentials);	      
         HttpHost proxy = new HttpHost(PROXY_HOST, PROXY_PORT);
@@ -55,17 +56,17 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
     }	
 	
 	/** 
-	     * 根据URL获得html信息 
+	     * Receive Html By Url  
 	     * @param url 
 	     * @return 
 	     */  
-	    public String getHtmlByUrl(String url){
+	    public String getHtmlByUrl(URI uri){
 	        StringWriter sw = new StringWriter();
 	        
 //	        DefaultHttpClient httpClient = getHttpClient(new DefaultHttpClient());//创建httpClient对象                	   
 	        DefaultHttpClient httpClient = new DefaultHttpClient();
 	        //如果代理需要密码验证，这里设置用户名密码  	        
-	        HttpGet httpGet = new HttpGet(url);	        
+	        HttpGet httpGet = new HttpGet(uri);	        
 	        try {	        	
 	            HttpResponse response = httpClient.execute(httpGet);//得到responce对象  
 	            int resStatu = response.getStatusLine().getStatusCode();//返回 	 
@@ -81,7 +82,7 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 		            System.out.println("Http Status Code:" + resStatu);
 	            }
 	        } catch (Exception e) {  
-	        	 System.out.println("访问【"+url+"】出现异常!");
+	        	 System.out.println("访问【"+uri+"】出现异常!");
 	             e.printStackTrace();  
 	        } finally {	        	        	
 	        	logger.info("HttpClient连接关闭.");
@@ -90,7 +91,12 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	        return sw.toString();  
 	    }
 	    
-	    public void analyseTransactionRecordsHtml(String html){
+	    /**
+	     * Analyse Transaction Record Detail
+	     * @param html
+	     */
+	    public List<HongKangInsuranceTransaction> analyseTransactionRecordsHtml(String html){
+	    	List<HongKangInsuranceTransaction> hks = new ArrayList<HongKangInsuranceTransaction>();
 	    	HongKangInsuranceTransaction tbt = null;
 	        if (html!= null && !"".equals(html)) {	        	
 	            Document doc = Jsoup.parse(html);  
@@ -117,24 +123,36 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	            	tbt.setTransactionDate(tr.select("td:eq(4)").html());
 	            	tbt.setStatus(tr.select("td:eq(5)").html());
 	            	taoBaoTransactionService.createHongKangInsuranceTransaction(tbt);
-	            }  
+	            	hks.add(tbt);
+	            }
 	        } 
+	        return hks;
 	    }
 	    
-	    public void analyseTransactionCountHtml(String html){
+	    /**
+	     * Analyse Transaction Count
+	     * @param html
+	     */
+	    public Long analyseTransactionCountHtml(String html){
+	    	Long pageCount =0L;
 	        if (html!= null && !"".equals(html)) {	        	
 	            Document doc = Jsoup.parse(html);  
 	            Elements trs = doc.select("ul.tab-bar  li:not(.sel)");
 	            Pattern p = Pattern.compile("m>(.*)件");
 	            Matcher m = p.matcher(trs.html());
 	            if (m.find()){
-		            PageCount = Long.parseLong(m.group().replace("m>", "").replace("件", ""))/10;
-		            System.out.println(m.group().replace("m>", "").replace("件", "") + "件,共" + PageCount + "页");
+	            	pageCount = new Double(Math.ceil(Long.parseLong(m.group().replace("m>", "").replace("件", ""))/10.0)).longValue();
+		            System.out.println(m.group().replace("m>", "").replace("件", "") + "件,共" + pageCount + "页");
 	            }
 	        } 
+	        return pageCount;
 	    }
 	    
 	    
+	    /**
+	     * Pooled Get URL for Paging
+	     * @throws Exception
+	     */
 	    public void pooledGetHtmlByUrl() throws Exception{
 	    	SchemeRegistry schemeRegistry = new SchemeRegistry();
 	    	schemeRegistry.register(new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
@@ -165,28 +183,41 @@ public class CrawlHongKangInsuranceTransaction extends CrawlTaoBaoJob {
 	    	}
 	    }
 	    
-	    public URI initUrl(){
+	    /**
+	     * Initial Parameter
+	     * @return
+	     */
+	    public URI initUrl(int pageNo){
 	    	URIBuilder builder;
 	    	URI ret = null;
 			try {
 				builder = new URIBuilder(HongKangTransactionUrl);
-				ret =  builder.addParameter("page", "1")
- 	           .addParameter("itemid", "17305541936")
- 	           .addParameter("sellerId", "1128953583")
- 	           .addParameter("callback", "mycallback")
- 	           .addParameter("sold_total_num","0")
- 	          .addParameter("callback", "mycallback").build();
+				ret =  builder.addParameter("page", Integer.toString(pageNo))
+				 	           .addParameter("itemid", "17305541936")
+				 	           .addParameter("sellerId", "1128953583")
+				 	           .addParameter("callback", "mycallback")
+				 	           .addParameter("sold_total_num","0")
+				 	           .addParameter("callback", "mycallback").build();
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			}
 			return ret;
 	    }
 	    public static void main(String[] args) throws Exception {
+	    	String html = null;
+	    	
 	    	CrawlHongKangInsuranceTransaction job = new CrawlHongKangInsuranceTransaction();
-	    	System.out.println(job.initUrl());
-	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/item.htm?spm=a220m.1000858.1000725.1.lMZiU8&id=17305541936&is_b=1&cat_id=2&q=%BA%EB%BF%B5&rn=859d895e481ccf0569738ec7a55d28a3");
-//	    	System.out.println(html);
-	    	job.analyseTransactionCountHtml(html);
+	    	Long pageCount = job.analyseTransactionCountHtml("http://baoxian.taobao.com/item.htm?spm=a220m.1000858.1000725.1.lMZiU8&id=17305541936&is_b=1&cat_id=2&q=%BA%EB%BF%B5&rn=859d895e481ccf0569738ec7a55d28a3");
+	    	
+	    	List<HongKangInsuranceTransaction> list = new ArrayList<HongKangInsuranceTransaction>();
+	    	for (int i = 1; i <= pageCount; i++) {	    		
+	    		html = job.getHtmlByUrl(job.initUrl(i));
+	    		list.addAll(job.analyseTransactionRecordsHtml(html));
+			}
+	    	
+	    	
+//	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/item.htm?spm=a220m.1000858.1000725.1.lMZiU8&id=17305541936&is_b=1&cat_id=2&q=%BA%EB%BF%B5&rn=859d895e481ccf0569738ec7a55d28a3");
+    	
 //	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0");
 //	    	job.analyseTransactionRecordsHtml(html);
 //	    	job.poolRequest();
