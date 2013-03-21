@@ -10,7 +10,7 @@
 </head>
 <body>		
 	<div>
-	   	<img src="<%=request.getContextPath()%>/img/Waterlilies.jpg" alt="Crossing" class="jqPuzzle jqp-r3-c5-h5" />	   	    
+	   	<img src="<%=request.getContextPath()%>/img/waterlilies.jpg" alt="Crossing" class="jqPuzzle jqp-r3-c5-h5" />	   	    
 	</div>
 </body>
 </html>
