@@ -1,6 +1,9 @@
 package com.bossteach.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import com.google.appengine.api.datastore.Key;
@@ -11,6 +14,8 @@ import com.google.appengine.api.datastore.Key;
     @NamedQuery(name="findHongKangInsuranceTransactionWithId",query="SELECT hkt FROM HongKangInsuranceTransaction hkt WHERE hkt.transactionId = :transactionId")      
 })
 public class HongKangInsuranceTransaction  {
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key transactionId;
 	private String buyer;
 	private String itemName;
