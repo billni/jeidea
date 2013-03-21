@@ -1,5 +1,9 @@
-$(function() {
-	$("#footer").load("/footer.html");
-	$(".h_logo").load("/logo.html");
-	$("#companycontent").load("/content.html");
+$(function(){
+	$("#menu").load("/decorate/menu.html");
+	$("#footer").load("/decorate/footer.html");
+	$("#logo").load("/decorate/logo.html");
+	$("#companycontent").load("/decorate/content.html");
+	if ($("meta[name='pagename']").attr("content") == "index") {
+			
+	}
 });

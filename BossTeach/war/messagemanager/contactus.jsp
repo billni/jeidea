@@ -122,7 +122,7 @@
 								<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus.</strong><br />
 								Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra mnec accumsan malesuada orci. Donec sit amet eros.<br class="clear" />
 							</p>
-							<form id="form">
+							<form id="messageform">
 								<div class="column1">
 									<div class="row">
 										<input name="message.visitor.name" type="text" class="input" value='Name:'/>
@@ -145,6 +145,7 @@
 								</div>
 								<div class="clear"></div>
 							</form>
+							<div id="thanks" style="font-weight: bold;display:none"></div>
 						</div>
 					</div>
 				</div>

@@ -20,27 +20,9 @@
 		<div id="main">
 			<!--header -->
 			<div id="header">
-				<div class="h_logo">
-				</div>
-				<div id="menu">
-					<div class="rightbg">
-						<div class="leftbg">
-							<div class="padding">
-								<ul>
-									<li><span>首页</span></li>
-									<li><a href="index-1.html">新闻中心</a></li>
-									<li><a href="index-2.html">博胜学院</a></li>
-									<li><a href="index-3.html">咨询服务</a></li>
-									<li><a href="index-4.html">产品研发</a></li>	
-									<li><a href="index-5.html">联系我们</a></li>
-								</ul>
-								<br class="clear" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="companycontent" class="content">
-				</div>				
+				<div id="logo" class="h_logo"></div>
+				<div id="menu"></div>
+				<div id="companycontent" class="content"></div>				
 			</div>
 			<!--header end-->
 			<div id="middle">
