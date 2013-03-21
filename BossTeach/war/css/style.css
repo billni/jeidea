@@ -43,7 +43,7 @@ a {color:#3d6f92; font-size:12px;}
 
 #header .left {padding:26px 0 0 0;}
 #header .right {padding:46px 11px 0 0;}
-#header .right a {color:#868686; font-family:arial; font-size:12px; background:url(/img/RSS.gif) no-repeat top right; padding:0 29px 2px 0;}
+#header .right a {color:#868686; font-family:arial; font-size:12px; background:url(/img/rss.gif) no-repeat top right; padding:0 29px 2px 0;}
 
 #menu {background:url(/img/menu_tall.gif) top repeat-x; height:65px;}
 #menu .rightbg {background:url(/img/menu_right.gif) top right no-repeat;}
