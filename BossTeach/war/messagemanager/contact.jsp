@@ -7,6 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="北京博胜天成管理咨询有限公司,博胜天成,管理咨询,consultant,boss,teach,service"/>	 
 	<meta name="description" content="boss teach and boss teacher"/>
+	<meta name="pagename" content="contact"/>
 	<link href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="<%=request.getContextPath()%>/css/layout.css" rel="stylesheet" type="text/css" />	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
@@ -22,27 +23,9 @@
 		<div id="main">
 			<!--header -->
 			<div id="header">
-				<div class="h_logo">
-				</div>
-				<div id="menu">
-					<div class="rightbg">
-						<div class="leftbg">
-							<div class="padding">
-								<ul>
-									<li><a href="/index.html">首页</a></li>
-									<li><a href="/index-1.html">新闻中心</a></li>
-									<li><a href="/index-2.html">博胜学院</a></li>
-									<li><a href="/index-3.html">咨询服务</a></li>
-									<li><a href="/index-4.html">产品研发</a></li>	
-									<li class="last"><span>联系我们</span></li>
-								</ul>
-								<br class="clear" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="companycontent" class="content">
-				</div>
+				<div id="logo" class="h_logo"></div>
+				<div id="menu"></div>
+				<div id="companycontent" class="content"></div>		
 			</div>
 			<!--header end-->
 			<div id="middle">
@@ -145,7 +128,7 @@
 								</div>
 								<div class="clear"></div>
 							</form>
-							<div id="thanks" style="font-weight: bold;display:none"></div>
+							<div id="msg" style="font-weight: bold;display:none"></div>
 						</div>
 					</div>
 				</div>

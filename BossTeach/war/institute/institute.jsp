@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 
@@ -6,11 +8,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="北京博胜天成管理咨询有限公司,博胜天成,管理咨询,consultant,boss,teach,service"/>	 
 	<meta name="description" content="boss teach and boss teacher"/>
-
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<link href="css/layout.css" rel="stylesheet" type="text/css" />	
-	<script type="text/javascript" src="js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="js/default.js"></script>
+	<meta name="pagename" content="institute"/>
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/css/layout.css" rel="stylesheet" type="text/css" />	
+	<script type="text/javascript" src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/default.js"></script>
 </head>
 
 <body id="index_2">
@@ -19,25 +21,8 @@
 			<!--header -->
 			<div id="header">
 				<div id="logo" class="h_logo"></div>
-				<div id="menu">
-					<div class="rightbg">
-						<div class="leftbg">
-							<div class="padding">
-								<ul>
-									<li><a href="index.html">首页</a></li>
-									<li><a href="index-1.html">新闻中心</a></li>
-									<li><span>博胜学院</span></li>
-									<li><a href="index-3.html">咨询服务</a></li>
-									<li><a href="index-4.html">产品研发</a></li>	
-									<li class="last"><a href="index-5.html">联系我们</a></li>
-								</ul>
-								<br class="clear" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="companycontent" class="content">
-				</div>
+				<div id="menu"></div>
+				<div id="companycontent" class="content"></div>		
 			</div>
 			<!--header end-->
 			<div id="middle">
@@ -54,7 +39,7 @@
 														<div class="bright">
 															<div class="ind">
 																<div class="h_text">
-																	<img alt="" src="img/3-t1.jpg" /><br />
+																	<img alt="" src="/img/3-t1.jpg" /><br />
 																</div>
 																<div class="padding">
 																	<strong>Lorem ipsum dolor sit am</strong><br />
@@ -88,7 +73,7 @@
 														<div class="bright">
 															<div class="ind">
 																<div class="h_text">
-																	<img alt="" src="img/3-t2.jpg" /><br />
+																	<img alt="" src="/img/3-t2.jpg" /><br />
 																</div>
 																<div class="padding">
 																	<strong>Quisque nulla. Vestibulum libero nislisque nulla.</strong><br />
@@ -113,9 +98,9 @@
 					<div class="ver_line">
 						<div class="column1">
 							<div class="padding">
-								<img alt="" src="img/3-t3.gif" /><br />
+								<img alt="" src="/img/3-t3.gif" /><br />
 								<p class="p1">
-									<img alt="" src="img/3-p1.jpg" style="margin-right:20px; float:left;" />
+									<img alt="" src="/img/3-p1.jpg" style="margin-right:20px; float:left;" />
 									<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris.</strong><br /><br />
 									Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique<br class="clear" />
 								</p>
@@ -127,7 +112,7 @@
 						</div>
 						<div class="column2">
 							<div class="padding">
-								<img alt="" src="img/3-t4.gif" /><br />
+								<img alt="" src="/img/3-t4.gif" /><br />
 								<div class="content">
 									<ul >
 										<li>- <a href="#">Maecenas ttique o ultricies paret.</a></li>

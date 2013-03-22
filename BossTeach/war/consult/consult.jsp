@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 
@@ -6,11 +8,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="北京博胜天成管理咨询有限公司,博胜天成,管理咨询,consultant,boss,teach,service"/>	 
 	<meta name="description" content="boss teach and boss teacher"/>
-	
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<link href="css/layout.css" rel="stylesheet" type="text/css" />	
-	<script type="text/javascript" src="js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="js/default.js"></script>	
+	<meta name="pagename" content="consult"/>
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/css/layout.css" rel="stylesheet" type="text/css" />	
+	<script type="text/javascript" src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/default.js"></script>	
 </head>
 
 <body id="index_3">
@@ -19,25 +21,8 @@
 			<!--header -->
 			<div id="header">
 				<div id="logo" class="h_logo"></div>
-				<div id="menu">
-					<div class="rightbg">
-						<div class="leftbg">
-							<div class="padding">
-								<ul>
-									<li><a href="index.html">首页</a></li>
-									<li><a href="index-1.html">新闻中心</a></li>
-									<li><a href="index-2.html">博胜学院</a></li>
-									<li><span>咨询服务</span></li>
-									<li><a href="index-4.html">产品研发</a></li>	
-									<li class="last"><a href="index-5.html">联系我们</a></li>
-								</ul>
-								<br class="clear" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="companycontent" class="content">
-				</div>							
+				<div id="menu"></div>
+				<div id="companycontent" class="content"></div>								
 			</div>
 			<!--header end-->
 			<div id="middle">
@@ -53,7 +38,7 @@
 													<div class="bright">
 														<div class="ind">
 															<div class="h_text">
-																<img alt="" src="img/4-t1.jpg" /><br />
+																<img alt="" src="/img/4-t1.jpg" /><br />
 															</div>
 															<div class="padding">
 																<strong>Praesent vestibulum</strong><br />
@@ -88,27 +73,27 @@
 					</div>
 					<div class="column1">
 						<div class="padding1">
-							<img alt="" src="img/4-t2.gif" /><br />
+							<img alt="" src="/img/4-t2.gif" /><br />
 							<div class="content">
 								<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit.</strong><br />
 								<p class="p1">
 									Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac.								</p>
-								<img alt="" src="img/4-p1.jpg" style="margin:8px 11px 0 0; float:left;" />
+								<img alt="" src="/img/4-p1.jpg" style="margin:8px 11px 0 0; float:left;" />
 								<div class="pd">
 									<strong>Praesent vestibulum</strong><br />
 									Cum sociis natpenatibus et magnis dis parturient tes, nascetur ridiculus mus. Nulla. Fusce feugiat malesuada odio. Morbi nunc odio. gravida at, cursus nec, luctus a, lorem.								</div>
 								<div class="clear"></div>
-								<img alt="" src="img/4-p2.jpg" style="margin:4px 11px 0 0; float:left;" />
+								<img alt="" src="/img/4-p2.jpg" style="margin:4px 11px 0 0; float:left;" />
 								<div class="pd2">
 									<strong>Vestibulum libero nisl</strong><br />
 									Cum sociis natpenatibus et magnis dis parturient tes, nascetur ridiculus mus. Nulla. Fusce feugiat malesuada odio. Morbi nunc odio. gravida at, cursus nec, luctus a, lorem.								</div>
 								<div class="clear"></div>
-								<img alt="" src="img/4-p3.jpg" style="margin:7px 11px 0 0; float:left;" />
+								<img alt="" src="/img/4-p3.jpg" style="margin:7px 11px 0 0; float:left;" />
 								<div class="pd3">
 									<strong>Donec in velit vel</strong><br />
 									Cum sociis natpenatibus et magnis dis parturient tes, nascetur ridiculus mus. Nulla. Fusce feugiat malesuada odio. Morbi nunc odio. gravida at, cursus nec, luctus a, lorem.								</div>
 								<div class="clear"></div>
-								<img alt="" src="img/4-p4.jpg" style="margin:10px 11px 0 0; float:left;" />
+								<img alt="" src="/img/4-p4.jpg" style="margin:10px 11px 0 0; float:left;" />
 								<div class="pd">
 									<strong>Proin dictum elementum velit</strong><br />
 									Cum sociis natpenatibus et magnis dis parturient tes, nascetur ridiculus mus. Nulla. Fusce feugiat malesuada odio. Morbi nunc odio. gravida at, cursus nec, luctus a, lorem.								</div>

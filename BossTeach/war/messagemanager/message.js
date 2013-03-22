@@ -3,14 +3,14 @@ $(function(){
     var error= "Name , Email , Fax , Message may be empty, please check.";
     
 	$("#submit").click(function(){
-		
+		$("#msg").text("");
 		if ($("input[name='message.visitor.name']").val() == "Name:" 
 		 || $("input[name='message.visitor.mail']").val() == "Email:"
 	     || $("input[name='message.visitor.fax']").val() == "Fax:"
 	     || $("textarea[name='message.content']").text() == ""){
-			$("#thanks").show(function(){	
-				$("#thanks").text(error);
-				$("#thanks").fadeOut(4000);
+			$("#msg").show(function(){	
+				$("#msg").text(error);
+				$("#msg").fadeOut(4000);				
 			});
 			resetform();			
 			return false;		
@@ -21,9 +21,9 @@ $(function(){
 			data: $("#messageform").formSerialize(),
 			url: "/messagemanager/addMessage.action",
 			success:function(t){
-				$("#thanks").show(function(){	
-					$("#thanks").text(success);
-					$("#thanks").fadeOut(2000);
+				$("#msg").show(function(){					
+					$("#msg").text(success);
+					$("#msg").fadeOut(2000);					
 				});
 				$("#messageform").clearForm();
 				resetform();

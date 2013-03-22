@@ -9,10 +9,10 @@
 	<meta name="keywords" content="北京博胜天成管理咨询有限公司,博胜天成,管理咨询,consultant,boss,teach,service"/>	 
 	<meta name="description" content="boss teach and boss teacher"/>
 	<meta name="pagename" content="index"/>
-	<link href="css/layout.css" rel="stylesheet" type="text/css" />	
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="js/default.js"></script>
+	<link href="/css/layout.css" rel="stylesheet" type="text/css" />	
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/default.js"></script>
 </head>
 
 <body id="index">
