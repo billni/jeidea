@@ -80,8 +80,8 @@
 																	<img alt="" src="/img/6-t2.jpg" /><br />
 																</div>
 																<div class="padding">
-																	<strong>Argentina</strong><br />
-																	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta.<br />
+																	<strong>Manchester</strong><br />
+																	Italian Consulate in Manchester, the United Kingdom Rodwell Tower - 111 Piccadilly Manchester M1 2HY United Kingdom															<br />
 																	<strong>Denmark</strong><br />
 																	Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci.<br />
 																	<strong>Finland</strong><br />
