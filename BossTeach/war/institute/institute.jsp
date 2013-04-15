@@ -79,14 +79,13 @@
 																		<ul>
 																		<li>1、你被缩小到一枚硬币大小，扔进搅拌机。你的质量减少，密度不变。搅拌机片60秒内就会开始搅拌。你会怎么办？</li>
 																		<li>2、有6个数字：10，9，60，90，70，66，接下来该出现什么数字？</li>
-																		<li>3、请代拟一份合同，内容是“把谷歌联合创始人谢尔盖·布林的灵魂卖给魔鬼”，合同必须在30分钟内发到布林的邮箱。</li>
-																		<li>4、刽子手让100名囚犯排成一列，并让每名囚犯戴上一顶红色或蓝色的帽子。每名囚犯都可以看到自己前面人头上戴的帽子，但它看不见自己的，也看不见身后其他人的。刽子手从队列最末尾的地方开始，询问最后一名囚犯他所戴帽子的颜色。他只能回答“红”或“蓝”。如果回答正确，他就能活下来。如果他给了错误的答案，那就立刻被无声无息地杀掉。(人人都听得到身后人的回答，但没人知道答案是对是错。)列队行刑的前一天晚上，囚犯们要琢磨出一套能够自救的策略来。他们应该怎么做？</li>
+																		<li>3、请代拟一份合同，内容是“把谷歌联合创始人谢尔盖·布林的灵魂卖给魔鬼”，合同必须在30分钟内发到布林的邮箱。</li>																		
 																	　　</ul>
 																		这些看似无厘头的题目就是为想进入谷歌的面试者准备的，而这也仅仅是冗长面试中的一个环节而已。
 　　																			《谁是谷歌想要的人才？》一书揭开谷歌招聘机制的一角，我们得以一窥这个庞大的互联网巨头是如何挑选它的“船员”。
 																		<br />
 																	</p>
-																	<a href="http://bschool.hexun.com/2013-03-01/151608679.html"><div class="all">更多</div></a><br />
+																	<a href="http://bschool.hexun.com/2013-03-01/151608679.html"><div class="all">阅读</div></a><br />
 																</div>
 															</div>
 														</div>
@@ -107,19 +106,19 @@
 								<img alt="" src="/img/3-t3.gif" /><br />
 								<p class="p1">
 									<img alt="" src="/img/3-p1.jpg" style="margin-right:20px; float:left;" />
-									<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris.</strong><br /><br />
-									Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique<br class="clear" />
+									<strong class="b_text">商业短信的16条规则</strong><br /><br />
+									短信是新型的电子邮件，所以你最好学习如何正确地使用它。短信正在迅速地成为流行的商务沟通方式。不幸的是，很多人没有意识到商业短信不成文的规则。
+									<br class="clear" />
 								</p>
-								<p class="p2">
-									<strong>Lorem ipsum dolor sit am.</strong><br />
-									Cectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonum my hendrerit mauris. Phasellus porta. Fusce suscipit.								</p>
-								<div class="more"><a href="#">learn more</a></div>
+								<p class="p2"><div class="more"><a href="http://bschool.hexun.com/2013-04-11/153043457.html">更多</a></div>
 							</div>
 						</div>
 						<div class="column2">
+							<!-- 
 							<div class="padding">
 								<img alt="" src="/img/3-t4.gif" /><br />
 								<div class="content">
+							
 									<ul >
 										<li>- <a href="#">Maecenas ttique o ultricies paret.</a></li>
 										<li>- <a href="#">Doec accumsanlesuada.</a></li>
@@ -132,9 +131,11 @@
 										<li>- <a href="#">Aenean auctor wisi et urna.</a></li>
 										<li>- <a href="#">Aliquam erat volutpat. </a></li>
 									</ul>
+									
 								</div>
 								<div class="all">更多</div>
 							</div>
+							 -->
 						</div>
 						<div class="clear"></div>
 					</div>
