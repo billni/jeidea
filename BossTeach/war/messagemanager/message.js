@@ -4,9 +4,9 @@ $(function(){
     
 	$("#submit").click(function(){
 		$("#msg").text("");
-		if ($("input[name='message.visitor.name']").val() == "Name:" 
-		 || $("input[name='message.visitor.mail']").val() == "Email:"
-	     || $("input[name='message.visitor.fax']").val() == "Fax:"
+		if ($("input[name='message.visitor.name']").val() == "联系人" 
+		 || $("input[name='message.visitor.mail']").val() == "电子邮件"
+	     || $("input[name='message.visitor.fax']").val() == "联系电话"
 	     || $("textarea[name='message.content']").text() == ""){
 			$("#msg").show(function(){	
 				$("#msg").text(error);
@@ -36,8 +36,8 @@ $(function(){
 	}); 
 	
 	function resetform(){
-		$("input[name='message.visitor.name']").val("Name:");
-		$("input[name='message.visitor.mail']").val("Email:");
-		$("input[name='message.visitor.fax']").val("Fax:");
+		$("input[name='message.visitor.name']").val("联系人");
+		$("input[name='message.visitor.mail']").val("电子邮件");
+		$("input[name='message.visitor.fax']").val("联系电话");
 	}
 })

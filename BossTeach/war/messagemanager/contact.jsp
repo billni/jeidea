@@ -102,19 +102,19 @@
 						<div class="padding">
 							<img alt="" src="/img/6-t3.gif" /><br />
 							<p class="p1">
-								<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit. Praesent vestibulum molestie lacus.</strong><br />
-								Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra mnec accumsan malesuada orci. Donec sit amet eros.<br class="clear" />
+								<strong class="b_text">可能你的公司运作的很好了，但是你不希望运作的更好吗？ </strong><br />
+								如果你想联系我们，获得专业的服务，请不要犹豫。请填写下面的信息来告知你的需求。等待你的消息!<br class="clear" />
 							</p>
 							<form id="messageform">
 								<div class="column1">
 									<div class="row">
-										<input name="message.visitor.name" type="text" class="input" value='Name:'/>
+										<input name="message.visitor.name" type="text" class="input" value='联系人'/>
 									</div>
 									<div class="row">
-										<input name="message.visitor.mail" type="text" class="input" value='Email:'/>
+										<input name="message.visitor.mail" type="text" class="input" value='电子邮件'/>
 									</div>
 									<div class="row">
-										<input name="message.visitor.fax" type="text" class="input" value='Fax:'/>
+										<input name="message.visitor.fax" type="text" class="input" value='联系电话'/>
 									</div>
 								</div>
 								<div class="column2">
