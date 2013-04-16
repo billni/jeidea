@@ -4,6 +4,9 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.bossteach.model.Visitor;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 
@@ -33,5 +36,12 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	public String contactus()throws Exception{
 		logger.info("联系我们...");
 		return SUCCESS;
+	}
+	
+	public void getUser(){
+        UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+        if (user != null) {
+        }
 	}
 }

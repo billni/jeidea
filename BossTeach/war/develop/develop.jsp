@@ -32,12 +32,21 @@
 							<div class="bot_line">
 								<img alt="" src="/img/5-t1.gif" /><br />
 								<div class="content">
-									<strong class="b_text">Lorem ipsum dolor sit aectetuer adipiscing elit.</strong><br />
+									<strong class="b_text">博胜天成知识库软件系统</strong><br />
 									<p class="p1">
-										Montes, nascetur ridiculus muulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra mnec accumsan malesuada orci.									</p><br />
-									<strong class="b_text">Praesent vestibulum molestie lacus.</strong><br />
-									<p class="p1">
-										Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada at, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultri ces posuere cubilia Cur endisse sollicitudin velit sed leo.									</p>
+										博胜天成知识库软件系统是专为公司管理和共享文件而设计的文档管理系统，是一个具有Lucene全文搜索索引、jBPM工作流程、以及一套自动导入程序的内容储存库，使用Java技术开发，是一种针对Microsoft Windows和Unix-like操作系统的文档管理系统，面向那些需要高度模块化和可扩展性的用户，提供了一种WebDAV接口，它可以在Microsoft Windows和Unix-like操作系统上提供兼容性支持。
+										使用基于J2SE标准的Java技术和Tomcat应用服务器而开发。因此它可以被安装和执行于各种平台（GNU/Linux操作系统，Windows视窗操作系统, Mac OS X苹果操作系统）。
+										博胜天成知识库软件系统架构是基于以下几种技术：
+										<ul>
+										<li>Apache Tomcat应用服务器</li>
+										<li>Java J2SE (Java开发工具包 1.6 或者更高)</li>
+										<li>GWT (Google Web Toolkit - Ajax)谷歌交互式网页工具包</li>
+										<li>Lucene全文搜索引擎</li>
+										<li>Spring Framework软件架构</li>
+										<li>由于它的轻量级架构，可被应用于许多类型的设备，以及实现云端/软件即服务（Cloud/SaaS）的文档管理。</li>
+										<li>数据可以储存在一个关系型数据库管理系统中（MySQL, Oracle, PostgreSQL, etc.）</li>
+										</ul>										
+									</p>									
 									<div class="more"><a href="#"><div class="all">更多</div></a><br /></div>
 								</div>
 							</div>
