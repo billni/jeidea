@@ -3,7 +3,4 @@ $(function(){
 	$("#footer").load("/decorate/footer.html");
 	$("#logo").load("/decorate/logo.html");
 	$("#companycontent").load("/decorate/content.html");
-	if ($("meta[name='pagename']").attr("content") == "index") {
-			
-	}
 });

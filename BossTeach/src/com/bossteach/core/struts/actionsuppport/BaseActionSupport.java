@@ -1,5 +1,7 @@
 package com.bossteach.core.struts.actionsuppport;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -11,6 +13,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.util.ServletContextAware;
+import org.json.JSONObject;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -22,7 +25,8 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version $Revision:  $, $Date:  $
  */
 public abstract class BaseActionSupport extends ActionSupport implements ServletContextAware,ServletResponseAware,ServletRequestAware,SessionAware{
-
+	protected JSONObject resultObj;
+	
 	/**
 	 * all  action must extend AbstractAction, it provide  Log,Session,ServletContext,
 	 * HttpServletRequest,HttpServletResponse Object for others action .
@@ -61,6 +65,11 @@ public abstract class BaseActionSupport extends ActionSupport implements Servlet
 		return request;
 	};
     
-    
+	public void setResultObj(List list) {
+		  Map<String, Object> jsonMap = new HashMap<String, Object>();	     
+	      jsonMap.put("total", 100); 
+	      jsonMap.put("rows", list);     
+	      resultObj = new JSONObject(jsonMap);
+	}
    
 }

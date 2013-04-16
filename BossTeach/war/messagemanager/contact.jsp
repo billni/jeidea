@@ -119,7 +119,7 @@
 								</div>
 								<div class="column2">
 									<div class="">
-										<textarea cols="1" rows="1" name="message.content">需求</textarea><br/>
+										<textarea cols="1" rows="1" name="message.content">我想知道:</textarea><br/>
 										<div class="div">
 											<input type="reset" value="重置" class="button"></input>&nbsp;
 											<input id="submit" type="button" value="提交" class="button"></input>

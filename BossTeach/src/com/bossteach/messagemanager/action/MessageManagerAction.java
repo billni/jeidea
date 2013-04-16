@@ -30,6 +30,7 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 
 	public String listMessage() throws Exception {
 		messages = messageManagerService.listMessage();
+		setResultObj(messages);
 		return SUCCESS;
 	}
 	

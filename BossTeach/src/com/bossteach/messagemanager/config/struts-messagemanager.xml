@@ -9,7 +9,14 @@
    	   <action name="addMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="addMessage"/>           
        
    	   <action name="listMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="listMessage">
-           <result name="success">/messagemanager/listMessage.jsp</result>	
+        	<result type="json">
+                <param name="root">resultObj</param>
+                <param name="enableGZIP">true</param> 	
+            </result>
+       </action>
+       
+       <action name="adminMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="listMessage">
+			<result name="success">/messagemanager/admin/listMessage.jsp</result>	
        </action>
               	
    	   <action name="contactus" class="com.bossteach.messagemanager.action.MessageManagerAction" method="contactus">
