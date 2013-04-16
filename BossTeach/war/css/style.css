@@ -219,7 +219,7 @@ form .row {height:25px;}
 form .row1 {height:34px;}
 
 .input {width:230px; height:20px; border:1px solid #a4a4a4; background:none; padding:0 0 0 5px; font-family:tahoma; line-height:18px; color:black;}
-textarea {width:600px; height:68px; border:1px solid #a4a4a4; background:none; padding:0 0 0 5px; overflow:auto; font-family:tahoma; line-height:13px; color:black;}
+textarea {width:600px; height:68px; border:1px solid #a4a4a4; background:none; padding:0 0 0 5px; overflow:auto; font-family:tahoma; line-height:20px; color:black;}
 form .div {text-align:right; padding:6px 0 0 0;}
 form .button {
 	cursor:hand;

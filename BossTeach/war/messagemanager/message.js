@@ -7,7 +7,7 @@ $(function(){
 		if ($("input[name='message.visitor.name']").val() == "联系人" 
 		 || $("input[name='message.visitor.mail']").val() == "电子邮件"
 	     || $("input[name='message.visitor.fax']").val() == "联系电话"
-	     || $("textarea[name='message.content']").text() == ""){
+	     || $("textarea[name='message.content']").text() == "需求"){
 			$("#msg").show(function(){	
 				$("#msg").text(error);
 				$("#msg").fadeOut(4000);				
@@ -39,5 +39,6 @@ $(function(){
 		$("input[name='message.visitor.name']").val("联系人");
 		$("input[name='message.visitor.mail']").val("电子邮件");
 		$("input[name='message.visitor.fax']").val("联系电话");
+		$("textarea[name='message.content']").text("需求");
 	}
 })
