@@ -4,6 +4,8 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+	<constant name="struts.objectFactory" value="spring"/> 
+	
 	<include file="com/bossteach/core/struts/config/struts-core.xml" />
 	<include file="com/bossteach/messagemanager/config/struts-messagemanager.xml" />
 </struts>

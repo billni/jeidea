@@ -7,6 +7,8 @@ import com.bossteach.model.Visitor;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import com.opensymphony.xwork2.ActionContext;
 
 public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 
@@ -30,7 +32,7 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 
 	public String listMessage() throws Exception {
 		messages = messageManagerService.listMessageWithPagination(getPagination());
-		setResultObj(messages);
+		setResultObj(messages);	
 		return SUCCESS;
 	}
 	
@@ -39,10 +41,10 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 		return SUCCESS;
 	}
 	
-	public void getUser(){
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        if (user != null) {
-        }
-	}
+//	public void getUser(){
+//        UserService userService = UserServiceFactory.getUserService();
+//        User user = userService.getCurrentUser();
+//        if (user != null) {
+//        }
+//	}
 }

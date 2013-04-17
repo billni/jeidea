@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.json.annotations.JSON;
 import org.apache.struts2.util.ServletContextAware;
 
 import com.bossteach.core.spring.daosupport.Pagination;
@@ -25,13 +26,9 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version $Revision:  $, $Date:  $
  */
 public abstract class BaseActionSupport extends ActionSupport implements ServletContextAware,ServletResponseAware,ServletRequestAware,SessionAware{
+	
 	public JSONObject resultObj;
 	
-	public JSONObject getResultObj() {
-		return resultObj;
-	}
-
-
 	/**
 	 * all  action must extend AbstractAction, it provide  Log,Session,ServletContext,
 	 * HttpServletRequest,HttpServletResponse Object for others action .
@@ -74,10 +71,9 @@ public abstract class BaseActionSupport extends ActionSupport implements Servlet
 		  Map<String, Object> jsonMap = new HashMap<String, Object>();	     
 	      jsonMap.put("total", list.toArray().length); 
 	      jsonMap.put("rows", list);	      
-	      resultObj = new JSONObject(jsonMap);
-	}
-	
-	
+	      this.resultObj = new JSONObject(jsonMap);
+	}	
+
 	public Pagination pagination = new Pagination();
 	
 	public void setPagination(Pagination pagination) {

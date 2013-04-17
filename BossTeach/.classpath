@@ -12,9 +12,9 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ognl-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-config-browser-plugin-2.2.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-core-2.2.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-core-2.2.3.jar" sourcepath="D:/niyong/desktop/struts2-core-2.2.3.src.zip"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-json-plugin-2.2.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/xwork-core-2.2.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/xwork-core-2.2.3.jar" sourcepath="D:/niyong/desktop/struts2-core-2.2.3.src.zip"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/freemarker-2.3.16.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.aop-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.asm-3.0.2.RELEASE.jar"/>
@@ -51,5 +51,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jxl.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.5.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-log4j12-1.5.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/json-lib-2.1-jdk15.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
