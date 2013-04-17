@@ -12,7 +12,7 @@
 	<link href="/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="/css/layout.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="/js/default.js"></script>
+	<script type="text/javascript" src="/js/decorate.js"></script>
 </head>
 <body id="index_1">
 	<div id="header_tall">

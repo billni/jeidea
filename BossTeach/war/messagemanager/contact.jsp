@@ -12,9 +12,8 @@
 	<link href="<%=request.getContextPath()%>/css/layout.css" rel="stylesheet" type="text/css" />	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.form.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/decorate.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/messagemanager/message.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
 </head>
 
 
