@@ -52,7 +52,7 @@
 					<br />	  	 
 				 <table id="messageListTable"></table>	 
 				</div>	
-			</div>						
+			</div> 				
 			<!--footer -->
 			<div id="footer">			
 			</div>
@@ -61,11 +61,7 @@
 	</div>
 	
 
-  		<s:iterator id="messages" value="messages" status="status">
-		 	<tr height="30">
-    			<td><s:property value="content"/></td>
-  			</tr>
-  		</s:iterator>       
+    
 
 </body>
 </html>

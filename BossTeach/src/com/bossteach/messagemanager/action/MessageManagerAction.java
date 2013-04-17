@@ -29,7 +29,7 @@ public class MessageManagerAction extends AbstrtactMesssageManagerAction {
 	}
 
 	public String listMessage() throws Exception {
-		messages = messageManagerService.listMessage();
+		messages = messageManagerService.listMessageWithPagination(getPagination());
 		setResultObj(messages);
 		return SUCCESS;
 	}

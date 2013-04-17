@@ -11,7 +11,8 @@ import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
+
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 
 public class CrawlTaoBao {

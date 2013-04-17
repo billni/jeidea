@@ -7,16 +7,16 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.util.ServletContextAware;
-import org.json.JSONObject;
 
+import com.bossteach.core.spring.daosupport.Pagination;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -25,8 +25,13 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version $Revision:  $, $Date:  $
  */
 public abstract class BaseActionSupport extends ActionSupport implements ServletContextAware,ServletResponseAware,ServletRequestAware,SessionAware{
-	protected JSONObject resultObj;
+	public JSONObject resultObj;
 	
+	public JSONObject getResultObj() {
+		return resultObj;
+	}
+
+
 	/**
 	 * all  action must extend AbstractAction, it provide  Log,Session,ServletContext,
 	 * HttpServletRequest,HttpServletResponse Object for others action .
@@ -67,9 +72,30 @@ public abstract class BaseActionSupport extends ActionSupport implements Servlet
     
 	public void setResultObj(List list) {
 		  Map<String, Object> jsonMap = new HashMap<String, Object>();	     
-	      jsonMap.put("total", 100); 
-	      jsonMap.put("rows", list);     
+	      jsonMap.put("total", list.toArray().length); 
+	      jsonMap.put("rows", list);	      
 	      resultObj = new JSONObject(jsonMap);
+	}
+	
+	
+	public Pagination pagination = new Pagination();
+	
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
+	}
+	public Pagination getPagination() {
+		    int page = 1;
+		    int rows = 0;
+		    if (request.getParameter("page")!=null){
+		    	page = Integer.parseInt(request.getParameter("page"));
+		    }
+		    if (request.getParameter("rows")!=null){
+		    	rows = Integer.parseInt(request.getParameter("rows"));
+		    }
+			pagination.setFirstResult(page * rows - rows);
+			pagination.setMaxResults(rows);	
+			
+		return this.pagination;
 	}
    
 }

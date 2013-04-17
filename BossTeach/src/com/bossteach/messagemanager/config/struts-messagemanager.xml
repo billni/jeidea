@@ -8,11 +8,11 @@
    <package name="messagemanager" extends="bossteach-default" namespace="/messagemanager">
    	   <action name="addMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="addMessage"/>           
        
-   	   <action name="listMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="listMessage">
-        	<result type="json">
+   	   <action name="listMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="listMessage">   	      	     	    	  
+	       	<result type="json">
                 <param name="root">resultObj</param>
-                <param name="enableGZIP">true</param> 	
-            </result>
+                <param name="enableGZIP">true</param>                 
+            </result>                  
        </action>
        
        <action name="adminMessage" class="com.bossteach.messagemanager.action.MessageManagerAction" method="listMessage">

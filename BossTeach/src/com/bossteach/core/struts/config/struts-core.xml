@@ -8,10 +8,7 @@
 	<package name="bossteach-default" namespace="/" extends="json-default">
 	 	<interceptors>        
             <interceptor-stack name="defaultInterceptorStack">
-                <interceptor-ref name="defaultStack">
-                <param name="exception.logEnabled">true</param>
-                <param name="exception.logLevel">error</param>
-                </interceptor-ref>    
+                <interceptor-ref name="defaultStack"/>                
             </interceptor-stack>      
         </interceptors>               
         <default-interceptor-ref name="defaultInterceptorStack"/>
