@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
@@ -26,6 +27,7 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.tools.ant.util.DateUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -85,35 +87,16 @@ public class Crawl12306  {
 	        return sw.toString();  
 	    }
 	    
-	    public void analyseTransactionRecordsHtml(String html){
-//	    	HongKangInsuranceTransaction tbt = null;
-	        if (html!= null && !"".equals(html)) {	        	
-	            Document doc = Jsoup.parse(html);  
-	            Elements trs = doc.select("tbody tr");
-	            for (Element tr: trs) {
-	            	tr = tr.html(tr.html().replace("\\r", "").replace("\\t", "").replace("\\n", "").replace("\\/td", "").replace("&lt;", "").replace("&gt;", "").replace("\\/tr", "").replace(" <em>", "").replace("\\/em", "").replace("</em>", "").replace("\\/table", ""));
-//	            	tbt = new HongKangInsuranceTransaction();
-	            	//去掉第一�?
-	            	if ("".equals(tr.select("td:eq(0)").html())) {
-	            		continue;
-	            	}
-	            	//过滤不是今天的记�?
-	            	String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-	            	if (!currentDate.equals(tr.select("td:eq(4)").html().subSequence(0, 10))) {
-	            		break;
-	            	}
-	            	System.out.println(tr.html());
-//	            	tbt.setSellerId("1128953583");
-//	            	tbt.setItemId("17305541936");
-//	            	tbt.setBuyer(tr.select("td:eq(0)").html());
-//	            	tbt.setItemName(tr.select("td:eq(1)").html());
-//	            	tbt.setPremium(Double.parseDouble(tr.select("td:eq(2)").html()));
-//	            	tbt.setCount(Long.parseLong(tr.select("td:eq(3)").html()));
-//	            	tbt.setTransactionDate(tr.select("td:eq(4)").html());
-//	            	tbt.setStatus(tr.select("td:eq(5)").html());
-//	            	taoBaoTransactionService.createHongKangInsuranceTransaction(tbt);
-	            }  
-	        } 
+	    public void analyseRecordsHtml(String data){
+	        if (data!= null && !"".equals(data)) {
+	        	String str[] = data.split("<span");
+	        	for (String string : str) {
+	        		String str2[] = data.split(",");
+	        		for (String s2 : str2) {
+						System.out.println(s2);
+					}
+	        	} 
+	        }
 	    }
 	    
 	    public void analyseTransactionCountHtml(String html){
@@ -166,7 +149,8 @@ public class Crawl12306  {
 			try {
 				builder = new URIBuilder(Url);
 				ret =  builder.addParameter("method", "queryLeftTicket")
-									.addParameter("orderRequest.train_date","2013-05-26")
+//									.addParameter("orderRequest.train_date", DateUtils.format(new Date(), "yyyy-MM-dd"))
+									.addParameter("orderRequest.train_date", "2013-05-27")
 									.addParameter("orderRequest.from_station_telecode","BJP")
 									.addParameter("orderRequest.to_station_telecode","LZZ")
 									.addParameter("orderRequest.train_no","")
@@ -180,17 +164,19 @@ public class Crawl12306  {
 			}
 			return ret;
 	    }
+	    
 	    public static void main(String[] args) throws Exception {
 	    	Crawl12306 job = new Crawl12306();
-	    	System.out.println(job.initUrl().toString());
+//	    	System.out.println(job.initUrl().toString());
 	    	String html = job.getHtmlByUrl(job.initUrl().toString());
-	    	System.out.println(html);
+//	    	System.out.println(html);
 	    	JSONObject jsonObject = new JSONObject(html);
 	    	String result = jsonObject.get("datas").toString();
-	    	System.out.println(result);
-	    	job.analyseTransactionRecordsHtml(result);
+//	    	System.out.println(result);
+	    	job.analyseRecordsHtml(result);
+	    	//0,<span id='id_24000000T50E' class='base_txtdiv' onmouseover=javascript:onStopHover('24000000T50E#BXP#LZZ') onmouseout='onStopOut()'>T5</span>,<img src='/otsquery/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京西&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;15:45,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;柳州&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;16:41,24:56,--,--,--,--,--,8,5,--,<font color='darkgray'>无</font>,150,--,\n1,<span id='id_240000T18909' class='base_txtdiv' onmouseover=javascript:onStopHover('240000T18909#BXP#LZZ') onmouseout='onStopOut()'>T189</span>,<img src='/otsquery/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京西&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;18:17,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;柳州&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;20:00,25:43,--,--,--,--,12,11,<font color='darkgray'>无</font>,--,9,10,--,\n2,<span id='id_240000K1570Q' class='base_txtdiv' onmouseover=javascript:onStopHover('240000K1570Q#BXP#LZZ') onmouseout='onStopOut()'>K157</span>,<img src='/otsquery/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京西&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;18:26,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;柳州&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;01:18,30:52,--,--,--,--,--,11,<font color='darkgray'>无</font>,--,<font color='darkgray'>无</font>,193,--,
 	    	String time = jsonObject.get("time").toString();
-	    	System.out.println(time);
+//	    	System.out.println(time);
 	    	job.analyseTransactionCountHtml(html);
 //	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0");
 //	    	job.analyseTransactionRecordsHtml(html);
