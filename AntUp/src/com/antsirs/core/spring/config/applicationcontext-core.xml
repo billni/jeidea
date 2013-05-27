@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
            
     <!-- component scan -->    
-	<context:component-scan base-package="com.bossteach" />
+	<context:component-scan base-package="com.antsirs" />
 	 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="transactions-optional" />
@@ -22,7 +22,7 @@
 
 	<!-- Transactions involved in the timing -->
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="serviceMethod" expression="execution(* com.bossteach.*.service.*Service.*(..))"/> 
+		<aop:pointcut id="serviceMethod" expression="execution(* com.antsirs.*.service.*Service.*(..))"/> 
         <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
 	</aop:config>
 	
@@ -46,7 +46,6 @@
     <bean
         class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor">
     </bean>
-
-	<bean class="com.bossteach.core.util.ci.ComponentInterfaceFactory"/>
+	
 	
 </beans>
