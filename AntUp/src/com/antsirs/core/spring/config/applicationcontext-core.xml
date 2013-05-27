@@ -11,11 +11,12 @@
            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
            
     <!-- component scan -->    
-	<context:component-scan base-package="com.antsirs" />
+	<context:component-scan base-package="com.antsirs.train12306.model" />
 	 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="transactions-optional" />
+	<bean id="entityManagerFactory" class="com.antsirs.core.spring.daosupport.SpringLocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="transactions-optional" />        		
 	</bean>
+	
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
