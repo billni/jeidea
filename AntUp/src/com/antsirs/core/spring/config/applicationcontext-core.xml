@@ -13,7 +13,7 @@
     <!-- component scan -->    
 	<context:component-scan base-package="com.antsirs.train12306.model" />
 	 
-	<bean id="entityManagerFactory" class="com.antsirs.core.spring.daosupport.SpringLocalContainerEntityManagerFactoryBean">
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="transactions-optional" />        		
 	</bean>
 	
@@ -47,6 +47,6 @@
     <bean
         class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor">
     </bean>
-	
+	<bean class="com.antsirs.core.util.ci.ComponentInterfaceFactory"/>
 	
 </beans>
