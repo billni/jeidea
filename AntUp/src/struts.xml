@@ -6,5 +6,8 @@
 <struts>
 	<constant name="struts.objectFactory" value="spring"/> 
 	
+	<include file="com/antsirs/core/struts/config/struts-core.xml" />
+	<include file="com/antsirs/train12306/config/struts-train12306.xml" />
+	
 </struts>
 

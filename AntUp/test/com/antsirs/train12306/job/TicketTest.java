@@ -9,6 +9,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
+import com.antsirs.train12306.action.Crawl12306Action;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
@@ -27,7 +29,7 @@ public class TicketTest extends AbstractTransactionalJUnit4SpringContextTests{
 	@Test
 //	@Rollback(false)
 	public void testRecordTicket() throws Exception{
-    	Crawl12306 job = new Crawl12306();
+    	Crawl12306Action job = new Crawl12306Action();
 //    	System.out.println(job.initUrl().toString());
     	String html = job.getHtmlByUrl(job.initUrl().toString());
 //    	System.out.println(html);//	    	

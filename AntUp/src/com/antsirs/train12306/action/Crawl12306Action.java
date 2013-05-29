@@ -1,4 +1,4 @@
-package com.antsirs.train12306.job;
+package com.antsirs.train12306.action;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
@@ -27,12 +28,16 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.datanucleus.util.Log4JLogger;
+
+import com.antsirs.train12306.job.GetThread;
 import com.antsirs.train12306.model.Ticket;
+import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 
-public class Crawl12306  {
-	private Log logger = LogFactory.getLog(Crawl12306.class);
+public class Crawl12306Action extends AbstrtactCrawl12306Action {
+	private Log logger = LogFactory.getLog(Crawl12306Action.class);
 	private static final String PROXY_HOST= "10.18.8.60";
 	private static final int PROXY_PORT = 8008;
 	private static final String PROXY_USERNAME= "niyong";
@@ -208,7 +213,7 @@ public class Crawl12306  {
 	     * @throws Exception
 	     */
 	    public static void main(String[] args) throws Exception {
-	    	Crawl12306 job = new Crawl12306();
+	    	Crawl12306Action job = new Crawl12306Action();
 //	    	System.out.println(job.initUrl().toString());
 	    	String html = job.getHtmlByUrl(job.initUrl().toString());
 //	    	System.out.println(html);//	    	
@@ -224,5 +229,22 @@ public class Crawl12306  {
 //	    	job.poolRequest();
 //	    	job.transformToJsonObject();
 		}
+	    
+	    /**
+	     * 调用crawl
+	     */
+	    public String execute() throws Exception {
+	    	String html = getHtmlByUrl(initUrl().toString());
+	    	JSONObject jsonObject = new JSONObject(html);
+	    	String result = jsonObject.get("datas").toString();	    	
+	    	List<Ticket> list = analyseRecords(result);
+	    	if (list != null) {
+	    		for (Ticket ticket : list) {
+	    			trainTicketManagerService.createTicket(ticket);
+				}
+	    		logger.info("Crawl12306 finish." + list.size());
+	    	}	    	
+	    	return NONE;
+	    }
 }
 
