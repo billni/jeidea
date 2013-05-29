@@ -13,7 +13,7 @@
         <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
       </tr>
       <tr>
-        <td><a href="antup">AntUp</a></td>
+        <td><a href="http://localhost:8888/train12306/crawl12306.action">AntUp</a></td>
       </tr>
     </table>
   </body>

@@ -6,7 +6,7 @@
 <struts>
 
    <package name="train12306" extends="antsirs-default" namespace="/train12306">
-   	   <action name="crawl12306" class="com.antsirs.messagemanager.action.Crawl12306Action"/>            
+   	   <action name="crawl12306" class="com.antsirs.train12306.action.Crawl12306Action"/>            
    </package>
 
 </struts>

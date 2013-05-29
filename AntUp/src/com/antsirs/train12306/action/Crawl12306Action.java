@@ -28,8 +28,8 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.tools.ant.util.DateUtils;
 import org.datanucleus.util.Log4JLogger;
-
 import com.antsirs.train12306.job.GetThread;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
@@ -190,9 +190,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	    	URI ret = null;
 			try {
 				builder = new URIBuilder(Url);
-				ret =  builder.addParameter("method", "queryLeftTicket")
-//									.addParameter("orderRequest.train_date", DateUtils.format(new Date(), "yyyy-MM-dd"))
-									.addParameter("orderRequest.train_date", "2013-05-27")
+				ret =  builder.addParameter("method", "queryLeftTicket")									
+									.addParameter("orderRequest.train_date", DateUtils.format(new Date(), "yyyy-MM-dd"))
 									.addParameter("orderRequest.from_station_telecode","BJP")
 									.addParameter("orderRequest.to_station_telecode","LZZ")
 									.addParameter("orderRequest.train_no","")
@@ -206,29 +205,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			}
 			return ret;
 	    }
-	    
-	    /**
-	     * Main entry
-	     * @param args
-	     * @throws Exception
-	     */
-	    public static void main(String[] args) throws Exception {
-	    	Crawl12306Action job = new Crawl12306Action();
-//	    	System.out.println(job.initUrl().toString());
-	    	String html = job.getHtmlByUrl(job.initUrl().toString());
-//	    	System.out.println(html);//	    	
-	    	JSONObject jsonObject = new JSONObject(html);
-	    	String result = jsonObject.get("datas").toString();
-//	    	System.out.println(result);	    	
-	    	job.analyseRecords(result);
-	    	//0,<span id='id_24000000T50E' class='base_txtdiv' onmouseover=javascript:onStopHover('24000000T50E#BXP#LZZ') onmouseout='onStopOut()'>T5</span>,<img src='/otsquery/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京西&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;15:45,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;柳州&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;16:41,24:56,--,--,--,--,--,8,5,--,<font color='darkgray'>无</font>,150,--,\n1,<span id='id_240000T18909' class='base_txtdiv' onmouseover=javascript:onStopHover('240000T18909#BXP#LZZ') onmouseout='onStopOut()'>T189</span>,<img src='/otsquery/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京西&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;18:17,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;柳州&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;20:00,25:43,--,--,--,--,12,11,<font color='darkgray'>无</font>,--,9,10,--,\n2,<span id='id_240000K1570Q' class='base_txtdiv' onmouseover=javascript:onStopHover('240000K1570Q#BXP#LZZ') onmouseout='onStopOut()'>K157</span>,<img src='/otsquery/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京西&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;18:26,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;柳州&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;01:18,30:52,--,--,--,--,--,11,<font color='darkgray'>无</font>,--,<font color='darkgray'>无</font>,193,--,
-	    	String time = jsonObject.get("time").toString();
-//	    	System.out.println(time);	    	
-//	    	String html = job.getHtmlByUrl("http://baoxian.taobao.com/json/PurchaseList.do?page=1&itemId=17305541936&sellerId=1128953583&callback=mycallback&sold_total_num=0");
-//	    	job.analyseTransactionRecordsHtml(html);
-//	    	job.poolRequest();
-//	    	job.transformToJsonObject();
-		}
+
+	 
 	    
 	    /**
 	     * 调用crawl
@@ -243,7 +221,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	    			trainTicketManagerService.createTicket(ticket);
 				}
 	    		logger.info("Crawl12306 finish." + list.size());
-	    	}	    	
+	    	}	   
+	    	logger.info("Crawl12306 execute one time.");
 	    	return NONE;
 	    }
 }
