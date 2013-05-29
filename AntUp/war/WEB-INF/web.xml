@@ -47,7 +47,7 @@
 		<url-pattern>/_ah/spi/*</url-pattern>
 	</servlet-mapping>
 	<!-- google auto add -->
-	
+	<!-- 
 	<security-constraint>
         <web-resource-collection>
     	    <web-resource-name>Public Area</web-resource-name> 	        
@@ -67,7 +67,7 @@
             <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
-	
+	 -->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
