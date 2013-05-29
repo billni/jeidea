@@ -3,6 +3,6 @@
   <cron>
     <url>/train12306/crawl12306.action</url>
     <description>Repopulate the cache every 2 minutes</description>
-    <schedule>every 2 minutes</schedule>
+    <schedule>every 2 minutes</schedule>        
   </cron>
 </cronentries>

@@ -5,26 +5,26 @@
 <head>		 		
 </head>
 <body>
-	<table border="1" style="border-style: inset;">
+	<table border="1">
 	     <tr>
-        		<td>流水号</td>
-        		<td>车次</td>
-        		<td>始发站</td>
-        		<td>目的站</td>
-        		<td>始发时间</td>
-        		<td>到达时间</td>
-        		<td>历时</td>
-        		<td>商务座</td>
-        		<td>特等座</td>
-        		<td>一等座</td>
-        		<td>二等座</td>        		
-        		<td>高级软卧</td>
-        		<td>软卧</td>
-        		<td>硬卧</td>
-        		<td>硬座</td>
-        		<td>无座</td>
-        		<td>其他</td>
-        		<td>查询时间</td>
+        		<th>流水号</th>
+        		<th>车次</th>
+        		<th>始发站</th>
+        		<th>目的站</th>
+        		<th>始发时间</th>
+        		<th>到达时间</th>
+        		<th>历时</th>
+        		<th>商务座</th>
+        		<th>特等座</th>
+        		<th>一等座</th>
+        		<th>二等座</th>        		
+        		<th>高级软卧</th>
+        		<th>软卧</th>
+        		<th>硬卧</th>
+        		<th>硬座</th>
+        		<th>无座</th>
+        		<th>其他</th>
+        		<th>查询时间</th>
         	</tr> 
 		<s:iterator id="ticket" value="tickets">
         	<tr>
