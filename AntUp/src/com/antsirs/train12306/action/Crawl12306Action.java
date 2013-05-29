@@ -7,7 +7,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
@@ -29,10 +28,8 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.tools.ant.util.DateUtils;
-import org.datanucleus.util.Log4JLogger;
 import com.antsirs.train12306.job.GetThread;
 import com.antsirs.train12306.model.Ticket;
-import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 
@@ -64,21 +61,22 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	        DefaultHttpClient httpClient = getHttpClient(new DefaultHttpClient());      
 	        HttpGet httpGet = new HttpGet(url);	        
 	        try {	        	
+	        	logger.info("HttpClient连接开启.");
 	            HttpResponse response = httpClient.execute(httpGet);//得到responce对象  
 	            int resStatu = response.getStatusLine().getStatusCode();//返回 	 
 	            if (resStatu == HttpStatus.SC_OK) {//200正常
 	                //获得相应实体  	            	
 	                HttpEntity entity = response.getEntity();
 	                if (entity!=null) {	             
-	                	InputStreamReader insr = new InputStreamReader(entity.getContent(), "utf-8" /*ContentType.getOrDefault(entity).getCharset()*/);
+	                	InputStreamReader insr = new InputStreamReader(entity.getContent(), "UTF-8" /*ContentType.getOrDefault(entity).getCharset()*/);
                         IOUtils.copy(insr, sw);
 	                	insr.close();
 	                }
 	            } else {
-		            System.out.println("Http Status Code:" + resStatu);
+	            	logger.info("Http Status Code:" + resStatu);
 	            }
 	        } catch (Exception e) {  
-	        	 System.out.println("Show exception when access this ulr.");
+	        	logger.info("Show exception when access this url.");
 	             e.printStackTrace();  
 	        } finally {	        	        	
 	        	logger.info("HttpClient连接关闭.");
@@ -98,7 +96,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	        	tickets = new ArrayList<Ticket>();
 	        	String str[] = data.split(",<span");
 	        	String temp = "";
-	        	for (String sf : str) {	        			
+	        	for (String sf : str) {
+	        		if (sf.length() > 2) {
 	        			sf = sf.replace("&nbsp;", "").trim();	        			
 	        			temp = matchPattern(sf, "id(.*)Out");
 	        			sf = sf.replace(temp, "");
@@ -131,7 +130,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 							ticket.setOthers(s[16]);
 							ticket.setInsertTime(new Date());
 							tickets.add(ticket);
-						}		           
+						}	
+	        	}
 	        }
 	        return tickets;
 	    }
@@ -205,15 +205,15 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			}
 			return ret;
 	    }
-
-	 
 	    
 	    /**
 	     * 调用crawl
 	     */
 	    public String execute() throws Exception {
+	    	logger.info("initUrl: " + initUrl().toString());
 	    	String html = getHtmlByUrl(initUrl().toString());
-	    	JSONObject jsonObject = new JSONObject(html);
+	    	logger.info("getHtmlByUrl: " + html);
+	    	JSONObject jsonObject = new JSONObject(html);	    	
 	    	String result = jsonObject.get("datas").toString();	    	
 	    	List<Ticket> list = analyseRecords(result);
 	    	if (list != null) {
@@ -224,6 +224,16 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	    	}	   
 	    	logger.info("Crawl12306 execute one time.");
 	    	return NONE;
+	    }
+	    
+	    
+	    /**
+	     * 列出ticket
+	     * @return
+	     */
+	    public String listTicket() {	    	
+	    	tickets = trainTicketManagerService.listTicket();	    			    			    	
+	    	return SUCCESS;
 	    }
 }
 
