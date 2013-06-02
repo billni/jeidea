@@ -5,11 +5,15 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
@@ -51,6 +55,77 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
         return httpClient;
     }	
 	
+    /**
+     * Generate Url 
+     * @return
+     */
+    public URI initUrl(){
+    	URIBuilder builder;
+    	URI ret = null;
+		try {
+			builder = new URIBuilder(Url);
+			ret =  builder.addParameter("method", "queryLeftTicket")									
+								.addParameter("orderRequest.train_date", DateUtils.format(new Date(), "yyyy-MM-dd"))
+								.addParameter("orderRequest.from_station_telecode","BJP")
+								.addParameter("orderRequest.to_station_telecode","LZZ")
+								.addParameter("orderRequest.train_no","")
+								.addParameter("trainPassType","QB")
+	                                 .addParameter("trainClass","QB#D#Z#T#K#QT#")
+	                                 .addParameter("includeStudent","00")
+	                                 .addParameter("seatTypeAndNum","")
+	                                 .addParameter("orderRequest.start_time_str","00:00--24:00").build();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return ret;
+    }
+    
+    /**
+     * Generate Url 
+     * @return
+     */
+    public List<String> initUrl(List<String> dates){
+    	URIBuilder builder;
+    	List<String> urls = null;
+    	URI ret;
+    	for (String date : dates) {
+    		try {
+    			builder = new URIBuilder(Url);
+    			ret =  builder.addParameter("method", "queryLeftTicket")									
+    								.addParameter("orderRequest.train_date", date)
+    								.addParameter("orderRequest.from_station_telecode","BJP")
+    								.addParameter("orderRequest.to_station_telecode","LZZ")
+    								.addParameter("orderRequest.train_no","")
+    								.addParameter("trainPassType","QB")
+    	                                 .addParameter("trainClass","QB#D#Z#T#K#QT#")
+    	                                 .addParameter("includeStudent","00")
+    	                                 .addParameter("seatTypeAndNum","")
+    	                                 .addParameter("orderRequest.start_time_str","00:00--24:00").build();
+    			urls.add(ret.toString());
+    		} catch (URISyntaxException e) {
+    			e.printStackTrace();
+    		}
+		}		
+		return urls;
+    }
+    
+    /**
+     * 获得未来20天的日期
+     * @return
+     */
+    public List<String> getFuture10Days() {
+    	List<String> list = new ArrayList<String>();
+    	Date date = new Date();
+    	Calendar calendar = new GregorianCalendar(Locale.CHINESE);
+    	calendar.setTime(date);    	
+    	for (int i = 0; i < 20; i++) {	
+    		calendar.add(calendar.DATE,i);//把日期往后增加一天.整数往后推,负数往前移动
+        	date = calendar.getTime(); //这个时间
+        	list.add(DateUtils.format(date, "yyyy-MM-dd"));
+		}    	
+    	return list;
+    }
+    
 	/** 
 	     * 根据URL获得html信息 
 	     * @param url 
@@ -86,10 +161,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	    }
 	    
 	    /**
-	     * Analyse Record
+	     * Generate Record
 	     * @param data
 	     */
-	    public List analyseRecords(String data){
+	    public List generateRecords(String data){
 	    	List<Ticket> tickets = null;
             Ticket ticket = null;            
 	        if (data!= null && !"".equals(data)) {	 
@@ -185,26 +260,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	    	}
 	    }
 	    
-	    public URI initUrl(){
-	    	URIBuilder builder;
-	    	URI ret = null;
-			try {
-				builder = new URIBuilder(Url);
-				ret =  builder.addParameter("method", "queryLeftTicket")									
-									.addParameter("orderRequest.train_date", DateUtils.format(new Date(), "yyyy-MM-dd"))
-									.addParameter("orderRequest.from_station_telecode","BJP")
-									.addParameter("orderRequest.to_station_telecode","LZZ")
-									.addParameter("orderRequest.train_no","")
-									.addParameter("trainPassType","QB")
- 	                                 .addParameter("trainClass","QB#D#Z#T#K#QT#")
- 	                                 .addParameter("includeStudent","00")
- 	                                 .addParameter("seatTypeAndNum","")
- 	                                 .addParameter("orderRequest.start_time_str","00:00--24:00").build();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
-			return ret;
-	    }
+
 	    
 	    /**
 	     * 调用crawl
@@ -215,16 +271,57 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	    	logger.info("getHtmlByUrl: " + html);
 	    	JSONObject jsonObject = new JSONObject(html);	    	
 	    	String result = jsonObject.get("datas").toString();	    	
-	    	List<Ticket> list = analyseRecords(result);
-	    	if (list != null) {
+	    	List<Ticket> list = generateRecords(result);
+	    	if (list != null) {	    		
 	    		for (Ticket ticket : list) {
-	    			trainTicketManagerService.createTicket(ticket);
+	    			if (checkTicketResource(ticket)) {
+	    				trainTicketManagerService.createTicket(ticket);
+	    			}
 				}
 	    		logger.info("Crawl12306 finish." + list.size());
 	    	}	   
 	    	logger.info("Crawl12306 execute one time.");
 	    	return NONE;
 	    }
+	    
+	    public boolean checkTicketResource(Ticket ticket) {
+	    	boolean flag = false;
+				if (NumberUtils.isNumber(ticket.getBusinessClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getSpecialClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getFirstClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getSecondClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getSeniorSoftSleepClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getSoftSleepClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getHardSleepClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getSoftSeatClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getHardSeatClass())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getStanding())) {
+					flag = true;
+				}
+				if (NumberUtils.isNumber(ticket.getOthers())) {
+					flag = true;
+				}
+				return flag;
+			}
+	    	    	
 	    
 	    
 	    /**
