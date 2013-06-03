@@ -105,7 +105,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
 			logger.info(" Crawling - " + date);
-			logger.info("trainTicketManagerService==null? -" + trainTicketManagerService==null);
+			logger.info("trainTicketManagerService==null? - " + trainTicketManagerService);
 			task.setTrainTicketManagerService(trainTicketManagerService);			
 			task.setUrl(initUrl(URL, date));
 			task.setHttpClient(getHttpClient(new DefaultHttpClient()));			
