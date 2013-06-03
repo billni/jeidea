@@ -18,7 +18,7 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml","classpath:applicationContext-*.xml"})
-public class TicketTest extends AbstractTransactionalJUnit38SpringContextTests{
+public class TicketTest {
 	private Log logger = LogFactory.getLog(TicketTest.class);
 	@Autowired
 	private TrainTicketManagerService trainTicketManagerService;
