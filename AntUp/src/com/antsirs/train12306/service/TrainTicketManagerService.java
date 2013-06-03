@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
+import com.antsirs.train12306.model.Train;
 import com.google.appengine.api.datastore.Key;
 
 public interface TrainTicketManagerService {
@@ -20,6 +21,10 @@ public interface TrainTicketManagerService {
 	 */
 	public void findTicket(Key key);
 		
+	public void createTrain(Train train);
+		
+	public void findTrain(Key key);	
+	public List<Train> findTrain(String trainNo, String insertDate);
 	/**
 	 * remove ticket from db
 	 * @param object
