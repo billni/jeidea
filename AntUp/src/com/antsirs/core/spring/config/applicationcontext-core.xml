@@ -22,6 +22,8 @@
 	</bean>
 
 	<!-- Transactions involved in the timing -->
+	<context:annotation-config/>   
+	
 	<aop:config proxy-target-class="true">
 		<aop:pointcut id="serviceMethod" expression="execution(* com.antsirs.*.service.*Service.*(..))"/> 
         <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
@@ -33,6 +35,7 @@
 	      <tx:method name="get*" read-only="true"/>
 	      <tx:method name="query*" read-only="true"/>
 	      <tx:method name="list*" read-only="true"/>
+	      <tx:method name="find*" read-only="true"/>
 	      <tx:method name="*" propagation="REQUIRED" rollback-for="Throwable"/>
 	   </tx:attributes>   
    </tx:advice>

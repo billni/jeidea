@@ -121,27 +121,28 @@ public class Crawl12306Task implements Runnable {
 					sf = sf.replace("</font>", "");
 
 					String s[] = sf.split(",");
-					if (s != null && s.length > 0)
+					if (s != null && s.length > 0) {
 						trainTicketInfo = new TrainTicketInfo();
-					trainTicketInfo.setTrainNo(s[0]);
-					trainTicketInfo.setFromStation(s[1]);
-					trainTicketInfo.setDepartureTime(s[2]);
-					trainTicketInfo.setToStation(s[3]);
-					trainTicketInfo.setArrvialTime(s[4]);
-					trainTicketInfo.setDuring(s[5]);
-					trainTicketInfo.setBusinessClass(s[6]);
-					trainTicketInfo.setSpecialClass(s[7]);
-					trainTicketInfo.setFirstClass(s[8]);
-					trainTicketInfo.setSecondClass(s[9]);
-					trainTicketInfo.setSeniorSoftSleepClass(s[10]);
-					trainTicketInfo.setSoftSleepClass(s[11]);
-					trainTicketInfo.setHardSleepClass(s[12]);
-					trainTicketInfo.setSoftSeatClass(s[13]);
-					trainTicketInfo.setHardSeatClass(s[14]);
-					trainTicketInfo.setStanding(s[15]);
-					trainTicketInfo.setOthers(s[16]);
-					trainTicketInfo.setInsertTime(new Date());
-					list.add(trainTicketInfo);
+						trainTicketInfo.setTrainNo(s[0]);
+						trainTicketInfo.setFromStation(s[1]);
+						trainTicketInfo.setDepartureTime(s[2]);
+						trainTicketInfo.setToStation(s[3]);
+						trainTicketInfo.setArrvialTime(s[4]);
+						trainTicketInfo.setDuring(s[5]);
+						trainTicketInfo.setBusinessClass(s[6]);
+						trainTicketInfo.setSpecialClass(s[7]);
+						trainTicketInfo.setFirstClass(s[8]);
+						trainTicketInfo.setSecondClass(s[9]);
+						trainTicketInfo.setSeniorSoftSleepClass(s[10]);
+						trainTicketInfo.setSoftSleepClass(s[11]);
+						trainTicketInfo.setHardSleepClass(s[12]);
+						trainTicketInfo.setSoftSeatClass(s[13]);
+						trainTicketInfo.setHardSeatClass(s[14]);
+						trainTicketInfo.setStanding(s[15]);
+						trainTicketInfo.setOthers(s[16]);
+						trainTicketInfo.setInsertTime(new Date());
+						list.add(trainTicketInfo);
+					}
 				}
 			}
 		}

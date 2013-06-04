@@ -2,9 +2,7 @@ package com.antsirs.train12306.service.impl;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Query;
-
 import com.antsirs.core.spring.daosupport.DaoTemplate;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
@@ -40,13 +38,13 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @param insertDate
 	 * @return
 	 */
-	public List<Train> findTrain(String trainNo, String insertDate){
-		String jpql = " select t from Train t where 1=1";				
-		jpql += " and trainNo=:trainNo";
-		jpql += " and insertDate=:insertDate";	
-		Query query = entityManagerFactory.createEntityManager().createQuery(jpql);
+	public List<Train> findTrain(String trainNo, String insertTime){
+		String jpql = " SELECT train FROM Train train WHERE 1=1 ";				
+		jpql += " AND train.trainNo = :trainNo";
+		jpql += " AND train.insertTime = :insertTime";	
+		Query query = getDaoTemplate().getEntityManagerFactory().createEntityManager().createQuery(jpql);
 		query.setParameter("trainNo", trainNo);
-		query.setParameter("insertDate", insertDate);
+		query.setParameter("insertTime", new Date());
 		return query.getResultList();
 	}	
 	
@@ -58,8 +56,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * list tickets
 	 */
 	public List listTicket() {				
-		return getDaoTemplate().getEntityManagerFactory().createEntityManager().
-				createNamedQuery("listTicket").getResultList();				
+		return getDaoTemplate().getEntityManager().createNamedQuery("listTicket").getResultList();				
 	}
 	
 	public List<Ticket> listTicketWithPagination(Pagination pagination){		

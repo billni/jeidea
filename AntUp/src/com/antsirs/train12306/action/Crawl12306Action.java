@@ -23,14 +23,14 @@ import com.antsirs.train12306.service.TrainTicketManagerService;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	
-	private Log logger = LogFactory.getLog(Crawl12306Action.class);
-	private static final String PROXY_HOST = "10.18.8.60";
-	private static final int PROXY_PORT = 8008;
-	private static final String PROXY_USERNAME = "niyong";
-	private static final String PROXY_PASSWORD = "Ny111111";
-	private static final String PROXY_WORKSTATION = "isa06";
-	private static final String PROXY_DOMAIN = "ulic";
-	private static final String URL = "http://dynamic.12306.cn/otsquery/query/queryRemanentTicketAction.do";
+	public Log logger = LogFactory.getLog(Crawl12306Action.class);
+	public static final String PROXY_HOST = "10.18.8.60";
+	public static final int PROXY_PORT = 8008;
+	public static final String PROXY_USERNAME = "niyong";
+	public static final String PROXY_PASSWORD = "Ny111111";
+	public static final String PROXY_WORKSTATION = "isa06";
+	public static final String PROXY_DOMAIN = "ulic";
+	public static final String URL = "http://dynamic.12306.cn/otsquery/query/queryRemanentTicketAction.do";
 
 	@Autowired
 	public TrainTicketManagerService trainTicketManagerService ;
