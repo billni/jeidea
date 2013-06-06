@@ -18,8 +18,8 @@ import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.antsirs.train12306.service.TrainTicketManagerService;
+import com.antsirs.train12306.task.Crawl12306Task;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	
@@ -104,16 +104,14 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		Thread worker;
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
-			logger.info(" Crawling - " + date);
-			logger.info("trainTicketManagerService==null? - " + trainTicketManagerService);
-			task.setTrainTicketManagerService(trainTicketManagerService);			
+			logger.info("Crawling - " + date);							
 			task.setUrl(initUrl(URL, date));
 			task.setHttpClient(getHttpClient(new DefaultHttpClient()));			
 			worker = new Thread(task);
 			worker.setName("Crawl-" + date);
-			logger.info("worker[" + worker.getName() + "] start");
+			logger.info("worker[" + worker.getName() + "] - start");
 			worker.start();
-			logger.info("worker[" + worker.getName() + "] finish");
+			logger.info("worker[" + worker.getName() + "] - finish");
 			while (true) {
 				if (!worker.isAlive()) {
 					logger.info("Thread.activeCount: " + Thread.activeCount());

@@ -1,4 +1,4 @@
-package com.antsirs.train12306.action;
+package com.antsirs.train12306.task;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -28,7 +28,16 @@ public class Crawl12306Task implements Runnable {
 
 	private String url;
 	private DefaultHttpClient httpClient;
-	private TrainTicketManagerService trainTicketManagerService;
+		
+	public TrainTicketManagerService trainTicketManagerService;
+	
+	public TrainTicketManagerService getTrainTicketManagerService() {
+		return trainTicketManagerService;
+	}
+
+	public void setTrainTicketManagerService(TrainTicketManagerService trainTicketManagerService) {
+		this.trainTicketManagerService = trainTicketManagerService;
+	}
 
 	public DefaultHttpClient getHttpClient() {
 		return httpClient;
@@ -44,15 +53,6 @@ public class Crawl12306Task implements Runnable {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public TrainTicketManagerService getTrainTicketManagerService() {
-		return trainTicketManagerService;
-	}
-
-	public void setTrainTicketManagerService(
-			TrainTicketManagerService trainTicketManagerService) {
-		this.trainTicketManagerService = trainTicketManagerService;
 	}
 
 	public Crawl12306Task() {
@@ -213,7 +213,7 @@ public class Crawl12306Task implements Runnable {
 	 */
 	public Train createTrainInfo(TrainTicketInfo trainTicketInfo) {
 		Train train = null;
-		List list = getTrainTicketManagerService().findTrain(trainTicketInfo.getTrainNo(), "2013-6-2");
+		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), "2013-6-6");
 		if (list == null) {
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
@@ -223,7 +223,7 @@ public class Crawl12306Task implements Runnable {
 			train.setArrvialTime(trainTicketInfo.getArrvialTime());
 			train.setDuring(trainTicketInfo.getDuring());
 			train.setInsertTime(new Date());
-			getTrainTicketManagerService().createTrain(train);
+			trainTicketManagerService.createTrain(train);
 		} else {
 			train = (Train) list.get(0);
 		}
@@ -243,7 +243,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("BusinessClass");
 			ticket.setCount(trainTicketInfo.getBusinessClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSpecialClass())) {
 			ticket = new Ticket();
@@ -251,7 +251,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("SpecialClass");
 			ticket.setCount(trainTicketInfo.getSpecialClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getFirstClass())) {
 			ticket = new Ticket();
@@ -259,7 +259,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("FirstClass");
 			ticket.setCount(trainTicketInfo.getFirstClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSecondClass())) {
 			ticket = new Ticket();
@@ -267,7 +267,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("SecondClass");
 			ticket.setCount(trainTicketInfo.getSecondClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSeniorSoftSleepClass())) {
 			ticket = new Ticket();
@@ -275,7 +275,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("SeniorSoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSeniorSoftSleepClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSleepClass())) {
 			ticket = new Ticket();
@@ -283,7 +283,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("SoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSoftSleepClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSleepClass())) {
 			ticket = new Ticket();
@@ -291,7 +291,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("HardSleepClass");
 			ticket.setCount(trainTicketInfo.getHardSleepClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSeatClass())) {
 			ticket = new Ticket();
@@ -299,7 +299,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("SoftSeatClass");
 			ticket.setCount(trainTicketInfo.getSoftSeatClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSeatClass())) {
 			ticket = new Ticket();
@@ -307,7 +307,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("HardSeatClass");
 			ticket.setCount(trainTicketInfo.getHardSeatClass());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getStanding())) {
 			ticket = new Ticket();
@@ -315,7 +315,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("Standing");
 			ticket.setCount(trainTicketInfo.getStanding());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getOthers())) {
 			ticket = new Ticket();
@@ -323,7 +323,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setInsertTime(new Date());
 			ticket.setGrade("Others");
 			ticket.setCount(trainTicketInfo.getOthers());
-			getTrainTicketManagerService().createTicket(ticket);
+			trainTicketManagerService.createTicket(ticket);
 		}
 	}
 

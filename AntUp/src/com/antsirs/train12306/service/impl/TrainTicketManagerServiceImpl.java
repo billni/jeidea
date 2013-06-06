@@ -39,8 +39,8 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @return
 	 */
 	public List<Train> findTrain(String trainNo, String insertTime){
-		String jpql = " SELECT train FROM Train train WHERE 1=1 ";				
-		jpql += " AND train.trainNo = :trainNo";
+		String jpql = " SELECT train FROM Train train ";				
+		jpql += " WHERE train.trainNo = :trainNo";
 		jpql += " AND train.insertTime = :insertTime";	
 		Query query = getDaoTemplate().getEntityManagerFactory().createEntityManager().createQuery(jpql);
 		query.setParameter("trainNo", trainNo);

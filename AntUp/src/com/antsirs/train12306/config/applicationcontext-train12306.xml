@@ -14,5 +14,9 @@
 	<bean id="trainTicketManagerService" class="com.antsirs.train12306.service.impl.TrainTicketManagerServiceImpl">  
 		<property name="entityManagerFactory" ref="entityManagerFactory" />    
 	</bean>
+	
+	<bean id="crawl12306Task" class="com.antsirs.train12306.task.Crawl12306Task">  
+		<property name="trainTicketManagerService" ref="trainTicketManagerService" />    
+	</bean>
    
 </beans>
