@@ -18,8 +18,11 @@ import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.backportconcurrent.ThreadPoolTaskExecutor;
+
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
+import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	
@@ -34,6 +37,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 
 	@Autowired
 	public TrainTicketManagerService trainTicketManagerService ;
+	
+	@Autowired
+	public Crawl12306Task task;
 	
 	/**
 	 * 
@@ -99,7 +105,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	/**
      * 
      */
-	public String execute() throws Exception {
+	public String execute() throws Exception {		
 		Crawl12306Task task = null;
 		Thread worker;
 		for (String date : getFuture20Days()) {
@@ -107,6 +113,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			logger.info("Crawling - " + date);							
 			task.setUrl(initUrl(URL, date));
 			task.setHttpClient(getHttpClient(new DefaultHttpClient()));			
+			task.setTrainTicketManagerService(trainTicketManagerService);
+			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			worker = new Thread(task);
 			worker.setName("Crawl-" + date);
 			logger.info("worker[" + worker.getName() + "] - start");
@@ -132,4 +140,6 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		tickets = trainTicketManagerService.listTicket();
 		return SUCCESS;
 	}
+	
+
 }

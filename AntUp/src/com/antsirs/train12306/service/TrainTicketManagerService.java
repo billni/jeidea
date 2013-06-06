@@ -20,11 +20,26 @@ public interface TrainTicketManagerService {
 	 * @param key
 	 */
 	public void findTicket(Key key);
-		
+	
+	/**
+	 * 
+	 * @param train
+	 */
 	public void createTrain(Train train);
-		
-	public void findTrain(Key key);	
-	public List<Train> findTrain(String trainNo, String insertDate);
+	
+	/**
+	 * 	
+	 * @param key
+	 */
+	public void findTrain(Key key);
+	
+	/**
+	 * 
+	 * @param trainNo
+	 * @param insertTime
+	 * @return
+	 */
+	public List<Train> findTrain(String trainNo, String insertTime);
 	/**
 	 * remove ticket from db
 	 * @param object
@@ -36,5 +51,10 @@ public interface TrainTicketManagerService {
 	 */
 	public List<Ticket> listTicket();
 	
+	/**
+	 * 
+	 * @param pagination
+	 * @return
+	 */
 	public List<Ticket> listTicketWithPagination(Pagination pagination);
 }

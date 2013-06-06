@@ -24,6 +24,7 @@ public class Train {
 	private String trainNo;
 	private String fromStation;
 	private String toStation;
+	private String departureDate;
 	private String departureTime;
 	private String arrvialTime;
 	private String during;
@@ -96,5 +97,15 @@ public class Train {
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
 	}
+
+	public String getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
+	}
+	
+	
 
 }

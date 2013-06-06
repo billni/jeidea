@@ -22,13 +22,15 @@ import com.antsirs.train12306.model.TrainTicketInfo;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
 
 public class Crawl12306Task implements Runnable {
 	private Log logger = LogFactory.getLog(Crawl12306Task.class);
 
 	private String url;
-	private DefaultHttpClient httpClient;
-		
+	private DefaultHttpClient httpClient;		
+
 	public TrainTicketManagerService trainTicketManagerService;
 	
 	public TrainTicketManagerService getTrainTicketManagerService() {
@@ -211,10 +213,11 @@ public class Crawl12306Task implements Runnable {
 	/**
 	 * @param trainTicketInfo
 	 */
-	public Train createTrainInfo(TrainTicketInfo trainTicketInfo) {
-		Train train = null;
-		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), "2013-6-6");
-		if (list == null) {
+	public Train createTrainInfo(TrainTicketInfo trainTicketInfo) {				
+		ApiProxy.setEnvironmentForCurrentThread(environment);
+		Train train = null;		
+		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), "2013-06-07");
+		if (list == null || list.size() == 0) {
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
 			train.setFromStation(trainTicketInfo.getFromStation());
@@ -224,10 +227,21 @@ public class Crawl12306Task implements Runnable {
 			train.setDuring(trainTicketInfo.getDuring());
 			train.setInsertTime(new Date());
 			trainTicketManagerService.createTrain(train);
+			logger.info("================" + train);
 		} else {
 			train = (Train) list.get(0);
 		}
 		return train;
+	}
+	
+	public Environment environment;
+		
+	public Environment getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
 	}
 
 	/**
@@ -351,9 +365,11 @@ public class Crawl12306Task implements Runnable {
 	/**
 	     * 
 	     */
-	public void run() {
+	public void run() {		
+		ApiProxy.setEnvironmentForCurrentThread(environment);
 		try {
-			doCrawl();
+			trainTicketManagerService = getTrainTicketManagerService();
+			doCrawl();			
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("出现异常" + e.getMessage());
