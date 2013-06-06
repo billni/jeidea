@@ -11,23 +11,9 @@ import com.antsirs.train12306.action.Crawl12306Action;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
 public class TicketTest extends AbstractTest{
 	private Log logger = LogFactory.getLog(TicketTest.class);
-	
-	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());   
-    
-	@Before  
-	public void setUp() {
-	    helper.setUp();   
-	}   
-	      
-	@After 
-	public void tearDown() {   
-	     helper.tearDown();   
-	} 
 	
 	@Autowired
 	public TrainTicketManagerService trainTicketManagerService ;

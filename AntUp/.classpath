@@ -59,10 +59,7 @@
 	<classpathentry kind="lib" path="D:/tools/GoogleAppEngine/appengine-java-sdk-1.7.5/lib/opt/tools/datanucleus/v2/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="D:/tools/GoogleAppEngine/appengine-java-sdk-1.7.5/lib/opt/tools/datanucleus/v2/jdo-api-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-testing.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.7.5.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-labs.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-stubs.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/json-lib-2.1-jdk15.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr107cache-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.12.jar"/>
