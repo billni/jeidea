@@ -22,6 +22,7 @@ public class TrainTicketInfo {
 	private String standing;
 	private String others;
 	private Date insertTime;
+	private String departureDate;
 
 	public TrainTicketInfo() {
 	}
@@ -169,6 +170,17 @@ public class TrainTicketInfo {
 
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
+	}
+
+
+
+	public String getDepartureDate() {
+		return departureDate;
+	}
+
+
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
 	}
 
 }

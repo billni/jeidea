@@ -2,6 +2,8 @@ package com.antsirs.train12306.task;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
@@ -52,14 +55,54 @@ public class Crawl12306Task implements Runnable {
 	public String getUrl() {
 		return url;
 	}
-
+	
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String departureDate;
+	
+	public String getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
 	}
 
 	public Crawl12306Task() {
 	}
 
+	/**
+	 * Generate Url
+	 * 
+	 * @return
+	 */
+	public String initUrl(String url, String date) {
+		URIBuilder builder;
+		URI ret = null;
+		try {
+			builder = new URIBuilder(url);
+			ret = builder
+					.addParameter("method", "queryLeftTicket")
+					.addParameter("orderRequest.train_date", date)
+					.addParameter("orderRequest.from_station_telecode", "BJP")
+					.addParameter("orderRequest.to_station_telecode", "LZZ")
+					.addParameter("orderRequest.train_no", "")
+					.addParameter("trainPassType", "QB")
+					.addParameter("trainClass", "QB#D#Z#T#K#QT#")
+					.addParameter("includeStudent", "00")
+					.addParameter("seatTypeAndNum", "")
+					.addParameter("orderRequest.start_time_str", "00:00--24:00")
+					.build();
+			logger.info("url: " + ret.toASCIIString());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return ret.toASCIIString();
+	}		
+	
+	
 	/**
 	 * 根据URL获得html信息
 	 * 
@@ -216,7 +259,7 @@ public class Crawl12306Task implements Runnable {
 	public Train createTrainInfo(TrainTicketInfo trainTicketInfo) {				
 		ApiProxy.setEnvironmentForCurrentThread(environment);
 		Train train = null;		
-		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), "2013-06-07");
+		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), trainTicketInfo.getDepartureDate());
 		if (list == null || list.size() == 0) {
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
@@ -225,7 +268,8 @@ public class Crawl12306Task implements Runnable {
 			train.setDepartureTime(trainTicketInfo.getDepartureTime());
 			train.setArrvialTime(trainTicketInfo.getArrvialTime());
 			train.setDuring(trainTicketInfo.getDuring());
-			train.setInsertTime(new Date());
+			train.setDepartureDate(trainTicketInfo.getDepartureDate());
+			train.setInsertTime(new Date());			
 			trainTicketManagerService.createTrain(train);
 			logger.info("================" + train);
 		} else {
@@ -355,6 +399,7 @@ public class Crawl12306Task implements Runnable {
 		if (list != null) {
 			for (TrainTicketInfo trainTicketInfo : list) {
 				if (checkTicketResource(trainTicketInfo)) {
+					trainTicketInfo.setDepartureDate(getDepartureDate());
 					train = createTrainInfo(trainTicketInfo);
 					createTicketInfo(train, trainTicketInfo);
 				}
@@ -367,12 +412,24 @@ public class Crawl12306Task implements Runnable {
 	     */
 	public void run() {		
 		ApiProxy.setEnvironmentForCurrentThread(environment);
-		try {
-			trainTicketManagerService = getTrainTicketManagerService();
+		trainTicketManagerService = getTrainTicketManagerService();
+		try {			
 			doCrawl();			
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("出现异常" + e.getMessage());
 		}
+	}
+	
+	/**
+	 * 
+	 * @param url
+	 * @param date
+	 * @param client
+	 */
+	public void initEnvironment(String url , String date, DefaultHttpClient client){		
+		setUrl(initUrl(url, date));
+		setDepartureDate(date);
+		setHttpClient(client);
 	}
 }

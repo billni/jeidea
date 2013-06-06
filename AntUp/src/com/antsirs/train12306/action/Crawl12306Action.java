@@ -57,34 +57,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		return httpClient;
 	}
 
-	/**
-	 * Generate Url
-	 * 
-	 * @return
-	 */
-	public String initUrl(String url, String date) {
-		URIBuilder builder;
-		URI ret = null;
-		try {
-			builder = new URIBuilder(URL);
-			ret = builder
-					.addParameter("method", "queryLeftTicket")
-					.addParameter("orderRequest.train_date", date)
-					.addParameter("orderRequest.from_station_telecode", "BJP")
-					.addParameter("orderRequest.to_station_telecode", "LZZ")
-					.addParameter("orderRequest.train_no", "")
-					.addParameter("trainPassType", "QB")
-					.addParameter("trainClass", "QB#D#Z#T#K#QT#")
-					.addParameter("includeStudent", "00")
-					.addParameter("seatTypeAndNum", "")
-					.addParameter("orderRequest.start_time_str", "00:00--24:00")
-					.build();
-			logger.info("url: " + ret.toASCIIString());
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		return ret.toASCIIString();
-	}
+
 
 	/**
 	 * 获得未来20天的日期
@@ -110,9 +83,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		Thread worker;
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
-			logger.info("Crawling - " + date);							
-			task.setUrl(initUrl(URL, date));
-			task.setHttpClient(getHttpClient(new DefaultHttpClient()));			
+			logger.info("Crawling - " + date);	
+			task.initEnvironment(URL, date, getHttpClient(new DefaultHttpClient()));			
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			worker = new Thread(task);
