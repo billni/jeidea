@@ -16,12 +16,15 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "listTicket", query = "SELECT m FROM Ticket m"),
-		@NamedQuery(name = "findTicketById", query = "SELECT m FROM Ticket m WHERE m.ticketId = :ticketId") })
+		@NamedQuery(name = "findTicketById", query = "SELECT m FROM Ticket m WHERE m.ticketId = :ticketId"),
+		@NamedQuery(name = "findTicketByTrainNo", query = "SELECT m FROM Ticket m WHERE m.trainNo = :trainNo order by m.insertTime")})
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketId;	
 	private String trainId;
+	private String trainNo;
+	private String departureDate;
 	private String grade;
 	private String count;
 	private Date insertTime;
@@ -67,6 +70,22 @@ public class Ticket {
 
 	public void setCount(String count) {
 		this.count = count;
+	}
+
+	public String getTrainNo() {
+		return trainNo;
+	}
+
+	public void setTrainNo(String trainNo) {
+		this.trainNo = trainNo;
+	}
+
+	public String getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
 	}
 
 	

@@ -7,6 +7,7 @@ public class TrainTicketInfo {
 	private String trainNo;
 	private String fromStation;
 	private String toStation;
+	private String departureDate;
 	private String departureTime;
 	private String arrvialTime;
 	private String during;
@@ -22,8 +23,7 @@ public class TrainTicketInfo {
 	private String standing;
 	private String others;
 	private Date insertTime;
-	private String departureDate;
-
+		
 	public TrainTicketInfo() {
 	}
 

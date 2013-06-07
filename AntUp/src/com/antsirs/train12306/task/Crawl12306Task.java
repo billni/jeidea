@@ -298,91 +298,93 @@ public class Crawl12306Task implements Runnable {
 		if (NumberUtils.isNumber(trainTicketInfo.getBusinessClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
 			ticket.setGrade("BusinessClass");
-			ticket.setCount(trainTicketInfo.getBusinessClass());
-			trainTicketManagerService.createTicket(ticket);
+			ticket.setCount(trainTicketInfo.getBusinessClass());			
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSpecialClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SpecialClass");
 			ticket.setCount(trainTicketInfo.getSpecialClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getFirstClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("FirstClass");
 			ticket.setCount(trainTicketInfo.getFirstClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSecondClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SecondClass");
 			ticket.setCount(trainTicketInfo.getSecondClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSeniorSoftSleepClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SeniorSoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSeniorSoftSleepClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSleepClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSoftSleepClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSleepClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("HardSleepClass");
 			ticket.setCount(trainTicketInfo.getHardSleepClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSeatClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SoftSeatClass");
 			ticket.setCount(trainTicketInfo.getSoftSeatClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSeatClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("HardSeatClass");
 			ticket.setCount(trainTicketInfo.getHardSeatClass());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getStanding())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket = new Ticket();	
 			ticket.setGrade("Standing");
 			ticket.setCount(trainTicketInfo.getStanding());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getOthers())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
-			ticket.setInsertTime(new Date());
+			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("Others");
 			ticket.setCount(trainTicketInfo.getOthers());
-			trainTicketManagerService.createTicket(ticket);
+			saveTicket(ticket, train, trainTicketInfo);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param ticket
+	 * @param train
+	 * @param trainTicketInfo
+	 */
+	public void saveTicket(Ticket ticket, Train train, TrainTicketInfo trainTicketInfo){		
+		ticket.setTrainId(train.getTrainId().toString());
+		ticket.setInsertTime(new Date());				
+		ticket.setTrainNo(trainTicketInfo.getTrainNo());
+		ticket.setDepartureDate(trainTicketInfo.getDepartureDate());
+		trainTicketManagerService.createTicket(ticket);
 	}
 
 	/**

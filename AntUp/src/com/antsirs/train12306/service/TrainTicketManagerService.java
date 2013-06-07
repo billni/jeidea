@@ -5,6 +5,7 @@ import java.util.List;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
+import com.antsirs.train12306.model.TrainTicketInfo;
 import com.google.appengine.api.datastore.Key;
 
 public interface TrainTicketManagerService {
@@ -57,4 +58,10 @@ public interface TrainTicketManagerService {
 	 * @return
 	 */
 	public List<Ticket> listTicketWithPagination(Pagination pagination);
+	
+	/**
+	 * list tickets
+	 */
+	public List listTicket(String trainNo, String grade);
+	
 }

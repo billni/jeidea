@@ -1,5 +1,8 @@
 package com.antsirs.train12306.job;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -7,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.antsirs.core.common.ConstantValue;
 import com.antsirs.train12306.action.Crawl12306Action;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
@@ -45,7 +50,7 @@ public class TicketTest extends AbstractTest{
 		task.initEnvironment(job.URL, "2013-06-07", job.getHttpClient(new DefaultHttpClient()));			
 		task.setTrainTicketManagerService(trainTicketManagerService);			
 		worker = new Thread(task);
-		worker.setName("Crawl-2013-6-6");
+		worker.setName("Crawl-2013-6-7");
 		logger.info("worker[" + worker.getName() + "] start");
 		worker.start();
 		logger.info("worker[" + worker.getName() + "] finish");
@@ -62,5 +67,9 @@ public class TicketTest extends AbstractTest{
 		}
 	}	
 	
-	
+
+	@Test
+	public void testListTrainTicketInfo(){
+		trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
+	}
 }

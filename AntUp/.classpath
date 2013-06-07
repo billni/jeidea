@@ -56,8 +56,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-commons-3.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-tree-3.1.jar"/>
-	<classpathentry kind="lib" path="D:/tools/GoogleAppEngine/appengine-java-sdk-1.7.5/lib/opt/tools/datanucleus/v2/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/tools/GoogleAppEngine/appengine-java-sdk-1.7.5/lib/opt/tools/datanucleus/v2/jdo-api-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.7.5.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/json-lib-2.1-jdk15.jar"/>

@@ -7,6 +7,7 @@ import com.antsirs.core.spring.daosupport.DaoTemplate;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
+import com.antsirs.train12306.model.TrainTicketInfo;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.api.datastore.Key;
 
@@ -64,4 +65,20 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		pagination.setParamValues(null);
 		return findWithPagination(Ticket.class, pagination);
 	}
+	
+	/**
+	 * list tickets
+	 */
+	public List listTicket(String trainNo, String grade) {				
+		String jpql = " SELECT ticket FROM Ticket ticket ";				
+		jpql += " WHERE ticket.trainNo = :trainNo";
+		jpql += " AND ticket.grade = :grade";
+		jpql += " ORDER BY trainNo, grade";	
+		Query query = getDaoTemplate().getEntityManagerFactory().createEntityManager().createQuery(jpql);
+		query.setParameter("trainNo", trainNo);
+		query.setParameter("grade", grade);
+		return query.getResultList();				
+	}
+	
 }
+
