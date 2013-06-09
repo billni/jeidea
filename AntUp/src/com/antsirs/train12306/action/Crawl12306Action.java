@@ -78,37 +78,21 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      * 
      */
 	public String execute() throws Exception {		
-		Crawl12306Task task = null;
-//		Thread worker;		
+		Crawl12306Task task = null;	
 		ExecutorService  executor = Executors.newCachedThreadPool(ThreadManager.currentRequestThreadFactory());
-		logger.info("Before Task executed, the count of active thread is: " + Thread.activeCount());
-		Thread.sleep(5000);
+		logger.info("Before Task executed, the count of active thread is: " + Thread.activeCount());		
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);	
 			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));			
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
-			executor.execute(task);			
-//			worker = new Thread(task);
-//			worker.setName("Crawl-" + date);
-//			logger.info("worker[" + worker.getName() + "] - start");
-//			worker.start();
-//			logger.info("worker[" + worker.getName() + "] - finish");
-//			while (true) {
-//				if (!worker.isAlive()) {
-//					logger.info("Thread.activeCount: " + Thread.activeCount());
-//					break;
-//				}
-//			}			
-//			Thread.sleep(2000);
+			executor.execute(task);	
 		}
 		executor.shutdown();
-		while (!executor.isTerminated()) {
-			logger.info("Thread active count is: " + Thread.activeCount());
+		while (!executor.isTerminated()) {			
 		}
-		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());
-		logger.info("All thread finished.");		
+		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());				
 		return NONE;
 	}
 	
