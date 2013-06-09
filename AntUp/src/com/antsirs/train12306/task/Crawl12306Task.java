@@ -130,7 +130,7 @@ public class Crawl12306Task implements Runnable {
 				logger.info("Http Status Code:" + resStatu);
 			}
 		} catch (Exception e) {
-			logger.info("Show exception when access this url.");
+			logger.severe(e.getMessage());			
 			e.printStackTrace();
 		} finally {
 			logger.info("HttpClient连接关闭.");
@@ -392,19 +392,21 @@ public class Crawl12306Task implements Runnable {
 	public void doCrawl() throws JSONException {
 		String info = getTrainTicketInfoByUrl(getUrl());
 		logger.info("getTrainTicketInfoByUrl: " + info);
-		JSONObject jsonObject = new JSONObject(info);
-		String data = jsonObject.get("datas").toString();
-		List<TrainTicketInfo> list = anaylseTrainTicketInfo(data);
-		Train train = null;
-		if (list != null) {
-			for (TrainTicketInfo trainTicketInfo : list) {
-				if (checkTicketResource(trainTicketInfo)) {
-					trainTicketInfo.setDepartureDate(getDepartureDate());
-					train = createTrainInfo(trainTicketInfo);
-					createTicketInfo(train, trainTicketInfo);
-				}
-			}			
-		}		
+		if (!info.equals("")) {
+			JSONObject jsonObject = new JSONObject(info);
+			String data = jsonObject.get("datas").toString();
+			List<TrainTicketInfo> list = anaylseTrainTicketInfo(data);
+			Train train = null;
+			if (list != null) {
+				for (TrainTicketInfo trainTicketInfo : list) {
+					if (checkTicketResource(trainTicketInfo)) {
+						trainTicketInfo.setDepartureDate(getDepartureDate());
+						train = createTrainInfo(trainTicketInfo);
+						createTicketInfo(train, trainTicketInfo);
+					}
+				}			
+			}
+		}
 	}
 
 	/**

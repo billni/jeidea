@@ -63,5 +63,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-endpoints.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-jsr107cache-1.7.5.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jdo2-api-2.3-eb.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
