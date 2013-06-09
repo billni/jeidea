@@ -9,8 +9,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -33,7 +32,7 @@ import org.jsoup.select.Elements;
 
 
 public class CrawlHongKangInsuranceTransaction  {
-	private Log logger = LogFactory.getLog(CrawlHongKangInsuranceTransaction.class);
+	private static final Logger logger = Logger.getLogger(CrawlHongKangInsuranceTransaction.class.getName());
 	private static final String PROXY_HOST= "10.18.8.108";
 	private static final int PROXY_PORT = 8008;
 	private static final String PROXY_USERNAME= "niyong";

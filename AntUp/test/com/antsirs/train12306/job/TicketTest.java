@@ -4,9 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +20,7 @@ import com.google.appengine.api.ThreadManager;
 import com.google.apphosting.api.ApiProxy;
 
 public class TicketTest extends AbstractTest{
-	private Log logger = LogFactory.getLog(TicketTest.class);
+	private static final Logger logger = Logger.getLogger(CrawlHongKangInsuranceTransaction.class.getName());
 	
 	@Autowired
 	public TrainTicketManagerService trainTicketManagerService ;
@@ -36,9 +34,9 @@ public class TicketTest extends AbstractTest{
 	public void testCrawlTrainTicket() throws Exception{
     	Crawl12306Action job = new Crawl12306Action();
     	
-    	logger.debug("Test start");
+    	logger.info("Test start");
     	job.execute();
-    	logger.debug("Test finish");
+    	logger.info("Test finish");
 	}	
 	
 	@Test

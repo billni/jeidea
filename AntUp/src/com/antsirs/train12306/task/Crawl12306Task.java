@@ -11,8 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -23,13 +21,14 @@ import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
 import com.antsirs.train12306.service.TrainTicketManagerService;
+import java.util.logging.Logger;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.apphosting.api.ApiProxy;
 import com.google.apphosting.api.ApiProxy.Environment;
 
 public class Crawl12306Task implements Runnable {
-	private Log logger = LogFactory.getLog(Crawl12306Task.class);
+	private static final Logger logger = Logger.getLogger(Crawl12306Task.class.getName());
 
 	private String url;
 	private DefaultHttpClient httpClient;		
@@ -418,7 +417,7 @@ public class Crawl12306Task implements Runnable {
 			doCrawl();			
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("出现异常" + e.getMessage());
+			logger.info("出现异常" + e.getMessage());
 		}
 	}
 	

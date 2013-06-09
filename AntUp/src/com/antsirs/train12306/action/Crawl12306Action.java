@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
@@ -25,7 +23,7 @@ import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	
-	public Log logger = LogFactory.getLog(Crawl12306Action.class);
+	private static final Logger logger = Logger.getLogger(Crawl12306Action.class.getName());
 	public static final String PROXY_HOST = "10.18.8.60";
 	public static final int PROXY_PORT = 8008;
 	public static final String PROXY_USERNAME = "niyong";
