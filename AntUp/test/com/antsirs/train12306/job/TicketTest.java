@@ -47,7 +47,7 @@ public class TicketTest extends AbstractTest{
 		Thread worker;
 		task = new Crawl12306Task();	
 		task.setEnvironment(ApiProxy.getCurrentEnvironment());		
-		task.initEnvironment(job.URL, "2013-06-07", job.getHttpClient(new DefaultHttpClient()));			
+		task.initParameters(job.URL, "2013-06-07", job.getHttpClient(new DefaultHttpClient()));			
 		task.setTrainTicketManagerService(trainTicketManagerService);			
 		worker = new Thread(task);
 		worker.setName("Crawl-2013-6-7");

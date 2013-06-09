@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHost;
@@ -17,6 +20,7 @@ import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
+import com.google.appengine.api.ThreadManager;
 import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
@@ -75,26 +79,36 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	public String execute() throws Exception {		
 		Crawl12306Task task = null;
-		Thread worker;
+//		Thread worker;		
+		ExecutorService  executor = Executors.newCachedThreadPool(ThreadManager.currentRequestThreadFactory());
+		logger.info("Before Task executed, the count of active thread is: " + Thread.activeCount());
+		Thread.sleep(5000);
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);	
-			task.initEnvironment(URL, date, getHttpClient(new DefaultHttpClient()));			
+			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));			
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
-			worker = new Thread(task);
-			worker.setName("Crawl-" + date);
-			logger.info("worker[" + worker.getName() + "] - start");
-			worker.start();
-			logger.info("worker[" + worker.getName() + "] - finish");
-			while (true) {
-				if (!worker.isAlive()) {
-					logger.info("Thread.activeCount: " + Thread.activeCount());
-					break;
-				}
-			}			
-			Thread.sleep(2000);
+			executor.execute(task);			
+//			worker = new Thread(task);
+//			worker.setName("Crawl-" + date);
+//			logger.info("worker[" + worker.getName() + "] - start");
+//			worker.start();
+//			logger.info("worker[" + worker.getName() + "] - finish");
+//			while (true) {
+//				if (!worker.isAlive()) {
+//					logger.info("Thread.activeCount: " + Thread.activeCount());
+//					break;
+//				}
+//			}			
+//			Thread.sleep(2000);
 		}
+		executor.shutdown();
+		while (!executor.isTerminated()) {
+			logger.info("Thread active count is: " + Thread.activeCount());
+		}
+		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());
+		logger.info("All thread finished.");		
 		return NONE;
 	}
 	

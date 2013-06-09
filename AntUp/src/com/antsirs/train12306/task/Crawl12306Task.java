@@ -270,8 +270,7 @@ public class Crawl12306Task implements Runnable {
 			train.setDuring(trainTicketInfo.getDuring());
 			train.setDepartureDate(trainTicketInfo.getDepartureDate());
 			train.setInsertTime(new Date());			
-			trainTicketManagerService.createTrain(train);
-			logger.info("================" + train);
+			trainTicketManagerService.createTrain(train);			
 		} else {
 			train = (Train) list.get(0);
 		}
@@ -429,7 +428,7 @@ public class Crawl12306Task implements Runnable {
 	 * @param date
 	 * @param client
 	 */
-	public void initEnvironment(String url , String date, DefaultHttpClient client){		
+	public void initParameters(String url , String date, DefaultHttpClient client){		
 		setUrl(initUrl(url, date));
 		setDepartureDate(date);
 		setHttpClient(client);
