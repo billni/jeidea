@@ -84,7 +84,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);	
-			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));			
+//			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));
+			task.initParameters(URL, date, new DefaultHttpClient());		
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			executor.execute(task);	

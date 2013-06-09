@@ -88,4 +88,7 @@
 //	public void tearDown() {   
 //	     helper.tearDown();   
 //	}  
+
+4. change Crawl12306Task from -  task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));
+                       to  - task.initParameters(URL, date, new DefaultHttpClient());
 ----------------------------------------------------------------------
