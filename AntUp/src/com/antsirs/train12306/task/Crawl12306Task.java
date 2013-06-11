@@ -159,16 +159,21 @@ public class Crawl12306Task implements Runnable {
 	 */
 	public String crawlTrainTicketInfo(URL url, Proxy proxy){
 		StringWriter sw = new StringWriter();	
+		InputStreamReader insr = null;
+		long startTime = 0L;
         try {
-        	logger.info("url: " + url.toString());
-			InputStreamReader insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+        	startTime = System.currentTimeMillis();
+        	logger.info("crawlTrainTicketInfo start. " + startTime);
+        	logger.info("crawl url: " + url.toString());
+//       		insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+       		insr = new InputStreamReader(getUrl().openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
 			IOUtils.copy(insr, sw);
 			insr.close();
-        } catch (Exception e) {         
+        } catch (Exception e) {        	 
 			logger.severe(e.getMessage());			
 			e.printStackTrace();
-		}
-        logger.info("crawlTrainTicketInfo complete");
+		}        
+        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
 		return sw.toString();
 	}
 
@@ -425,7 +430,7 @@ public class Crawl12306Task implements Runnable {
 	 */
 	public void doCrawl() throws JSONException {
 		String info = crawlTrainTicketInfo(getUrl(), getProxy());
-		logger.info("getTrainTicketInfoByUrl: " + info);
+		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
 			String data = jsonObject.get("datas").toString();

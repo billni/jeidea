@@ -79,10 +79,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * 
 	 * @return
 	 */
-	public List<String> getFuture20Days() {
+	public List<String> getFutureDays() {
 		List<String> list = new ArrayList<String>();		
 		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
-		for (int i = 0; i < 20; i++) {			
+		for (int i = 0; i < 10; i++) {			
 			calendar.setTime(new Date());
 			calendar.add(Calendar.DATE, i);// 把日期往后增加一天.整数往后推,负数往前移动					
 			list.add(DateUtils.format(calendar.getTime(), "yyyy-MM-dd"));
@@ -97,11 +97,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		Crawl12306Task task = null;	
 		ExecutorService  executor = Executors.newCachedThreadPool(ThreadManager.currentRequestThreadFactory());
 		logger.info("Before Task executed, the count of active thread is: " + Thread.activeCount());		
-		for (String date : getFuture20Days()) {
+		for (String date : getFutureDays()) {
 			task = new Crawl12306Task();
-			logger.info("Crawling - " + date);	
-			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()), initProxy());
-//			task.initParameters(URL, date, new DefaultHttpClient(), initProxy());			
+			logger.info("Crawling - " + date);
+//			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()), null);
+//			task.initParameters(URL, date, null, initProxy());
+			task.initParameters(URL, date, null, null);			
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			executor.execute(task);	
