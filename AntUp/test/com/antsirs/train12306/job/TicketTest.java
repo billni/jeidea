@@ -1,22 +1,19 @@
 package com.antsirs.train12306.job;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 
 import com.antsirs.core.common.ConstantValue;
 import com.antsirs.train12306.action.Crawl12306Action;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
-import com.google.appengine.api.ThreadManager;
 import com.google.apphosting.api.ApiProxy;
 
 public class TicketTest extends AbstractTest{
@@ -40,9 +37,8 @@ public class TicketTest extends AbstractTest{
 	}	
 	
 	@Test
+	@Rollback(false)
 	public void testCrawl() {		
-		Ticket ticket = new Ticket();
-		ticket.setGrade("Cadfa");		
 		ExecutorService  executor = Executors.newFixedThreadPool(20);//(ThreadManager.currentRequestThreadFactory());
 		Crawl12306Action job = new Crawl12306Action();
 		Crawl12306Task task = null;			
@@ -51,13 +47,18 @@ public class TicketTest extends AbstractTest{
 			logger.info("Crawling - " + date);
 			task.setTrainTicketManagerService(trainTicketManagerService);			
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());				
-			task.initParameters(job.URL, date, job.getHttpClient(new DefaultHttpClient()));			
+			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), job.initProxy());			
 			executor.execute(task);	
 		}
 		executor.shutdown();
 		while (!executor.isTerminated()) {			
 		}
 		
+		List<Ticket> list = trainTicketManagerService.listTicket();
+		logger.info("list.count is " + list.size());
+		for (Ticket ticket : list) {
+			logger.info("ticket" + ticket.getTrainNo());
+		}
 //		worker = new Thread(task);
 //		worker.setName("Crawl-2013-6-7");
 //		logger.info("worker[" + worker.getName() + "] start");

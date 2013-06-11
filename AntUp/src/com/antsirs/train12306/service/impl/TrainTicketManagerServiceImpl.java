@@ -57,7 +57,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * list tickets
 	 */
 	public List listTicket() {				
-		return getDaoTemplate().getEntityManager().createNamedQuery("listTicket").getResultList();				
+		return getDaoTemplate().getEntityManagerFactory().createEntityManager().createNamedQuery("listTicket").getResultList();				
 	}
 	
 	public List<Ticket> listTicketWithPagination(Pagination pagination){		

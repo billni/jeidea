@@ -2,8 +2,11 @@ package com.antsirs.train12306.task;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +33,7 @@ import com.google.apphosting.api.ApiProxy.Environment;
 public class Crawl12306Task implements Runnable {
 	private static final Logger logger = Logger.getLogger(Crawl12306Task.class.getName());
 
-	private String url;
+	private URL url;
 	private DefaultHttpClient httpClient;		
 
 	public TrainTicketManagerService trainTicketManagerService;
@@ -51,11 +54,21 @@ public class Crawl12306Task implements Runnable {
 		this.httpClient = httpClient;
 	}
 
-	public String getUrl() {
+	public Proxy proxy;
+	
+	public Proxy getProxy() {
+		return proxy;
+	}
+
+	public void setProxy(Proxy proxy) {
+		this.proxy = proxy;
+	}
+
+	public URL getUrl() {
 		return url;
 	}
 	
-	public void setUrl(String url) {
+	public void setUrl(URL url) {
 		this.url = url;
 	}
 
@@ -77,11 +90,10 @@ public class Crawl12306Task implements Runnable {
 	 * 
 	 * @return
 	 */
-	public String initUrl(String url, String date) {
-		URIBuilder builder;
+	public URL initUrl(String url, String date) {		
 		URI ret = null;
 		try {
-			builder = new URIBuilder(url);
+			URIBuilder builder = new URIBuilder(url);
 			ret = builder
 					.addParameter("method", "queryLeftTicket")
 					.addParameter("orderRequest.train_date", date)
@@ -94,11 +106,12 @@ public class Crawl12306Task implements Runnable {
 					.addParameter("seatTypeAndNum", "")
 					.addParameter("orderRequest.start_time_str", "00:00--24:00")
 					.build();
-			logger.info("url: " + ret.toASCIIString());
-		} catch (URISyntaxException e) {
+			logger.info("url: " + ret.toURL().toString());
+			return ret.toURL();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ret.toASCIIString();
+		return null;
 	}		
 	
 	
@@ -138,6 +151,27 @@ public class Crawl12306Task implements Runnable {
 		}
 		return sw.toString();
 	}
+	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public String crawlTrainTicketInfo(URL url, Proxy proxy){
+		StringWriter sw = new StringWriter();	
+        try {
+        	logger.info("url: " + url.toString());
+			InputStreamReader insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+			IOUtils.copy(insr, sw);
+			insr.close();
+        } catch (Exception e) {         
+			logger.severe(e.getMessage());			
+			e.printStackTrace();
+		}
+        logger.info("crawlTrainTicketInfo complete");
+		return sw.toString();
+	}
+
 
 	/**
 	 * Generate Record
@@ -390,7 +424,7 @@ public class Crawl12306Task implements Runnable {
 	 * 
 	 */
 	public void doCrawl() throws JSONException {
-		String info = getTrainTicketInfoByUrl(getUrl());
+		String info = crawlTrainTicketInfo(getUrl(), getProxy());
 		logger.info("getTrainTicketInfoByUrl: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
@@ -429,9 +463,11 @@ public class Crawl12306Task implements Runnable {
 	 * @param date
 	 * @param client
 	 */
-	public void initParameters(String url , String date, DefaultHttpClient client){		
+	public void initParameters(String url , String date, DefaultHttpClient client, Proxy proxy){		
 		setUrl(initUrl(url, date));
 		setDepartureDate(date);
 		setHttpClient(client);
+		setProxy(proxy);
 	}
+	
 }

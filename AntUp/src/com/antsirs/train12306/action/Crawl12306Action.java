@@ -1,5 +1,9 @@
 package com.antsirs.train12306.action;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +58,21 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		return httpClient;
 	}
 
-
+	/**
+	 * support java.net.url
+	 * @return
+	 */
+	public Proxy initProxy() {  
+        InetSocketAddress socketAddress;
+        Proxy proxy = null;
+		try {
+			socketAddress = new InetSocketAddress(InetAddress.getByName(PROXY_WORKSTATION), PROXY_PORT);
+			proxy = new Proxy(Proxy.Type.HTTP, socketAddress);  
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}  
+		return proxy;        
+	}
 
 	/**
 	 * 获得未来20天的日期
@@ -82,8 +100,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		for (String date : getFuture20Days()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);	
-//			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));
-			task.initParameters(URL, date, new DefaultHttpClient());		
+			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()), initProxy());
+//			task.initParameters(URL, date, new DefaultHttpClient(), initProxy());			
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			executor.execute(task);	
