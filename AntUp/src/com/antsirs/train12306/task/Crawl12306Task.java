@@ -164,12 +164,10 @@ public class Crawl12306Task implements Runnable {
         try {
         	startTime = System.currentTimeMillis();
         	logger.info("crawlTrainTicketInfo start. " + startTime);
-        	logger.info("crawl url: " + url.toString());
-        	if (proxy!=null) {
-       		insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	} else {
+        	logger.info("crawl url: " + url.toString());        	
+//       	insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);        	
        		insr = new InputStreamReader(getUrl().openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	}
+        	
 			IOUtils.copy(insr, sw);
 			insr.close();
         } catch (Exception e) {        	 
