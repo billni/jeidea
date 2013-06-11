@@ -82,7 +82,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public List<String> getFutureDays() {
 		List<String> list = new ArrayList<String>();		
 		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
-		for (int i = 0; i < 10; i++) {			
+		for (int i = 0; i < 20; i++) {			
 			calendar.setTime(new Date());
 			calendar.add(Calendar.DATE, i);// 把日期往后增加一天.整数往后推,负数往前移动					
 			list.add(DateUtils.format(calendar.getTime(), "yyyy-MM-dd"));
