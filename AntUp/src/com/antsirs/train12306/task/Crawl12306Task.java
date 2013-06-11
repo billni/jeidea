@@ -165,8 +165,11 @@ public class Crawl12306Task implements Runnable {
         	startTime = System.currentTimeMillis();
         	logger.info("crawlTrainTicketInfo start. " + startTime);
         	logger.info("crawl url: " + url.toString());
-//       		insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+        	if (proxy!=null) {
+       		insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+        	} else {
        		insr = new InputStreamReader(getUrl().openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+        	}
 			IOUtils.copy(insr, sw);
 			insr.close();
         } catch (Exception e) {        	 
@@ -330,84 +333,86 @@ public class Crawl12306Task implements Runnable {
 	 * @param train
 	 * @param trainTicketInfo
 	 */
-	public void createTicketInfo(Train train, TrainTicketInfo trainTicketInfo) {
+	public List<Ticket> createTicketInfo(Train train, TrainTicketInfo trainTicketInfo) {
+		List<Ticket> tickets = new ArrayList<Ticket>();
 		Ticket ticket = null;
 		if (NumberUtils.isNumber(trainTicketInfo.getBusinessClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());
 			ticket.setGrade("BusinessClass");
 			ticket.setCount(trainTicketInfo.getBusinessClass());			
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSpecialClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SpecialClass");
 			ticket.setCount(trainTicketInfo.getSpecialClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getFirstClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("FirstClass");
 			ticket.setCount(trainTicketInfo.getFirstClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSecondClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SecondClass");
 			ticket.setCount(trainTicketInfo.getSecondClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSeniorSoftSleepClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SeniorSoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSeniorSoftSleepClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSleepClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSoftSleepClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSleepClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("HardSleepClass");
 			ticket.setCount(trainTicketInfo.getHardSleepClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSeatClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("SoftSeatClass");
 			ticket.setCount(trainTicketInfo.getSoftSeatClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSeatClass())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("HardSeatClass");
 			ticket.setCount(trainTicketInfo.getHardSeatClass());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getStanding())) {
 			ticket = new Ticket();	
 			ticket.setGrade("Standing");
 			ticket.setCount(trainTicketInfo.getStanding());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getOthers())) {
 			ticket = new Ticket();
 			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("Others");
 			ticket.setCount(trainTicketInfo.getOthers());
-			saveTicket(ticket, train, trainTicketInfo);
+			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
+		return tickets;
 	}
 	
 	/**
@@ -416,12 +421,12 @@ public class Crawl12306Task implements Runnable {
 	 * @param train
 	 * @param trainTicketInfo
 	 */
-	public void saveTicket(Ticket ticket, Train train, TrainTicketInfo trainTicketInfo){		
+	public Ticket saveTicket(Ticket ticket, Train train, TrainTicketInfo trainTicketInfo){		
 		ticket.setTrainId(train.getTrainId().toString());
 		ticket.setInsertTime(new Date());				
 		ticket.setTrainNo(trainTicketInfo.getTrainNo());
 		ticket.setDepartureDate(trainTicketInfo.getDepartureDate());
-		trainTicketManagerService.createTicket(ticket);
+		return ticket;
 	}
 
 	/**
@@ -435,15 +440,17 @@ public class Crawl12306Task implements Runnable {
 			JSONObject jsonObject = new JSONObject(info);
 			String data = jsonObject.get("datas").toString();
 			List<TrainTicketInfo> list = anaylseTrainTicketInfo(data);
+			List<Ticket> ticketList = new ArrayList<Ticket>();
 			Train train = null;
 			if (list != null) {
 				for (TrainTicketInfo trainTicketInfo : list) {
 					if (checkTicketResource(trainTicketInfo)) {
 						trainTicketInfo.setDepartureDate(getDepartureDate());
 						train = createTrainInfo(trainTicketInfo);
-						createTicketInfo(train, trainTicketInfo);
+						ticketList.addAll(createTicketInfo(train, trainTicketInfo));						
 					}
-				}			
+				}
+				trainTicketManagerService.batchInsert(ticketList);
 			}
 		}
 	}

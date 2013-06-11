@@ -37,12 +37,12 @@ public class TicketTest extends AbstractTest{
 	}	
 	
 	@Test
-	@Rollback(false)
+//	@Rollback(false)
 	public void testCrawl() {		
 		ExecutorService  executor = Executors.newFixedThreadPool(20);//(ThreadManager.currentRequestThreadFactory());
 		Crawl12306Action job = new Crawl12306Action();
 		Crawl12306Task task = null;			
-		for (String date :job.getFutureDays()) {
+		for (String date : job.getFutureDays()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			task.setTrainTicketManagerService(trainTicketManagerService);			

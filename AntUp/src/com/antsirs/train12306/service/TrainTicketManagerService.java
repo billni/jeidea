@@ -2,6 +2,11 @@ package com.antsirs.train12306.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
@@ -64,4 +69,10 @@ public interface TrainTicketManagerService {
 	 */
 	public List listTicket(String trainNo, String grade);
 	
+	/**
+	 * 
+	 * @param object
+	 */
+	@Transactional
+	public void batchInsert(List<Ticket> tickets);
 }

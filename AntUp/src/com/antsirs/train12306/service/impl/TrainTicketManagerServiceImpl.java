@@ -2,7 +2,13 @@ package com.antsirs.train12306.service.impl;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.antsirs.core.spring.daosupport.DaoTemplate;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
@@ -80,5 +86,26 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		return query.getResultList();				
 	}
 	
+	/**
+	 * 
+	 * @param object
+	 */
+	@Transactional
+	public void batchInsert(List<Ticket> tickets) {
+		EntityManager em = getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		EntityTransaction et = em.getTransaction(); 
+		et.begin();
+		int batchSize = 100;		
+		int i = 0;
+		for(Ticket ticket : tickets){ 
+			persist(ticket);
+			i++;
+			if( i % batchSize == 0 ){
+				em.flush();
+				em.clear();
+			} 
+		}
+		et.commit(); 
+	}
 }
 
