@@ -81,7 +81,11 @@ public class TicketTest extends AbstractTest{
 
 	@Test
 	public void testListTrainTicketInfo(){
-		trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
+		List<Ticket> tickets = trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
+		
+		for (Ticket ticket : tickets) {
+			logger.info("ticket -" + ticket.getTrain().getTrainNo());
+		}
 	}
 	
 	@Test

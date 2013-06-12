@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
 		@NamedQuery(name = "listTicket", query = "SELECT m FROM Ticket m"),
 		@NamedQuery(name = "findTicketById", query = "SELECT m FROM Ticket m WHERE m.ticketId = :ticketId"),
-		@NamedQuery(name = "findTicketByTrainNo", query = "SELECT m FROM Ticket m WHERE m.trainNo = :trainNo order by m.insertTime")})
+		@NamedQuery(name = "findTicketByTrainNo", query = "SELECT m FROM Ticket m WHERE m.trainNo = :trainNo order by m.departureDate")})
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
