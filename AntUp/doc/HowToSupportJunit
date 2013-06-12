@@ -1,0 +1,94 @@
+------------------------Test Ready--------------------------------
+1.  add 3 jar.
+	appengine-api-labs.jar
+	appengine-api-stubs.jar
+	appengine-testing.jar
+	
+2.  Test Class do not extends anything. 
+
+3.  Add @RunWith(SpringJUnit4ClassRunner.class) over Test Class.
+
+4.  set Service - task.setTrainTicketManagerService(trainTicketManagerService);			
+	set Enviroment - task.setEnvironment(ApiProxy.getCurrentEnvironment());				
+	set parameters - task.initParameters(job.URL, date, job.getHttpClient(new DefaultHttpClient()));	
+    
+5. Add follow code:
+	  private final LocalServiceTestHelper helper = new LocalServiceTestHelper(   
+	           new LocalDatastoreServiceTestConfig());   
+	      
+	   @Before  
+	   public void setUp() {   
+	       helper.setUp();   
+	   }   
+	      
+	   @After 
+	   public void tearDown() {   
+	       helper.tearDown();   
+	   } 	
+	   
+---------------------------- Deploy GAE-------------------------------
+1. delete web.xml as follow:
+<!-- google auto add, can delete for deploy 
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value/>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
+	-->
+	<!-- google auto add -->
+	<!-- <security-constraint> <web-resource-collection> <web-resource-name>Public 
+		Area</web-resource-name> <url-pattern>/*</url-pattern> </web-resource-collection> 
+		<auth-constraint> <role-name>*</role-name> </auth-constraint> </security-constraint> 
+		<security-constraint> <web-resource-collection> <web-resource-name>Protected 
+		Area</web-resource-name> <url-pattern>/**/admin/*</url-pattern> </web-resource-collection> 
+		<auth-constraint> <role-name>admin</role-name> </auth-constraint> </security-constraint> -->
+		<!-- 
+	<filter>
+		<filter-name>_ah_DevSocketFilter</filter-name>
+		<filter-class>com.google.appengine.api.socket.dev.DevSocketFilter
+		</filter-class>
+		<init-param>
+			<param-name>use-native-sockets</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>_ah_DevSocketFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 -->	
+	 
+2. delete test jar - appengine-api-labs.jar,appengine-api-stubs.jar,appengine-testing.jar
+ 
+3. delete test class annotation
+//import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
+//import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:applicationContext.xml","classpath:applicationContext-*.xml"})
+//	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());   
+//	      
+// ..................
+//	@Before  
+//	public void setUp() {
+//		helper.setEnvAppId("AntSirs");
+//		helper.setEnvVersionId("1");
+//		helper.setEnvAuthDomain("gmail.com");
+//	    helper.setUp();   
+//	}   
+//	      
+//	@After 
+//	public void tearDown() {   
+//	     helper.tearDown();   
+//	}  
+
+4. change Crawl12306Task from -  task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));
+                       to  - task.initParameters(URL, date, new DefaultHttpClient());
+----------------------------------------------------------------------

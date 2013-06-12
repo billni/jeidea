@@ -1,3 +1,0 @@
-$(function(){
-	$('.item').corner("round");
-});
