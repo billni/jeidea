@@ -47,7 +47,8 @@ public class TicketTest extends AbstractTest{
 			logger.info("Crawling - " + date);
 			task.setTrainTicketManagerService(trainTicketManagerService);			
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());				
-			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), job.initProxy());			
+//			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), job.initProxy());			
+			task.initParameters(Crawl12306Action.URL,  date, null, null);		
 			executor.execute(task);	
 		}
 		executor.shutdown();
