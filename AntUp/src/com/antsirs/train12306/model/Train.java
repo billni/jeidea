@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.appengine.api.datastore.Key;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +35,7 @@ public class Train {
 	private String arrvialTime;
 	private String during;
 	private Date insertTime;
-	 @OneToMany(targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
+	 @OneToMany(cascade={CascadeType.REFRESH},targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
 	 private Set<Ticket> tickets = new HashSet<Ticket>();
 
 

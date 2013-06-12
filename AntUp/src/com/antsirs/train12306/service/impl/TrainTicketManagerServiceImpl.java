@@ -90,7 +90,6 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * 
 	 * @param object
 	 */
-	@Transactional
 	public void batchInsert(List<Ticket> tickets) {
 		EntityManager em = getDaoTemplate().getEntityManagerFactory().createEntityManager();
 		EntityTransaction et = em.getTransaction(); 

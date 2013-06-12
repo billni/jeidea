@@ -74,7 +74,6 @@ public interface TrainTicketManagerService {
 	 * 
 	 * @param object
 	 */
-	@Transactional
 	public void batchInsert(List<Ticket> tickets);
 	
 	/**

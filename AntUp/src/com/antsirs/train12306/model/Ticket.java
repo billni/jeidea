@@ -3,6 +3,8 @@ package com.antsirs.train12306.model;
 import java.util.Date;
 
 import com.google.appengine.api.datastore.Key;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

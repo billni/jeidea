@@ -1,6 +1,7 @@
 package com.antsirs.train12306.job;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,6 +20,7 @@ import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.google.apphosting.api.ApiProxy;
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 public class TicketTest extends AbstractTest{
 	private static final Logger logger = Logger.getLogger(CrawlHongKangInsuranceTransaction.class.getName());
@@ -59,11 +61,11 @@ public class TicketTest extends AbstractTest{
 		while (!executor.isTerminated()) {			
 		}
 		
-		List<Ticket> list = trainTicketManagerService.listTicket();
-		logger.info("list.count is " + list.size());
-		for (Ticket ticket : list) {
-			logger.info("ticket - " + ticket.getTrainNo());
-		}
+		List<Train> trainlist = trainTicketManagerService.listTrain();
+		logger.info("Train count is " + trainlist.size());
+
+		List<Ticket> ticketlist = trainTicketManagerService.listTicket();
+		logger.info("Ticket count is " + ticketlist.size());
 //		worker = new Thread(task);
 //		worker.setName("Crawl-2013-6-7");
 //		logger.info("worker[" + worker.getName() + "] start");
@@ -113,5 +115,28 @@ public class TicketTest extends AbstractTest{
 		System.out.println("ApiProxy.getCurrentEnvironment(): " + ApiProxy.getCurrentEnvironment().getEmail());
 		System.out.println("ApiProxy.getCurrentEnvironment(): " + ApiProxy.getCurrentEnvironment().getVersionId());
 		System.out.println("ApiProxy.getCurrentEnvironment(): " + ApiProxy.getCurrentEnvironment().getAttributes());
+	}
+	
+	@Test
+	@Rollback(false)
+	public void testBatchInsertTicket() {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		Ticket ticket = new Ticket();
+		ticket.setCount("12");
+		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
+		ticket.setTrainNo("T5");
+		tickets.add(ticket);
+		ticket = new Ticket();
+		ticket.setCount("25");
+		ticket.setGrade("bbb");
+		ticket.setTrainNo("ConstantValue.SOFT_SLEEP_CLASS");
+		tickets.add(ticket);
+		trainTicketManagerService.batchInsert(tickets);
+		
+		List<Ticket> ts = trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
+		logger.info("ticket count is " + ts.size());
+		for (Ticket ti : ts) {
+			logger.info("ticket -" + ti.getTrain().getTrainNo());
+		}
 	}
 }
