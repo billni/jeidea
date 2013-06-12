@@ -471,7 +471,7 @@ public class Crawl12306Task implements Runnable {
 			doCrawl();			
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.info("出现异常" + e.getMessage());
+			logger.severe("出现异常 - " + e.getMessage());
 		}
 	}
 	
