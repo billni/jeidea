@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -298,7 +300,13 @@ public class Crawl12306Task implements Runnable {
 	public Train createTrainInfo(TrainTicketInfo trainTicketInfo) {				
 		ApiProxy.setEnvironmentForCurrentThread(environment);
 		Train train = null;		
-		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), trainTicketInfo.getDepartureDate());
+		List list = null;
+		try {
+			list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), DateUtils.parseDate(trainTicketInfo.getDepartureDate() , new String[]{"yyyy-MM-dd"}));
+		} catch (ParseException e) {
+			logger.severe("DepartureDate parse error ,  - " + trainTicketInfo.getDepartureDate());
+			e.printStackTrace();
+		}
 		if (list == null || list.size() == 0) {
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
