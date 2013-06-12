@@ -343,64 +343,56 @@ public class Crawl12306Task implements Runnable {
 		List<Ticket> tickets = new ArrayList<Ticket>();
 		Ticket ticket = null;
 		if (NumberUtils.isNumber(trainTicketInfo.getBusinessClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());
+			ticket = new Ticket();	
 			ticket.setGrade("BusinessClass");
 			ticket.setCount(trainTicketInfo.getBusinessClass());			
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSpecialClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();			
 			ticket.setGrade("SpecialClass");
 			ticket.setCount(trainTicketInfo.getSpecialClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getFirstClass())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket.setTrain(train);					
 			ticket.setGrade("FirstClass");
 			ticket.setCount(trainTicketInfo.getFirstClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSecondClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();		
 			ticket.setGrade("SecondClass");
 			ticket.setCount(trainTicketInfo.getSecondClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSeniorSoftSleepClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();			
 			ticket.setGrade("SeniorSoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSeniorSoftSleepClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSleepClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();			
 			ticket.setGrade("SoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSoftSleepClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSleepClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();		
 			ticket.setGrade("HardSleepClass");
 			ticket.setCount(trainTicketInfo.getHardSleepClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSeatClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();	
 			ticket.setGrade("SoftSeatClass");
 			ticket.setCount(trainTicketInfo.getSoftSeatClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSeatClass())) {
-			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
+			ticket = new Ticket();	
 			ticket.setGrade("HardSeatClass");
 			ticket.setCount(trainTicketInfo.getHardSeatClass());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
@@ -413,7 +405,6 @@ public class Crawl12306Task implements Runnable {
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getOthers())) {
 			ticket = new Ticket();
-			ticket.setTrainId(train.getTrainId().toString());			
 			ticket.setGrade("Others");
 			ticket.setCount(trainTicketInfo.getOthers());
 			tickets.add(saveTicket(ticket, train, trainTicketInfo));
@@ -428,7 +419,7 @@ public class Crawl12306Task implements Runnable {
 	 * @param trainTicketInfo
 	 */
 	public Ticket saveTicket(Ticket ticket, Train train, TrainTicketInfo trainTicketInfo){		
-		ticket.setTrainId(train.getTrainId().toString());
+		ticket.setTrain(train);	
 		ticket.setInsertTime(new Date());				
 		ticket.setTrainNo(trainTicketInfo.getTrainNo());
 		ticket.setDepartureDate(trainTicketInfo.getDepartureDate());

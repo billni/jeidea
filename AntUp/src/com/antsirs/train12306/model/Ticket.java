@@ -4,9 +4,11 @@ import java.util.Date;
 
 import com.google.appengine.api.datastore.Key;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -21,8 +23,9 @@ import javax.persistence.TemporalType;
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key ticketId;	
-	private String trainId;
+	private Key ticketId;
+	  @ManyToOne(fetch=FetchType.LAZY, targetEntity=Train.class)
+	private Train train;
 	private String trainNo;
 	private String departureDate;
 	private String grade;
@@ -48,12 +51,12 @@ public class Ticket {
 		this.insertTime = insertTime;
 	}
 
-	public String getTrainId() {
-		return trainId;
+	public Train getTrain() {
+		return train;
 	}
 
-	public void setTrainId(String trainId) {
-		this.trainId = trainId;
+	public void setTrain(Train train) {
+		this.train = train;
 	}
 
 	public String getGrade() {
