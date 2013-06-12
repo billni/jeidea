@@ -107,5 +107,12 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		}
 		et.commit(); 
 	}
+	
+	/**
+	 * list tickets
+	 */
+	public List<Train> listTrain() {				
+		return getDaoTemplate().getEntityManagerFactory().createEntityManager().createNamedQuery("listTrain").getResultList();				
+	}
 }
 

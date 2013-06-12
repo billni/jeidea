@@ -76,4 +76,10 @@ public interface TrainTicketManagerService {
 	 */
 	@Transactional
 	public void batchInsert(List<Ticket> tickets);
+	
+	/**
+	 * list train
+	 * @return
+	 */
+	public List<Train> listTrain() ;
 }

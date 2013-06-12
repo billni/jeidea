@@ -169,8 +169,8 @@ public class Crawl12306Task implements Runnable {
         	logger.info("crawl url: " + url.toString());        	
 //       	insr = new InputStreamReader(getUrl().openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);        	
        		insr = new InputStreamReader(getUrl().openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	
 			IOUtils.copy(insr, sw);
+			sw.close();
 			insr.close();
         } catch (Exception e) {        	 
 			logger.severe(e.getMessage());			
@@ -308,6 +308,7 @@ public class Crawl12306Task implements Runnable {
 			e.printStackTrace();
 		}
 		if (list == null || list.size() == 0) {
+			logger.info("Create a train   - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
 			train.setFromStation(trainTicketInfo.getFromStation());
@@ -318,6 +319,7 @@ public class Crawl12306Task implements Runnable {
 			train.setDepartureDate(trainTicketInfo.getDepartureDate());
 			train.setInsertTime(new Date());			
 			trainTicketManagerService.createTrain(train);			
+			logger.info("Create a train completed  - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 		} else {
 			train = (Train) list.get(0);
 		}
@@ -346,68 +348,68 @@ public class Crawl12306Task implements Runnable {
 			ticket = new Ticket();	
 			ticket.setGrade("BusinessClass");
 			ticket.setCount(trainTicketInfo.getBusinessClass());			
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSpecialClass())) {
 			ticket = new Ticket();			
 			ticket.setGrade("SpecialClass");
 			ticket.setCount(trainTicketInfo.getSpecialClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getFirstClass())) {
 			ticket = new Ticket();
 			ticket.setTrain(train);					
 			ticket.setGrade("FirstClass");
 			ticket.setCount(trainTicketInfo.getFirstClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSecondClass())) {
 			ticket = new Ticket();		
 			ticket.setGrade("SecondClass");
 			ticket.setCount(trainTicketInfo.getSecondClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSeniorSoftSleepClass())) {
 			ticket = new Ticket();			
 			ticket.setGrade("SeniorSoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSeniorSoftSleepClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSleepClass())) {
 			ticket = new Ticket();			
 			ticket.setGrade("SoftSleepClass");
 			ticket.setCount(trainTicketInfo.getSoftSleepClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSleepClass())) {
 			ticket = new Ticket();		
 			ticket.setGrade("HardSleepClass");
 			ticket.setCount(trainTicketInfo.getHardSleepClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSoftSeatClass())) {
 			ticket = new Ticket();	
 			ticket.setGrade("SoftSeatClass");
 			ticket.setCount(trainTicketInfo.getSoftSeatClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSeatClass())) {
 			ticket = new Ticket();	
 			ticket.setGrade("HardSeatClass");
 			ticket.setCount(trainTicketInfo.getHardSeatClass());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getStanding())) {
 			ticket = new Ticket();	
 			ticket.setGrade("Standing");
 			ticket.setCount(trainTicketInfo.getStanding());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getOthers())) {
 			ticket = new Ticket();
 			ticket.setGrade("Others");
 			ticket.setCount(trainTicketInfo.getOthers());
-			tickets.add(saveTicket(ticket, train, trainTicketInfo));
+			tickets.add(saveTicket(ticket, train));
 		}
 		return tickets;
 	}
@@ -418,11 +420,11 @@ public class Crawl12306Task implements Runnable {
 	 * @param train
 	 * @param trainTicketInfo
 	 */
-	public Ticket saveTicket(Ticket ticket, Train train, TrainTicketInfo trainTicketInfo){		
+	public Ticket saveTicket(Ticket ticket, Train train){		
 		ticket.setTrain(train);	
 		ticket.setInsertTime(new Date());				
-		ticket.setTrainNo(trainTicketInfo.getTrainNo());
-		ticket.setDepartureDate(trainTicketInfo.getDepartureDate());
+		ticket.setTrainNo(train.getTrainNo());
+		ticket.setDepartureDate(train.getDepartureDate());
 		return ticket;
 	}
 
@@ -436,11 +438,12 @@ public class Crawl12306Task implements Runnable {
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
 			String data = jsonObject.get("datas").toString();
-			List<TrainTicketInfo> list = anaylseTrainTicketInfo(data);
+			List<TrainTicketInfo> trainTicketInfos = anaylseTrainTicketInfo(data);
 			List<Ticket> ticketList = new ArrayList<Ticket>();
 			Train train = null;
-			if (list != null) {
-				for (TrainTicketInfo trainTicketInfo : list) {
+			if (trainTicketInfos != null) {
+				logger.info("save TrainTicketInfo, TrainTicketInfo size: " + trainTicketInfos.size());
+				for (TrainTicketInfo trainTicketInfo : trainTicketInfos) {
 					if (checkTicketResource(trainTicketInfo)) {
 						trainTicketInfo.setDepartureDate(getDepartureDate());
 						train = createTrainInfo(trainTicketInfo);
