@@ -2,17 +2,15 @@ package com.antsirs.train12306.job;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
-
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
-
 import com.antsirs.core.common.ConstantValue;
 import com.antsirs.train12306.action.Crawl12306Action;
 import com.antsirs.train12306.model.Ticket;
@@ -20,7 +18,7 @@ import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.google.apphosting.api.ApiProxy;
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
+
 
 public class TicketTest extends AbstractTest{
 	private static final Logger logger = Logger.getLogger(CrawlHongKangInsuranceTransaction.class.getName());
@@ -119,24 +117,48 @@ public class TicketTest extends AbstractTest{
 	
 	@Test
 	@Rollback(false)
+	public void testInsertTrain() {
+
+		List list = trainTicketManagerService.listTrain();
+		logger.info("1 list count " + list.size());
+		Train train = new Train();
+		train.setTrainNo("T5");
+		train.setInsertTime(new Date());
+		trainTicketManagerService.createTrain(train);	
+		list = trainTicketManagerService.listTrain();
+		logger.info("2 list count " + list.size());
+	}
+	
+	@Test
+	@Rollback(false)
 	public void testBatchInsertTicket() {
 		List<Ticket> tickets = new ArrayList<Ticket>();
-		Ticket ticket = new Ticket();
-		ticket.setCount("12");
-		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
-		ticket.setTrainNo("T5");
-		tickets.add(ticket);
-		ticket = new Ticket();
-		ticket.setCount("25");
-		ticket.setGrade("bbb");
-		ticket.setTrainNo("ConstantValue.SOFT_SLEEP_CLASS");
-		tickets.add(ticket);
-		trainTicketManagerService.batchInsert(tickets);
+		Train train = new Train();
+		train.setTrainNo("T5");
+		train.setDepartureDate("2013-6-19");		
+		train.setInsertTime(new Date());
+		trainTicketManagerService.createTrain(train);		
 		
-		List<Ticket> ts = trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
-		logger.info("ticket count is " + ts.size());
-		for (Ticket ti : ts) {
-			logger.info("ticket -" + ti.getTrain().getTrainNo());
-		}
+//		Ticket ticket = new Ticket();
+//		ticket.setCount("12");
+//		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
+//		ticket.setTrainNo("T5");
+//		ticket.setTrain(train);		
+//		tickets.add(ticket);
+//		
+//		ticket = new Ticket();
+//		ticket.setCount("25");
+//		ticket.setTrainNo("T5");		
+//		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
+//		ticket.setTrain(train);
+//		tickets.add(ticket);
+//		
+//		trainTicketManagerService.batchInsert(tickets);
+//		
+//		List<Ticket> ts = trainTicketManagerService.listTicket();	
+//		logger.info("ticket count is " + ts.size());
+//		for (Ticket ti : ts) {
+//			logger.info("ticket -" + ti.getTrain().getTrainNo());
+//		}
 	}
 }

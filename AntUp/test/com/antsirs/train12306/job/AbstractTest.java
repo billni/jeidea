@@ -12,7 +12,7 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 public class AbstractTest {
 	
 	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));   
-	      
+		      
 	@Before  
 	public void setUp() {
 		helper.setEnvAppId("AntSirs");

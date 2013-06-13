@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -90,12 +91,15 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * 
 	 * @param object
 	 */
+	@Transactional
 	public void batchInsert(List<Ticket> tickets) {
 		EntityManager em = getDaoTemplate().getEntityManagerFactory().createEntityManager();
-		EntityTransaction et = em.getTransaction(); 
+		em.setFlushMode(FlushModeType.COMMIT);
+		EntityTransaction et = em.getTransaction();		
 		et.begin();
 		int batchSize = 100;		
 		int i = 0;
+		
 		for(Ticket ticket : tickets){ 
 			persist(ticket);
 			i++;
@@ -104,7 +108,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 				em.clear();
 			} 
 		}
-		et.commit(); 
+		et.commit();		
 	}
 	
 	/**

@@ -35,8 +35,8 @@ public class Train {
 	private String arrvialTime;
 	private String during;
 	private Date insertTime;
-	 @OneToMany(cascade={CascadeType.REFRESH},targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
-	 private Set<Ticket> tickets = new HashSet<Ticket>();
+	 @OneToMany(cascade={CascadeType.PERSIST},targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
+	private Set<Ticket> tickets = new HashSet<Ticket>();
 
 
 	public Train() {
