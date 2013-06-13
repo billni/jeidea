@@ -26,7 +26,7 @@
 	       helper.tearDown();   
 	   } 	
 	   
----------------------------- Deploy GAE-------------------------------
+---------------------------- Deploy GAE-------------------------------20130611
 1. delete web.xml as follow:
 <!-- google auto add, can delete for deploy 
 	<servlet>
@@ -91,4 +91,10 @@
 
 4. change Crawl12306Task from -  task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()));
                        to  - task.initParameters(URL, date, new DefaultHttpClient());
-----------------------------------------------------------------------
+                       
+----------------------------------------------------------------------20130612
+1. To enable XG transactions in JPA, add the following property to your persistence.xml file:
+ <property name="datanucleus.appengine.datastoreEnableXGTransactions" value="true"/>
+2. junit set HRD for XG transactions
+	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));   
+	    

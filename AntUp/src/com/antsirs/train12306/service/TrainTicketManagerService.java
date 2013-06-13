@@ -1,5 +1,6 @@
 package com.antsirs.train12306.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -45,7 +46,7 @@ public interface TrainTicketManagerService {
 	 * @param insertTime
 	 * @return
 	 */
-	public List<Train> findTrain(String trainNo, String insertTime);
+	public List<Train> findTrain(String trainNo,  Date departureDate);
 	/**
 	 * remove ticket from db
 	 * @param object
@@ -73,6 +74,11 @@ public interface TrainTicketManagerService {
 	 * 
 	 * @param object
 	 */
-	@Transactional
 	public void batchInsert(List<Ticket> tickets);
+	
+	/**
+	 * list train
+	 * @return
+	 */
+	public List<Train> listTrain() ;
 }

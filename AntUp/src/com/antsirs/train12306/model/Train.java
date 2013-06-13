@@ -1,14 +1,20 @@
 package com.antsirs.train12306.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.google.appengine.api.datastore.Key;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,6 +35,9 @@ public class Train {
 	private String arrvialTime;
 	private String during;
 	private Date insertTime;
+	 @OneToMany(cascade={CascadeType.REFRESH},targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
+	 private Set<Ticket> tickets = new HashSet<Ticket>();
+
 
 	public Train() {
 	}
@@ -104,6 +113,14 @@ public class Train {
 
 	public void setDepartureDate(String departureDate) {
 		this.departureDate = departureDate;
+	}
+
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 	
 	

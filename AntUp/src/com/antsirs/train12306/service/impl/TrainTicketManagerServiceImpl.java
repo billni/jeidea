@@ -45,13 +45,13 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @param insertDate
 	 * @return
 	 */
-	public List<Train> findTrain(String trainNo, String insertTime){
+	public List<Train> findTrain(String trainNo, Date departureDate) {
 		String jpql = " SELECT train FROM Train train ";				
 		jpql += " WHERE train.trainNo = :trainNo";
-		jpql += " AND train.insertTime = :insertTime";	
+		jpql += " AND train.departureDate = :departureDate";	
 		Query query = getDaoTemplate().getEntityManagerFactory().createEntityManager().createQuery(jpql);
 		query.setParameter("trainNo", trainNo);
-		query.setParameter("insertTime", new Date());
+		query.setParameter("departureDate", departureDate);
 		return query.getResultList();
 	}	
 	
@@ -90,7 +90,6 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * 
 	 * @param object
 	 */
-	@Transactional
 	public void batchInsert(List<Ticket> tickets) {
 		EntityManager em = getDaoTemplate().getEntityManagerFactory().createEntityManager();
 		EntityTransaction et = em.getTransaction(); 
@@ -106,6 +105,13 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 			} 
 		}
 		et.commit(); 
+	}
+	
+	/**
+	 * list tickets
+	 */
+	public List<Train> listTrain() {				
+		return getDaoTemplate().getEntityManagerFactory().createEntityManager().createNamedQuery("listTrain").getResultList();				
 	}
 }
 
