@@ -91,17 +91,8 @@ public class TicketTest extends AbstractTest{
 		
 		List<Train>  trainlist = trainTicketManagerService.listTrain();
 		System.out.println(trainlist.size());
-		
-		try {
-			List<Train> trains = trainTicketManagerService.findTrain("T5", DateUtils.parseDate("2013-06-13", new String[]{"yyyy-MM-dd"}));
-			System.out.println("train size - " + trains.size());
-			for (Train train : trains) {
-				System.out.println("train -" + train.getTrainNo());
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		List<Train> trains = trainTicketManagerService.findTrain("T5", "2013-06-18");
+		System.out.println("train size - " + trains.size());
 		List<Ticket> tickets = trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
 		for (Ticket ticket : tickets) {
 			logger.info("ticket -" + ticket.getTrain().getTrainNo());
