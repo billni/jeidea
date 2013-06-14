@@ -1,13 +1,11 @@
 package com.antsirs.train12306.job;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
-import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -52,7 +50,8 @@ public class TicketTest extends AbstractTest{
 			task.setTrainTicketManagerService(trainTicketManagerService);			
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());				
 //			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), job.initProxy());			
-			task.initParameters(Crawl12306Action.URL,  date , null, null);		
+			task.initParameters(Crawl12306Action.URL, date, null, job.initProxy());
+//			task.initParameters(Crawl12306Action.URL,  date , null, null);		
 			executor.execute(task);	
 		}
 		executor.shutdown();

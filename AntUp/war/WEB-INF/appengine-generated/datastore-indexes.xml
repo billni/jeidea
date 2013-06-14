@@ -1,0 +1,11 @@
+<!-- Indices written at Thu, 13 Jun 2013 10:32:50 CST -->
+
+<datastore-index kind="Train" ancestor="false">
+  <property name="trainNo" direction="asc" />
+  <property name="departureDate" direction="desc" />
+</datastore-index>
+
+<datastore-index kind="Ticket" ancestor="false">
+  <property name="trainNo" direction="asc" />
+  <property name="departureDate" direction="desc" />
+</datastore-index>
