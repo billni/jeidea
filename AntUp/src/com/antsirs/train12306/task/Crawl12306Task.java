@@ -7,7 +7,6 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -25,65 +23,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
-import com.antsirs.train12306.service.TrainTicketManagerService;
 import java.util.logging.Logger;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.apphosting.api.ApiProxy;
 import com.google.apphosting.api.ApiProxy.Environment;
 
-public class Crawl12306Task implements Runnable {
+public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 	private static final Logger logger = Logger.getLogger(Crawl12306Task.class.getName());
-
-	private URL url;
-	private DefaultHttpClient httpClient;		
-
-	public TrainTicketManagerService trainTicketManagerService;
 	
-	public TrainTicketManagerService getTrainTicketManagerService() {
-		return trainTicketManagerService;
-	}
-
-	public void setTrainTicketManagerService(TrainTicketManagerService trainTicketManagerService) {
-		this.trainTicketManagerService = trainTicketManagerService;
-	}
-
-	public DefaultHttpClient getHttpClient() {
-		return httpClient;
-	}
-
-	public void setHttpClient(DefaultHttpClient httpClient) {
-		this.httpClient = httpClient;
-	}
-
-	public Proxy proxy;
-	
-	public Proxy getProxy() {
-		return proxy;
-	}
-
-	public void setProxy(Proxy proxy) {
-		this.proxy = proxy;
-	}
-
-	public URL getUrl() {
-		return url;
-	}
-	
-	public void setUrl(URL url) {
-		this.url = url;
-	}
-
-	public String departureDate;
-	
-	public String getDepartureDate() {
-		return departureDate;
-	}
-
-	public void setDepartureDate(String departureDate) {
-		this.departureDate = departureDate;
-	}
-
 	public Crawl12306Task() {
 	}
 
@@ -123,11 +71,11 @@ public class Crawl12306Task implements Runnable {
 	 * @param url
 	 * @return
 	 */
-	public String getTrainTicketInfoByUrl(String url) {
+	public String getTrainTicketInfoByUrl(URL url, DefaultHttpClient client) {
 		StringWriter sw = new StringWriter();
 		try {
 			logger.info("HttpClient连接开启.");
-			HttpResponse response = getHttpClient().execute(new HttpGet(url));// 得到responce对象
+			HttpResponse response = client.execute(new HttpGet(url.toString()));// 得到responce对象
 			int resStatu = response.getStatusLine().getStatusCode();// 返回
 			if (resStatu == HttpStatus.SC_OK) {// 200正常
 				// 获得相应实体
@@ -154,35 +102,7 @@ public class Crawl12306Task implements Runnable {
 		return sw.toString();
 	}
 	
-	/**
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public String crawlTrainTicketInfo(URL url, Proxy proxy){
-		StringWriter sw = new StringWriter();	
-		InputStreamReader insr = null;
-		long startTime = 0L;
-        try {
-        	startTime = System.currentTimeMillis();
-        	logger.info("crawlTrainTicketInfo start. " + startTime);
-        	logger.info("crawl url: " + url.toString());        	
-        	if (proxy != null) {
-        		insr = new InputStreamReader(url.openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	} else {
-        		insr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	}
-			IOUtils.copy(insr, sw);
-			sw.close();
-			insr.close();
-        } catch (Exception e) {        	 
-			logger.severe(e.getMessage());			
-			e.printStackTrace();
-		}        
-        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
-		return sw.toString();
-	}
-
+	
 
 	/**
 	 * Generate Record
@@ -346,7 +266,7 @@ public class Crawl12306Task implements Runnable {
 			ticket = new Ticket();	
 			ticket.setGrade("BusinessClass");
 			ticket.setCount(trainTicketInfo.getBusinessClass());			
-			tickets.add(saveTicket(ticket, train));
+			tickets.add(saveTicket(ticket, train));	
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getSpecialClass())) {
 			ticket = new Ticket();			
@@ -355,8 +275,7 @@ public class Crawl12306Task implements Runnable {
 			tickets.add(saveTicket(ticket, train));
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getFirstClass())) {
-			ticket = new Ticket();
-			ticket.setTrain(train);					
+			ticket = new Ticket();						
 			ticket.setGrade("FirstClass");
 			ticket.setCount(trainTicketInfo.getFirstClass());
 			tickets.add(saveTicket(ticket, train));
@@ -408,7 +327,7 @@ public class Crawl12306Task implements Runnable {
 			ticket.setGrade("Others");
 			ticket.setCount(trainTicketInfo.getOthers());
 			tickets.add(saveTicket(ticket, train));
-		}
+		}	
 		return tickets;
 	}
 	
@@ -419,10 +338,9 @@ public class Crawl12306Task implements Runnable {
 	 * @param trainTicketInfo
 	 */
 	public Ticket saveTicket(Ticket ticket, Train train){		
-		ticket.setTrain(train);	
 		ticket.setInsertTime(new Date());				
 		ticket.setTrainNo(train.getTrainNo());
-		ticket.setDepartureDate(train.getDepartureDate());
+		ticket.setDepartureDate(train.getDepartureDate());		
 		return ticket;
 	}
 
@@ -431,7 +349,8 @@ public class Crawl12306Task implements Runnable {
 	 * 
 	 */
 	public void doCrawl() throws JSONException {
-		String info = crawlTrainTicketInfo(getUrl(), getProxy());
+//		String info = crawlTrainTicketInfo(getUrl(), getProxy());
+		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
 		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
@@ -480,4 +399,33 @@ public class Crawl12306Task implements Runnable {
 		setProxy(proxy);
 	}
 	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public String crawlTrainTicketInfo(URL url, Proxy proxy){
+		StringWriter sw = new StringWriter();	
+		InputStreamReader insr = null;
+		long startTime = 0L;
+        try {
+        	startTime = System.currentTimeMillis();
+        	logger.info("crawlTrainTicketInfo start. " + startTime);
+        	logger.info("crawl url: " + url.toString());        	
+        	if (proxy != null) {
+        		insr = new InputStreamReader(url.openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+        	} else {
+        		insr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+        	}
+			IOUtils.copy(insr, sw);
+			sw.close();
+			insr.close();
+        } catch (Exception e) {        	 
+			logger.severe(e.getMessage());			
+			e.printStackTrace();
+		}        
+        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
+		return sw.toString();
+	}
+
 }

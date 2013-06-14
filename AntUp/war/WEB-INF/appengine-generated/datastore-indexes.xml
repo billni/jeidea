@@ -1,5 +1,6 @@
-<!-- Indices written at Thu, 13 Jun 2013 10:32:50 CST -->
+<?xml version="1.0" encoding="utf-8"?>
 
+<datastore-indexes autoGenerate="true">
 <datastore-index kind="Train" ancestor="false">
   <property name="trainNo" direction="asc" />
   <property name="departureDate" direction="desc" />
@@ -9,3 +10,4 @@
   <property name="trainNo" direction="asc" />
   <property name="departureDate" direction="desc" />
 </datastore-index>
+</datastore-indexes>

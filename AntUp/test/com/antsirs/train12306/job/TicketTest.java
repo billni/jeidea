@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
+
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -49,8 +51,8 @@ public class TicketTest extends AbstractTest{
 			logger.info("Crawling - " + date);
 			task.setTrainTicketManagerService(trainTicketManagerService);			
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());				
-//			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), job.initProxy());			
-			task.initParameters(Crawl12306Action.URL, date, null, job.initProxy());
+			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), null);			
+//			task.initParameters(Crawl12306Action.URL, date, null, job.initProxy());
 //			task.initParameters(Crawl12306Action.URL,  date , null, null);		
 			executor.execute(task);	
 		}
@@ -92,7 +94,7 @@ public class TicketTest extends AbstractTest{
 		System.out.println("train size - " + trains.size());
 		List<Ticket> tickets = trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
 		for (Ticket ticket : tickets) {
-			logger.info("ticket -" + ticket.getTrain().getTrainNo());
+
 		}
 	}
 	
@@ -107,15 +109,27 @@ public class TicketTest extends AbstractTest{
 	
 	@Test
 	@Rollback(false)
-	public void testInsertTrain() {
+	public void testInsertTrainAndTicket() {
 
 		List list = trainTicketManagerService.listTrain();
 		logger.info("1 list count " + list.size());
 		Train train = new Train();
 		train.setTrainNo("T5");
 		train.setInsertTime(new Date());
+
 		trainTicketManagerService.createTrain(train);	
+		logger.info("train id - " + train.getTrainId());
 		list = trainTicketManagerService.listTrain();
+		
+		Ticket ticket = new Ticket();
+		ticket.setInsertTime(new Date());
+		ticket.setDepartureDate(train.getDepartureDate());
+		ticket.setGrade(ConstantValue.BUSINESS_CLASS);
+		ticket.setCount("15");		
+		trainTicketManagerService.createTicket(ticket);
+		
+		logger.info("ticket id - " + ticket.getTicketId());
+		
 		logger.info("2 list count " + list.size());
 	}
 	

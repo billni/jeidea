@@ -14,6 +14,13 @@ import com.antsirs.train12306.model.Ticket;
 public class DaoTemplate extends JpaTemplate {
 
 	protected static EntityManagerFactory entityManagerFactory;
+	
+	protected static EntityManager entityManager;
+
+	public EntityManager getEntityManager() {		
+		entityManager = getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		return entityManager;
+	}
 
 	public EntityManagerFactory getEntityManagerFactory() {
 		return entityManagerFactory;
