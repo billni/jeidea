@@ -14,8 +14,9 @@
         		<th>数量</th>
         		<th>查询时间</th>
         	</tr> 
-		<s:iterator id="ticket" value="tickets">
+		<s:iterator id="ticket" value="tickets" status="st">
         	<tr>
+        		<td><s:property value="#st.index"/></td>
         		<td><s:property value="ticketId"/></td>
         		<td><s:property value="trainNo"/></td>        		
         		<td><s:property value="departureDate"/></td>
