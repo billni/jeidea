@@ -94,9 +94,9 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		int batchSize = 100;		
 		int i = 0;
 		
-		for(Ticket ticket : tickets){ 
-			getDaoTemplate().persist(ticket);	
-			logger.info("persist a ticket - " + ticket.getTicketId());
+		for(Ticket ticket : tickets){
+			ticket.setTrain(em.find(Train.class, ticket.getTrain().getTrainId()));
+			em.persist(ticket);	
 			i++;
 			if( i % batchSize == 0 ){
 				em.flush();

@@ -2,14 +2,10 @@ package com.antsirs.core.spring.daosupport;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import org.springframework.orm.jpa.JpaTemplate;
-
-import com.antsirs.train12306.model.Ticket;
 
 public class DaoTemplate extends JpaTemplate {
 

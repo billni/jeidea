@@ -141,28 +141,30 @@ public class TicketTest extends AbstractTest{
 		train.setTrainNo("T5");
 		train.setDepartureDate("2013-6-19");		
 		train.setInsertTime(new Date());
-		trainTicketManagerService.createTrain(train);		
+
+		trainTicketManagerService.createTrain(train);
 		
-//		Ticket ticket = new Ticket();
-//		ticket.setCount("12");
-//		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
-//		ticket.setTrainNo("T5");
-//		ticket.setTrain(train);		
-//		tickets.add(ticket);
-//		
-//		ticket = new Ticket();
-//		ticket.setCount("25");
-//		ticket.setTrainNo("T5");		
-//		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
-//		ticket.setTrain(train);
-//		tickets.add(ticket);
-//		
-//		trainTicketManagerService.batchInsert(tickets);
-//		
-//		List<Ticket> ts = trainTicketManagerService.listTicket();	
-//		logger.info("ticket count is " + ts.size());
-//		for (Ticket ti : ts) {
-//			logger.info("ticket -" + ti.getTrain().getTrainNo());
-//		}
+		Ticket ticket = new Ticket();
+		ticket.setCount("12");
+		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
+		ticket.setTrainNo("T5");
+		ticket.setTrain(train);		
+		tickets.add(ticket);
+		
+		ticket = new Ticket();
+		ticket.setCount("25");
+		ticket.setTrainNo("T5");		
+		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
+		ticket.setTrain(train);
+		tickets.add(ticket);
+		
+		trainTicketManagerService.batchInsert(tickets);
+		
+		List<Ticket> ts = trainTicketManagerService.listTicket();	
+		logger.info("ticket count is " + ts.size());
+		for (Ticket ti : ts) {
+			logger.info("ticket -" + ti.getTrain().getTrainNo());
+		}
+		
 	}
 }

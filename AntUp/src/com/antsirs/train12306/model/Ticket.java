@@ -21,6 +21,7 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketId;
+	private Train train;
 	private String trainNo;
 	private String departureDate;
 	private String grade;
@@ -44,6 +45,14 @@ public class Ticket {
 
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
+	}
+
+	public Train getTrain() {
+		return train;
+	}
+
+	public void setTrain(Train train) {
+		this.train = train;
 	}
 
 	public String getGrade() {

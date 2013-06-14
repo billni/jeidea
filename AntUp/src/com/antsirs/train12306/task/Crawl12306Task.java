@@ -312,7 +312,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 		}
 		if (NumberUtils.isNumber(trainTicketInfo.getHardSeatClass())) {
 			ticket = new Ticket();	
-			ticket.setGrade("HardSeatClass");
+			ticket.setGrade("HardSeatClass");			
 			ticket.setCount(trainTicketInfo.getHardSeatClass());
 			tickets.add(saveTicket(ticket, train));
 		}
@@ -338,7 +338,8 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 	 * @param trainTicketInfo
 	 */
 	public Ticket saveTicket(Ticket ticket, Train train){		
-		ticket.setInsertTime(new Date());				
+		ticket.setInsertTime(new Date());		
+		ticket.setTrain(train);
 		ticket.setTrainNo(train.getTrainNo());
 		ticket.setDepartureDate(train.getDepartureDate());		
 		return ticket;

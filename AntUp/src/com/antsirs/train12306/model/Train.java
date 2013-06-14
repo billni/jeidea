@@ -35,6 +35,9 @@ public class Train {
 	private String arrvialTime;
 	private String during;
 	private Date insertTime;
+	@OneToMany(targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
+	private Set<Ticket> tickets = new HashSet<Ticket>();
+
 
 	public Train() {
 	}
@@ -112,6 +115,14 @@ public class Train {
 		this.departureDate = departureDate;
 	}
 
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+	
 	
 
 }
