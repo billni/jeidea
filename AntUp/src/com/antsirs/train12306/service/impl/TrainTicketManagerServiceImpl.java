@@ -46,7 +46,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @param insertDate
 	 * @return
 	 */
-	public List<Train> findTrain(String trainNo, Date departureDate) {
+	public List<Train> findTrain(String trainNo, String departureDate) {
 		String jpql = " SELECT train FROM Train train ";				
 		jpql += " WHERE train.trainNo = :trainNo";
 		jpql += " AND train.departureDate = :departureDate";	

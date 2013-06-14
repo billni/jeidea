@@ -46,7 +46,7 @@ public interface TrainTicketManagerService {
 	 * @param insertTime
 	 * @return
 	 */
-	public List<Train> findTrain(String trainNo,  Date departureDate);
+	public List<Train> findTrain(String trainNo,  String departureDate);
 	/**
 	 * remove ticket from db
 	 * @param object
