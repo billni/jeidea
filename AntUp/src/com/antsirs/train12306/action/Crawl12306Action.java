@@ -111,7 +111,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		while (!executor.isTerminated()) {			
 		}
 		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());				
-		return NONE;
+		return SUCCESS;
 	}
 	
 	/**
