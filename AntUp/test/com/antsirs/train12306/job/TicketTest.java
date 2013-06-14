@@ -88,13 +88,13 @@ public class TicketTest extends AbstractTest{
 	@Rollback(false)
 	public void testListTrainTicketInfo(){
 		
-		List<Train>  trainlist = trainTicketManagerService.listTrain();
-		System.out.println(trainlist.size());
-		List<Train> trains = trainTicketManagerService.findTrain("T5", "2013-06-18");
-		System.out.println("train size - " + trains.size());
-		List<Ticket> tickets = trainTicketManagerService.listTicket(ConstantValue.T5, ConstantValue.SOFT_SLEEP_CLASS);	
+//		List<Train>  trainlist = trainTicketManagerService.listTrain();
+//		System.out.println(trainlist.size());
+//		List<Train> trains = trainTicketManagerService.findTrain("T5", "2013-06-18");
+//		System.out.println("train size - " + trains.size());
+		List<Ticket> tickets = trainTicketManagerService.listTicket();	
 		for (Ticket ticket : tickets) {
-
+			
 		}
 	}
 	

@@ -6,12 +6,12 @@
 <struts>
 
    <package name="train12306" extends="antsirs-default" namespace="/train12306">
-   	   <action name="crawl12306" class="com.antsirs.train12306.action.Crawl12306Action">
+   	   <action name="crawlTicket" class="com.antsirs.train12306.action.Crawl12306Action">
    	   		<result name="success">/train12306/graphTrainTicket.jsp</result>	
    	   </action>
    	   
-   	   <action name="listTicket12306" class="com.antsirs.train12306.action.Crawl12306Action" method="listTicket">
-   	   		<result name="success">/train12306/listTicket12306.jsp</result>	
+   	   <action name="listTicket" class="com.antsirs.train12306.action.Crawl12306Action" method="listTicket">
+   	   		<result name="success">/train12306/listTicket.jsp</result>	
    	   </action>      
    </package>
 

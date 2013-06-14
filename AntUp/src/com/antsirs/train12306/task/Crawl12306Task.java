@@ -350,8 +350,8 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 	 * 
 	 */
 	public void doCrawl() throws JSONException {
-//		String info = crawlTrainTicketInfo(getUrl(), getProxy());
-		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
+		String info = crawlTrainTicketInfo(getUrl(), null);
+//		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
 		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
@@ -412,12 +412,12 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
         try {
         	startTime = System.currentTimeMillis();
         	logger.info("crawlTrainTicketInfo start. " + startTime);
-        	logger.info("crawl url: " + url.toString());        	
-        	if (proxy != null) {
-        		insr = new InputStreamReader(url.openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	} else {
-        		insr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
-        	}
+        	logger.info("crawl url: " + url.toString());
+//        	if (proxy != null) {
+//        	insr = new InputStreamReader(url.openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+//        	} else {
+        	insr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
+//        	}
 			IOUtils.copy(insr, sw);
 			sw.close();
 			insr.close();
