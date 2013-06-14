@@ -12,7 +12,11 @@
    	   
    	   <action name="listTicket" class="com.antsirs.train12306.action.Crawl12306Action" method="listTicket">
    	   		<result name="success">/train12306/listTicket.jsp</result>	
-   	   </action>      
+   	   </action>     
+   	   
+   	   <action name="listTodayTicket" class="com.antsirs.train12306.action.Crawl12306Action" method="listTodayTicket">
+   	   		<result name="success">/train12306/listTicket.jsp</result>	
+   	   </action>   
    </package>
 
 </struts>
