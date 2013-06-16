@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.datanucleus.jpa.annotations.Extension;
+
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "listTrain", query = "SELECT m FROM Train m"),
@@ -28,14 +30,20 @@ public class Train {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key trainId;
 	private String trainNo;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String fromStation;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String toStation;
 	private String departureDate;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String departureTime;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String arrvialTime;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String during;
 	private Date insertTime;
 	@OneToMany(targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private Set<Ticket> tickets = new HashSet<Ticket>();
 
 

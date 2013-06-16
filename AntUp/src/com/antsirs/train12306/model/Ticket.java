@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.datanucleus.jpa.annotations.Extension;
+
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "listTicket", query = "SELECT m FROM Ticket m"),
@@ -21,10 +23,12 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketId;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private Train train;
 	private String trainNo;
 	private String departureDate;
 	private String grade;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String count;
 	private Date insertTime;
 
