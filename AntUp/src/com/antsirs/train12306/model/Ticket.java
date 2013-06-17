@@ -25,11 +25,14 @@ public class Ticket {
 	private Key ticketId;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private Train train;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String trainNo;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String departureDate;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String grade;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
-	private String count;
+	private String count;	
 	private Date insertTime;
 
 	public Ticket() {

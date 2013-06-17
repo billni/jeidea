@@ -29,6 +29,7 @@ public class Train {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key trainId;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")	
 	private String trainNo;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String fromStation;
