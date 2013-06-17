@@ -42,6 +42,7 @@ public class Train {
 	private String arrvialTime;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String during;
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private Date insertTime;
 	@OneToMany(targetEntity=Ticket.class, mappedBy="train", fetch=FetchType.LAZY)
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")

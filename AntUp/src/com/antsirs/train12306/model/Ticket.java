@@ -33,6 +33,7 @@ public class Ticket {
 	private String grade;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String count;	
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private Date insertTime;
 
 	public Ticket() {
