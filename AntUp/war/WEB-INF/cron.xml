@@ -2,7 +2,8 @@
 <cronentries>
   <cron>
     <url>/train12306/crawlTicket.action</url>
-    <description>Repopulate the cache every 30 minutes</description>
-    <schedule>every 30 minutes</schedule>        
+    <description>populate the cache every 30 minutes</description>
+    <schedule>every 30 minutes</schedule>    
+     <timezone>Asia/Shanghai</timezone>       
   </cron>
 </cronentries>
