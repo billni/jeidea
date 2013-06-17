@@ -2,19 +2,29 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
-  <head>   
-    <title>Hello App Engine</title>
-  </head>
+<head>
+<title>Hello App Engine</title>
+<link rel="stylesheet" type="text/css"
+	href="/js/jquery-easyui-1.3.1/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="/js/jquery-easyui-1.3.1/themes/icon.css">
+<script type="text/javascript"
+	src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+<script type="text/javascript"
+	src="/js/jquery-easyui-1.3.1/jquery.easyui.min.js"></script>
 
-  <body>
-    <h1>Hello App Engine!</h1>	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
-      </tr>
-      <tr>
-        <td><a href="<%=request.getContextPath() %>/train12306/crawlTicket.action">AntUp</a></td>
-      </tr>
-    </table>
-  </body>
+</head>
+
+<body>
+	<h2>You are welcome.</h2>
+	<p>Web site introduction:</p>
+	<ul>
+		<li>Crawl a lot of thing for statistics.</li>
+		<li>Generate more 1000 units data daily.</li>
+		<li>Plan to run this website about 2 years.</li>
+		<li>This website source code use git to manage and architecture
+			use SSJ (Spring, Struts2, JPA).</li>
+	</ul>
+
+</body>
 </html>
