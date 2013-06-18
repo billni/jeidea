@@ -360,7 +360,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 			List<Ticket> ticketList = new ArrayList<Ticket>();
 			Train train = null;
 			if (trainTicketInfos != null) {
-				logger.info("save TrainTicketInfo, TrainTicketInfo size: " + trainTicketInfos.size());
+//				logger.info("save TrainTicketInfo, TrainTicketInfo size: " + trainTicketInfos.size());
 				for (TrainTicketInfo trainTicketInfo : trainTicketInfos) {
 					if (checkTicketResource(trainTicketInfo)) {
 						trainTicketInfo.setDepartureDate(getDepartureDate());
@@ -411,7 +411,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 		long startTime = 0L;
         try {
         	startTime = System.currentTimeMillis();
-        	logger.info("crawlTrainTicketInfo start. " + startTime);
+//        	logger.info("crawlTrainTicketInfo start. " + startTime);
         	logger.info("crawl url: " + url.toString());
 //        	if (proxy != null) {
 //        	insr = new InputStreamReader(url.openConnection(proxy).getInputStream(), "UTF-8" /*ContentType.getOrDefault*/);
@@ -425,7 +425,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 			logger.severe(e.getMessage());			
 			e.printStackTrace();
 		}        
-        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
+//        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
 		return sw.toString();
 	}
 
