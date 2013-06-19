@@ -355,8 +355,8 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 	 */
 	public List<Ticket> doCrawl() throws JSONException {
 		List<Ticket> ticketList = new ArrayList<Ticket>();
-		String info = crawlTrainTicketInfo(getUrl(), null);
-//		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
+//		String info = crawlTrainTicketInfo(getUrl(), null);
+		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
 		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);

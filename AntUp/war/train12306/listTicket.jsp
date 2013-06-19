@@ -8,6 +8,7 @@
 	<table border="1">
 	     <tr>
         		<th>流水号</th>
+        		<th>ticketId</th>
         		<th>车次</th>
         		<th>始发时间</th>
         		<th>座位等级</th>

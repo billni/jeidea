@@ -211,7 +211,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
 		if (ticketlist != null) {
-			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId");
+			tickets = new ArrayList<Ticket>();
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {
 
