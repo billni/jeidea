@@ -1,5 +1,6 @@
 package com.antsirs.train12306.action;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -13,6 +14,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
+
+import javax.transaction.Synchronization;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
@@ -21,15 +26,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.struts2.ServletActionContext;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.antsirs.core.util.zip.ZipUtils;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
+import com.antsirs.train12306.task.SendMultipartMessage;
 import com.google.appengine.api.ThreadManager;
 import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
-	
-	private static final Logger logger = Logger.getLogger(Crawl12306Action.class.getName());
+
+	private static final Logger logger = Logger
+			.getLogger(Crawl12306Action.class.getName());
 	public static final String PROXY_HOST = "10.18.8.60";
 	public static final int PROXY_PORT = 8008;
 	public static final String PROXY_USERNAME = "niyong";
@@ -39,11 +48,11 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public static final String URL = "http://dynamic.12306.cn/otsquery/query/queryRemanentTicketAction.do";
 
 	@Autowired
-	public TrainTicketManagerService trainTicketManagerService ;
-	
+	public TrainTicketManagerService trainTicketManagerService;
+
 	@Autowired
 	public Crawl12306Task task;
-	
+
 	/**
 	 * 
 	 * @param httpClient
@@ -62,18 +71,20 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 
 	/**
 	 * support java.net.url
+	 * 
 	 * @return
 	 */
-	public Proxy initProxy() {  
-        InetSocketAddress socketAddress;
-        Proxy proxy = null;
+	public Proxy initProxy() {
+		InetSocketAddress socketAddress;
+		Proxy proxy = null;
 		try {
-			socketAddress = new InetSocketAddress(InetAddress.getByName(PROXY_WORKSTATION), PROXY_PORT);
-			proxy = new Proxy(Proxy.Type.HTTP, socketAddress);  
+			socketAddress = new InetSocketAddress(
+					InetAddress.getByName(PROXY_WORKSTATION), PROXY_PORT);
+			proxy = new Proxy(Proxy.Type.HTTP, socketAddress);
 		} catch (Exception e) {
-			e.printStackTrace();			
-		}  
-		return proxy;        
+			e.printStackTrace();
+		}
+		return proxy;
 	}
 
 	/**
@@ -82,11 +93,11 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * @return
 	 */
 	public List<String> getFutureDays() {
-		List<String> list = new ArrayList<String>();		
-		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
-		for (int i = 0; i < 20; i++) {			
+		List<String> list = new ArrayList<String>();
+		Calendar calendar = new GregorianCalendar(Locale.CHINESE);
+		for (int i = 0; i < 20; i++) {
 			calendar.setTime(new Date());
-			calendar.add(Calendar.DATE, i);// 把日期往后增加一天.整数往后推,负数往前移动					
+			calendar.add(Calendar.DATE, i);// 把日期往后增加一天.整数往后推,负数往前移动
 			list.add(DateUtils.format(calendar.getTime(), "yyyy-MM-dd"));
 		}
 		return list;
@@ -96,35 +107,42 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      * 
      */
 	@SuppressWarnings("unchecked")
-	public String execute() throws Exception {		
-		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>)ServletActionContext.getServletContext().getAttribute("tickets");
+	public String execute() throws Exception {
+		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
+				.getServletContext().getAttribute("tickets");
 		if (tickets == null) {
 			logger.info("This tickets is null in web application, and new one at once now.");
 			tickets = new ArrayList<Future<List<Ticket>>>();
 		}
-		Crawl12306Task task = null;	
-		ExecutorService  executor = Executors.newCachedThreadPool(ThreadManager.currentRequestThreadFactory());
-		logger.info("Before Task executed, the count of active thread is: " + Thread.activeCount());		
+		Crawl12306Task task = null;
+		ExecutorService executor = Executors.newCachedThreadPool(ThreadManager
+				.currentRequestThreadFactory());
+		logger.info("Before Task executed, the count of active thread is: "
+				+ Thread.activeCount());
 		for (String date : getFutureDays()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
-			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()), null);
-//			task.initParameters(URL, date, null, initProxy());
-//			task.initParameters(URL, date, null, null);
+			task.initParameters(URL, date,
+					getHttpClient(new DefaultHttpClient()), null);
+			// task.initParameters(URL, date, null, initProxy());
+			// task.initParameters(URL, date, null, null);
 			task.setTrainTicketManagerService(trainTicketManagerService);
-			task.setEnvironment(ApiProxy.getCurrentEnvironment());	   
-		    Future<List<Ticket>> tasks = executor.submit(task);		    
-		    tickets.add(tasks);		    
-//			executor.execute(task);	
+			task.setEnvironment(ApiProxy.getCurrentEnvironment());
+			Future<List<Ticket>> future = executor.submit(task);
+			tickets.add(future);
+			// executor.execute(task);
 		}
 		executor.shutdown();
-		while (!executor.isTerminated()) {			
+		while (!executor.isTerminated()) {
 		}
-		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());
-	    ServletActionContext.getServletContext().setAttribute("tickets" , tickets);
+		logger.info("After Task executed, the count of active thread is: "
+				+ Thread.activeCount());
+		ServletActionContext.getServletContext().setAttribute("tickets",
+				tickets);
+
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 列出ticket
 	 * 
@@ -134,6 +152,51 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		tickets = trainTicketManagerService.listTicket();
 		return SUCCESS;
 	}
-	
+
+	/**
+	 * 通过邮件提取数据
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String extractData() {
+		int i = 0;
+		StringBuffer buff = new StringBuffer();		
+		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
+				.getServletContext().getAttribute("tickets");
+		if (tickets != null) {
+			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId");
+			try {
+				for (Future<List<Ticket>> future : tickets) {
+
+					for (Ticket ticket : future.get()) {
+						buff.append(i++);
+						buff.append(ticket.getTrainNo());
+						buff.append(ticket.getDepartureDate());
+						buff.append(ticket.getGrade());
+						buff.append(ticket.getCount());
+						buff.append(ticket.getInsertTime());
+						buff.append(ticket.getTicketId());
+						buff.append(IOUtils.LINE_SEPARATOR);
+						logger.info(" i: " + i++ + " ticket: "
+								+ ticket.getTrainNo() + " , count: "
+								+ ticket.getCount());
+					}
+				}
+				String msgContent = ZipUtils.compress(buff.toString());
+				SendMultipartMessage.sentMail(msgContent);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			logger.info("Extracted Data have mailed special mailbox. " + new Date());
+			synchronized (tickets) {
+				tickets = null;
+				ServletActionContext.getServletContext().setAttribute(
+						"tickets", tickets);
+			}
+			logger.info("Clean tickets from Application Context");
+		}
+		return SUCCESS;
+	}
 
 }
