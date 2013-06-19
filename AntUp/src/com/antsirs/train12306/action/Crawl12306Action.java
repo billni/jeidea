@@ -122,10 +122,14 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		for (String date : getFutureDays()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
+			//-- dev in office , use it.
 //			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
-			task.initParameters(URL, date,	new DefaultHttpClient(), null);
-			// task.initParameters(URL, date, null, initProxy());
-//			 task.initParameters(URL, date, null, null);
+			//-------------------dev in home, use it-------------------------
+//			task.initParameters(URL, date,	new DefaultHttpClient(), null);
+			//----------------------------------------------
+			//deploy gae product server , need use it
+			 task.initParameters(URL, date, null, null);
+			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			Future<List<Ticket>> future = executor.submit(task);
