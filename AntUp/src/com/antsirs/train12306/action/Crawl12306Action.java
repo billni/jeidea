@@ -113,15 +113,15 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 //			task.initParameters(URL, date, null, null);
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());	   
-		    Future<List<Ticket>> submit = executor.submit(task);
-		    tickets.add(submit);		    
-		    ServletActionContext.getServletContext().setAttribute("tickets" , tickets);		    
+		    Future<List<Ticket>> tasks = executor.submit(task);		    
+		    tickets.add(tasks);		    
 //			executor.execute(task);	
 		}
 		executor.shutdown();
 		while (!executor.isTerminated()) {			
 		}
-		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());				
+		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());
+	    ServletActionContext.getServletContext().setAttribute("tickets" , tickets);
 		return SUCCESS;
 	}
 	

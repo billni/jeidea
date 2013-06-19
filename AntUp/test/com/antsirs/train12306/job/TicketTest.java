@@ -3,12 +3,14 @@ package com.antsirs.train12306.job;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.struts2.ServletActionContext;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -43,8 +45,13 @@ public class TicketTest extends AbstractTest{
 	
 	@Test
 	@Rollback(false)
-	public void testCrawl() {	
-		List<Future<List<Ticket>>> tickets = new ArrayList<Future<List<Ticket>>>();
+	public void testCrawl() {
+		ThreadLocal<List<Future<List<Ticket>>>> tl = new ThreadLocal<List<Future<List<Ticket>>>> ();	
+		List<Future<List<Ticket>>> tickets = tl.get();
+		if (tickets == null) {
+			tickets = new ArrayList<Future<List<Ticket>>>();
+		}
+			
 		ExecutorService  executor = Executors.newFixedThreadPool(20);//(ThreadManager.currentRequestThreadFactory());
 		Crawl12306Action job = new Crawl12306Action();
 		Crawl12306Task task = null;			
@@ -63,7 +70,19 @@ public class TicketTest extends AbstractTest{
 		executor.shutdown();
 		while (!executor.isTerminated()) {			
 		}
-		
+		tl.set(tickets);
+	    int i=0;
+	    for (Future<List<Ticket>> future : tickets) {			
+			try {
+				for (Ticket ticket : future.get()) {
+					logger.info(" i: " + i++ + " ticket: "+ ticket.getTrainNo() + " , count: " + ticket.getCount());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+	    logger.info("tickets size from app " + tickets.size());
 		List<Train> trainlist = trainTicketManagerService.listTrain();
 		logger.info("Train count is " + trainlist.size());
 
