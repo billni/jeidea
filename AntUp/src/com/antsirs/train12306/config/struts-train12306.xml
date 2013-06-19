@@ -19,8 +19,12 @@
    	   </action>   
    	   
    	   <action name="extractData" class="com.antsirs.train12306.action.Crawl12306Action" method="extractData">
-   	   		<result name="success">/train12306/listTicket.jsp</result>	
+   	   		<result name="success">/train12306/listExtractData.jsp</result>	
    	   </action>   	   
+   	   
+   	   <action name="listExtractData" class="com.antsirs.train12306.action.Crawl12306Action" method="listExtractData">
+   	   		<result name="success">/train12306/listExtractData.jsp</result>	
+   	   </action>   
    </package>
 
 </struts>
