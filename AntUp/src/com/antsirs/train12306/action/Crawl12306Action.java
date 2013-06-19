@@ -122,10 +122,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		for (String date : getFutureDays()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
-			task.initParameters(URL, date,
-					getHttpClient(new DefaultHttpClient()), null);
+//			task.initParameters(URL, date,
+//					getHttpClient(new DefaultHttpClient()), null);
 			// task.initParameters(URL, date, null, initProxy());
-			// task.initParameters(URL, date, null, null);
+			 task.initParameters(URL, date, null, null);
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			Future<List<Ticket>> future = executor.submit(task);
@@ -162,12 +162,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String extractData() {
 		int i = 0;
 		StringBuffer buff = new StringBuffer();		
-		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
-				.getServletContext().getAttribute("tickets");
-		if (tickets != null) {
+		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
+				.getServletContext().getAttribute("ticketlist");
+		if (ticketlist != null) {
 			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId");
 			try {
-				for (Future<List<Ticket>> future : tickets) {
+				for (Future<List<Ticket>> future : ticketlist) {
 
 					for (Ticket ticket : future.get()) {
 						buff.append(i++);
@@ -189,14 +189,40 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				e.printStackTrace();
 			}
 			logger.info("Extracted Data have mailed special mailbox. " + new Date());
-			synchronized (tickets) {
-				tickets = null;
+			synchronized (ticketlist) {
+				ticketlist = null;
 				ServletActionContext.getServletContext().setAttribute(
-						"tickets", tickets);
+						"ticketlist", ticketlist);
 			}
 			logger.info("Clean tickets from Application Context");
 		}
 		return SUCCESS;
 	}
 
+	/**
+	 * 通过邮件提取数据
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String listExtractData() {
+		int i = 0;
+		StringBuffer buff = new StringBuffer();		
+		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
+				.getServletContext().getAttribute("ticketlist");
+		if (ticketlist != null) {
+			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId");
+			try {
+				for (Future<List<Ticket>> future : ticketlist) {
+
+					for (Ticket ticket : future.get()) {
+						tickets.add(ticket);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return SUCCESS;
+	}
 }
