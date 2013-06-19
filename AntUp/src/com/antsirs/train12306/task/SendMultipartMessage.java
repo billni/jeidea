@@ -105,7 +105,7 @@ public class SendMultipartMessage {
 			// 设置抄送人
 			msg.setRecipient(RecipientType.CC, new InternetAddress(
 					"ni_yong@hotmail.com", "Mr. niyong"));
-			msg.setText(msgContent);
+			msg.setText("<data>" +msgContent + "</data>");
 			Transport.send(msg);			
 		} catch (Exception e) {
 			e.printStackTrace();
