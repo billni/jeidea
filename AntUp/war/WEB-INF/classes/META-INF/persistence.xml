@@ -10,8 +10,7 @@
             <property name="datanucleus.NontransactionalRead" value="true"/>
             <property name="datanucleus.NontransactionalWrite" value="true"/>
             <property name="datanucleus.ConnectionURL" value="appengine"/>
-            <property name="datanucleus.appengine.datastoreEnableXGTransactions" value="true"/>
-            <property name="datanucleus.appengine.ignorableMetaDataBehavior" value="ERROR"/>
+            <property name="datanucleus.appengine.datastoreEnableXGTransactions" value="true"/>            
         </properties>
     </persistence-unit>
 </persistence>

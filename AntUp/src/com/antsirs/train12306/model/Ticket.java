@@ -26,7 +26,7 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketId;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
-	@ManyToOne(cascade = {CascadeType.REFRESH })   
+	@ManyToOne(cascade = {CascadeType.REFRESH }, fetch=FetchType.LAZY)   
 	private Train train;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String trainNo;

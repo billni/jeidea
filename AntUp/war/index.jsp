@@ -28,7 +28,7 @@
 
     <p>Available Action:</p>
     <ul>                
-    <li><a href="<%=request.getContextPath() %>/train12306/crawlTicket.action">AntUp</a></li>    
+    <li><a href="<%=request.getContextPath() %>/train12306/crawlTicket.action">Crawl Ticket</a></li>    
     </ul>
 </body>
 </html>
