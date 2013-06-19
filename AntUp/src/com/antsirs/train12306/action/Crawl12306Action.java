@@ -188,7 +188,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 					}
 				}
 				String msgContent = ZipUtils.compress(buff.toString());
-				SendMultipartMessage.sentMail(msgContent);
+				SendMultipartMessage.sentSimpleMail(msgContent);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
