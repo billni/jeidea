@@ -3,6 +3,8 @@ package com.antsirs.train12306.model;
 import java.util.Date;
 
 import com.google.appengine.api.datastore.Key;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketId;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
+	@ManyToOne(cascade = {CascadeType.REFRESH })   
 	private Train train;
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String trainNo;

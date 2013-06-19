@@ -125,13 +125,13 @@ public class Train {
 		this.departureDate = departureDate;
 	}
 
-	public Set<Ticket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
-	}
+//	public Set<Ticket> getTickets() {
+//		return tickets;
+//	}
+//
+//	public void setTickets(Set<Ticket> tickets) {
+//		this.tickets = tickets;
+//	}
 	
 	
 

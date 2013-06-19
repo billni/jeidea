@@ -36,5 +36,6 @@ $(function () {
 </head>
 <body>
 <div id="container" style="width:100%; height:400px;"></div>
+<a href="<%=request.getContextPath() %>/train12306/listTicket.action">List Tickets</a>
 </body>
 </html>

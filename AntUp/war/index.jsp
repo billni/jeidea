@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hello App Engine</title>
+<title>Stand On Cloud</title>
 <link rel="stylesheet" type="text/css"
 	href="/js/jquery-easyui-1.3.1/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
@@ -26,5 +26,9 @@
 			use SSJ (Spring, Struts2, JPA).</li>
 	</ul>
 
+    <p>Available Action:</p>
+    <ul>                
+    <li><a href="<%=request.getContextPath() %>/train12306/crawlTicket.action">AntUp</a></li>    
+    </ul>
 </body>
 </html>

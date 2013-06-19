@@ -23,14 +23,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
+
+import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.apphosting.api.ApiProxy;
 import com.google.apphosting.api.ApiProxy.Environment;
 
-public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
+public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<List<Ticket>>{
 	private static final Logger logger = Logger.getLogger(Crawl12306Task.class.getName());
+	
+	
 	
 	public Crawl12306Task() {
 	}
@@ -349,15 +353,16 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 	 * @throws JSONException
 	 * 
 	 */
-	public void doCrawl() throws JSONException {
-		String info = crawlTrainTicketInfo(getUrl(), null);
-//		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
+	public List<Ticket> doCrawl() throws JSONException {
+		List<Ticket> ticketList = new ArrayList<Ticket>();
+//		String info = crawlTrainTicketInfo(getUrl(), null);
+		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
 		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
 			String data = jsonObject.get("datas").toString();
 			List<TrainTicketInfo> trainTicketInfos = anaylseTrainTicketInfo(data);
-			List<Ticket> ticketList = new ArrayList<Ticket>();
+			
 			Train train = null;
 			if (trainTicketInfos != null) {
 //				logger.info("save TrainTicketInfo, TrainTicketInfo size: " + trainTicketInfos.size());
@@ -371,20 +376,14 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 				trainTicketManagerService.batchInsert(ticketList);
 			}
 		}
+		return ticketList;
 	}
 
 	/**
 	     * 
 	     */
 	public void run() {		
-		ApiProxy.setEnvironmentForCurrentThread(environment);
-		trainTicketManagerService = getTrainTicketManagerService();
-		try {			
-			doCrawl();			
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.severe("出现异常 - " + e.getMessage());
-		}
+
 	}
 	
 	/**
@@ -429,4 +428,19 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Runnable {
 		return sw.toString();
 	}
 
+	/**
+	 * return list to crawl action
+	 */
+	public List<Ticket> call() throws Exception {
+		List<Ticket> tickets = null;
+		ApiProxy.setEnvironmentForCurrentThread(environment);
+		trainTicketManagerService = getTrainTicketManagerService();
+		try {			
+			tickets = doCrawl();			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.severe("出现异常 - " + e.getMessage());
+		}
+		return tickets;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -42,7 +43,8 @@ public class TicketTest extends AbstractTest{
 	
 	@Test
 	@Rollback(false)
-	public void testCrawl() {		
+	public void testCrawl() {	
+		List<Future<List<Ticket>>> tickets = new ArrayList<Future<List<Ticket>>>();
 		ExecutorService  executor = Executors.newFixedThreadPool(20);//(ThreadManager.currentRequestThreadFactory());
 		Crawl12306Action job = new Crawl12306Action();
 		Crawl12306Task task = null;			
@@ -54,7 +56,9 @@ public class TicketTest extends AbstractTest{
 			task.initParameters(Crawl12306Action.URL, date, job.getHttpClient(new DefaultHttpClient()), null);			
 //			task.initParameters(Crawl12306Action.URL, date, null, job.initProxy());
 //			task.initParameters(Crawl12306Action.URL,  date , null, null);		
-			executor.execute(task);	
+//			executor.execute(task);	
+		    Future<List<Ticket>> submit = executor.submit(task);
+		    tickets.add(submit);
 		}
 		executor.shutdown();
 		while (!executor.isTerminated()) {			
@@ -148,14 +152,14 @@ public class TicketTest extends AbstractTest{
 		ticket.setCount("12");
 		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
 		ticket.setTrainNo("T5");
-		ticket.setTrain(train);		
+//		ticket.setTrain(train);		
 		tickets.add(ticket);
 		
 		ticket = new Ticket();
 		ticket.setCount("25");
 		ticket.setTrainNo("T5");		
 		ticket.setGrade("ConstantValue.SOFT_SLEEP_CLASS");
-		ticket.setTrain(train);
+//		ticket.setTrain(train);
 		tickets.add(ticket);
 		
 		trainTicketManagerService.batchInsert(tickets);
@@ -163,7 +167,7 @@ public class TicketTest extends AbstractTest{
 		List<Ticket> ts = trainTicketManagerService.listTicket();	
 		logger.info("ticket count is " + ts.size());
 		for (Ticket ti : ts) {
-			logger.info("ticket -" + ti.getTrain().getTrainNo());
+//			logger.info("ticket -" + ti.getTrain().getTrainNo());
 		}
 		
 	}

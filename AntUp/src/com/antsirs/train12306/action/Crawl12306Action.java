@@ -3,7 +3,6 @@ package com.antsirs.train12306.action;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,14 +11,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.struts2.ServletActionContext;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.google.appengine.api.ThreadManager;
@@ -93,19 +95,28 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	/**
      * 
      */
+	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {		
+		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>)ServletActionContext.getServletContext().getAttribute("tickets");
+		if (tickets == null) {
+			logger.info("This tickets is null in web application, and new one at once now.");
+			tickets = new ArrayList<Future<List<Ticket>>>();
+		}
 		Crawl12306Task task = null;	
 		ExecutorService  executor = Executors.newCachedThreadPool(ThreadManager.currentRequestThreadFactory());
 		logger.info("Before Task executed, the count of active thread is: " + Thread.activeCount());		
 		for (String date : getFutureDays()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
-//			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date, getHttpClient(new DefaultHttpClient()), null);
 //			task.initParameters(URL, date, null, initProxy());
-			task.initParameters(URL, date, null, null);
+//			task.initParameters(URL, date, null, null);
 			task.setTrainTicketManagerService(trainTicketManagerService);
-			task.setEnvironment(ApiProxy.getCurrentEnvironment());
-			executor.execute(task);	
+			task.setEnvironment(ApiProxy.getCurrentEnvironment());	   
+		    Future<List<Ticket>> submit = executor.submit(task);
+		    tickets.add(submit);		    
+		    ServletActionContext.getServletContext().setAttribute("tickets" , tickets);		    
+//			executor.execute(task);	
 		}
 		executor.shutdown();
 		while (!executor.isTerminated()) {			

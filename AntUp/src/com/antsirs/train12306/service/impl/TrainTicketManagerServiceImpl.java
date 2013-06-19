@@ -1,6 +1,7 @@
 package com.antsirs.train12306.service.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -95,8 +96,13 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		int i = 0;
 		
 		for(Ticket ticket : tickets){
-			ticket.setTrain(em.find(Train.class, ticket.getTrain().getTrainId()));
-			em.persist(ticket);	
+			Train train = em.find(Train.class, ticket.getTrain().getTrainId());
+//			Set<Ticket> ticketSet = train.getTickets();
+//			ticketSet.add(ticket);
+//			train.setTickets(ticketSet);
+//			em.merge(train);
+			ticket.setTrain(train);
+			em.persist(ticket);
 			i++;
 			if( i % batchSize == 0 ){
 				em.flush();
