@@ -108,11 +108,11 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
-		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
-				.getServletContext().getAttribute("tickets");
-		if (tickets == null) {
+		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
+				.getServletContext().getAttribute("ticketlist");
+		if (ticketlist == null) {
 			logger.info("This tickets is null in web application, and new one at once now.");
-			tickets = new ArrayList<Future<List<Ticket>>>();
+			ticketlist = new ArrayList<Future<List<Ticket>>>();
 		}
 		Crawl12306Task task = null;
 		ExecutorService executor = Executors.newCachedThreadPool(ThreadManager
@@ -122,14 +122,14 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		for (String date : getFutureDays()) {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
-//			task.initParameters(URL, date,
-//					getHttpClient(new DefaultHttpClient()), null);
+//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			// task.initParameters(URL, date, null, initProxy());
-			 task.initParameters(URL, date, null, null);
+//			 task.initParameters(URL, date, null, null);
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			Future<List<Ticket>> future = executor.submit(task);
-			tickets.add(future);
+			ticketlist.add(future);
 			// executor.execute(task);
 		}
 		executor.shutdown();
@@ -137,8 +137,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		}
 		logger.info("After Task executed, the count of active thread is: "
 				+ Thread.activeCount());
-		ServletActionContext.getServletContext().setAttribute("tickets",
-				tickets);
+		ServletActionContext.getServletContext().setAttribute("ticketlist",
+				ticketlist);
 
 		return SUCCESS;
 	}
