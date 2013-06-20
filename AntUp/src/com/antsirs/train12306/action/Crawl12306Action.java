@@ -224,8 +224,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			logger.info("ticket size "+ tickets.size());
 		}
-		logger.info("ticket size "+ tickets.size());
 		return SUCCESS;
 	}
 }
