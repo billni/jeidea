@@ -212,8 +212,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String listExtractData() {
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
-		logger.info("listExtractData, application context have ticket quantity: " + ticketlist.size());
 		if (ticketlist != null) {
+			logger.info("listExtractData, application context have ticket quantity: " + ticketlist.size());
 			tickets = new ArrayList<Ticket>();
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {

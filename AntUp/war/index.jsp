@@ -29,6 +29,9 @@
     <p>Available Action:</p>
     <ul>                
     <li><a href="<%=request.getContextPath() %>/train12306/crawlTicket.action">Crawl Ticket</a></li>    
+   <li> <a href="<%=request.getContextPath() %>/train12306/listTicket.action">List Tickets</a></li> 
+<li><a href="<%=request.getContextPath() %>/train12306/extractData.action">Extract Data</a></li> 
+<li><a href="<%=request.getContextPath() %>/train12306/listExtractData.action">List Extract Data</li> 
     </ul>
 </body>
 </html>
