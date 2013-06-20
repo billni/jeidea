@@ -127,8 +127,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
-			//deploy gae product server , need use it
-			 task.initParameters(URL, date, null, null);
+//			deploy gae produce server , need use it
+			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
@@ -210,15 +210,13 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 */
 	@SuppressWarnings("unchecked")
 	public String listExtractData() {
-		int i = 0;
-		StringBuffer buff = new StringBuffer();		
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
+		logger.info("listExtractData, application context have ticket quantity: " + ticketlist.size());
 		if (ticketlist != null) {
 			tickets = new ArrayList<Ticket>();
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {
-
 					for (Ticket ticket : future.get()) {
 						tickets.add(ticket);
 					}
@@ -227,6 +225,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				e.printStackTrace();
 			}
 		}
+		logger.info("ticket size "+ tickets.size());
 		return SUCCESS;
 	}
 }

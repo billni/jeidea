@@ -355,7 +355,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 	 */
 	public List<Ticket> doCrawl() throws JSONException {
 		List<Ticket> ticketList = new ArrayList<Ticket>();
-		//deploy on gae product server ,use it
+		//deploy on gae produce server ,use it
 		String info = crawlTrainTicketInfo(getUrl(), null);
 		//-----dev in home, use it
 //		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
@@ -419,7 +419,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			logger.severe(e.getMessage());			
 			e.printStackTrace();
 		}        
-//        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
+        logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
 		return sw.toString();
 	}
 
