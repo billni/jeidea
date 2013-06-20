@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
-<script src="/js/highcharts/highcharts.js"></script>	
+<script src="<%=request.getContextPath() %>/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/highcharts/highcharts.js"></script>	
 <script type="text/javascript">
 $(function () { 
     $('#container').highcharts({
