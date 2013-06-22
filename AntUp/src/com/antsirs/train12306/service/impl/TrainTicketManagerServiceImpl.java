@@ -94,7 +94,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		et.begin();
 		int batchSize = 100;		
 		int i = 0;
-		
+		logger.info("batch insert ticket count - " + tickets.size());
 		for(Ticket ticket : tickets){
 			Train train = em.find(Train.class, ticket.getTrain().getTrainId());
 //			Set<Ticket> ticketSet = train.getTickets();

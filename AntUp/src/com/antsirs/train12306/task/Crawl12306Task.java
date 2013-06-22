@@ -332,6 +332,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			ticket.setCount(trainTicketInfo.getOthers());
 			tickets.add(saveTicket(ticket, train));
 		}	
+		logger.info("crawl trainNo - " + train.getTrainNo() + " departureDate - " + train.getDepartureDate() + "  ticket count - " + tickets.size());
 		return tickets;
 	}
 	
@@ -374,7 +375,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 						train = createTrainInfo(trainTicketInfo);
 						ticketList.addAll(createTicketInfo(train, trainTicketInfo));						
 					}
-				}
+				}				
 				trainTicketManagerService.batchInsert(ticketList);
 			}
 		}

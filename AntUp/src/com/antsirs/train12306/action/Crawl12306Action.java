@@ -197,6 +197,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				ticketlist = null;
 				ServletActionContext.getServletContext().setAttribute(
 						"ticketlist", ticketlist);
+				i = 0;
 			}
 			logger.info("Clean tickets from Application Context");
 		}
