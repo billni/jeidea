@@ -187,8 +187,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						buff.append(",");
 						buff.append(ticket.getInsertTime());
 						buff.append(",");
-						buff.append(ticket.getTicketId());
-						buff.append(",");
+						buff.append(ticket.getTicketId());						
 						buff.append(IOUtils.LINE_SEPARATOR);
 						logger.info(" i: " + i++ + " ticket: "
 								+ ticket.getTrainNo() + " , count: "
