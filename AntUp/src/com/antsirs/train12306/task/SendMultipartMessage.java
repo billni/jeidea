@@ -98,13 +98,15 @@ public class SendMultipartMessage {
 					+ DateUtil.formatDateTime(new Date()));
 
 			// 设置发送人
-			msg.setFrom(new InternetAddress("niyong2008@gmail.com"));
+			msg.setFrom(new InternetAddress("niyong@jeidea.com"));
 			// 设置收件人
 			msg.setRecipient(RecipientType.TO, new InternetAddress(
 					"niyong2008@gmail.com", "Mr. niyong"));
 			// 设置抄送人
 			msg.setRecipient(RecipientType.CC, new InternetAddress(
 					"ni_yong@hotmail.com", "Mr. niyong"));
+			msg.setRecipient(RecipientType.CC, new InternetAddress(
+					"niyong@jeidea.com", "Mr. niyong"));
 			msg.setText("<data>" +msgContent + "</data>");
 			Transport.send(msg);			
 		} catch (Exception e) {
