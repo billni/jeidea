@@ -3,6 +3,8 @@ package com.antsirs.core.util.zip;
 import java.io.*;
 import java.util.zip.*;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class ZipUtils {
 
 	public static void zipStream() throws Exception {
@@ -79,7 +81,7 @@ public class ZipUtils {
 	/**
 	 * 将字符串编码成16进制数字,适用于所有字符（包括中文）
 	 */
-	public static String encode(String str) {
+	public static String encode16(String str) {
 		// 根据默认编码获取字节数组
 		byte[] bytes = str.getBytes();
 		StringBuilder sb = new StringBuilder(bytes.length * 2);
@@ -94,7 +96,7 @@ public class ZipUtils {
 	/**
 	 * 将16进制数字解码成字符串,适用于所有字符（包括中文）
 	 */
-	public static String decode(String bytes) {
+	public static String decode16(String bytes) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(
 				bytes.length() / 2);
 		// 将每2位16进制整数组装成一个字节
@@ -104,4 +106,27 @@ public class ZipUtils {
 		return new String(baos.toByteArray());
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String encode64(String str){
+		Base64 base64 = new Base64();
+		try {
+			str = base64.encodeToString(str.getBytes("UTF-8"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return str;
+		}
+
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String decode64(String str) {
+		return new String(Base64.decodeBase64(str));
+	}
 }

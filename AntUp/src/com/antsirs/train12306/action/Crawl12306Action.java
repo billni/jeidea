@@ -170,17 +170,25 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				.getServletContext().getAttribute("ticketlist");
 		if (ticketlist != null) {
 			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId");
+			buff.append(IOUtils.LINE_SEPARATOR);
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {
 
 					for (Ticket ticket : future.get()) {
 						buff.append(i++);
+						buff.append(",");
 						buff.append(ticket.getTrainNo());
+						buff.append(",");
 						buff.append(ticket.getDepartureDate());
+						buff.append(",");
 						buff.append(ticket.getGrade());
+						buff.append(",");
 						buff.append(ticket.getCount());
+						buff.append(",");
 						buff.append(ticket.getInsertTime());
+						buff.append(",");
 						buff.append(ticket.getTicketId());
+						buff.append(",");
 						buff.append(IOUtils.LINE_SEPARATOR);
 						logger.info(" i: " + i++ + " ticket: "
 								+ ticket.getTrainNo() + " , count: "
@@ -188,7 +196,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 					}
 				}
 				String msgContent = ZipUtils.compress(buff.toString());
-				msgContent = ZipUtils.encode(msgContent);
+				msgContent = ZipUtils.encode64(msgContent);
 				SendMultipartMessage.sentSimpleMail(msgContent);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -229,5 +237,5 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			logger.info("ticket size "+ tickets.size());
 		}
 		return SUCCESS;
-	}
+	}		
 }

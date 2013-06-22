@@ -222,4 +222,53 @@ public class TicketTest extends AbstractTest {
 		}
 		logger.info("after unCompressed, String length : " + ret.length() +  " content " + ret);
 	}
+
+	public void testEncodeString(){
+		 StringBuffer buff = new StringBuffer();
+		 buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId,");
+		 buff.append(1);
+		 buff.append("T189");
+		 buff.append("2013-06-12");
+		 buff.append("SoftSeatClass");
+		 buff.append(123);
+		 buff.append(new Date());
+		 buff.append("123213AEC");
+		 buff.append(",");
+		 buff.append(2);
+		 buff.append("T189");
+		 buff.append("2013-06-12");
+		 buff.append("SoftSeatClass");
+		 buff.append(123);
+		 buff.append(new Date());
+		 buff.append("123213AEC");
+		 buff.append(",");
+		 buff.append(3);
+		 buff.append("T189");
+		 buff.append("2013-06-12");
+		 buff.append("SoftSeatClass");
+		 buff.append(123);
+		 buff.append(new Date());
+		 buff.append("123213AEC");
+		 buff.append("中国");
+		 buff.append(",");
+		 String str = buff.toString();
+		 System.out.println("1- " + str.length() + " str -" + str);
+		 try {
+			str = ZipUtils.compress(str);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 str = ZipUtils.encode64(str);
+		 System.out.println("2- " + str.length() + " str -" + str);
+		 str = ZipUtils.decode64(str);
+		 System.out.println("2- " + str.length() + " str -" + str);
+		 try {
+			str = ZipUtils.unCompress(str, "UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 System.out.println("3- " + str.length() + " str -" + str);
+	}
 }
