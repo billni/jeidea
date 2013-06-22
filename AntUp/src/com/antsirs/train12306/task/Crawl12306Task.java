@@ -243,7 +243,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			logger.info("Create a train completed  - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 		} else {
 			train = (Train) list.get(0);
-			logger.info("find a train record - " + train.getTrainNo() + " DepartureDate - " + train.getDepartureDate() );
+//			logger.info("find a train record - " + train.getTrainNo() + " DepartureDate - " + train.getDepartureDate() );
 		}
 		return train;
 	}
