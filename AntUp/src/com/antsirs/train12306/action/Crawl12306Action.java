@@ -202,7 +202,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			}
 			logger.info("Extracted Data have mailed special mailbox. " + new Date());
 			synchronized (ticketlist) {
-				ticketlist = null;
+				ticketlist = new ArrayList<Future<List<Ticket>>>();
 				ServletActionContext.getServletContext().setAttribute(
 						"ticketlist", ticketlist);
 				i = 0;
