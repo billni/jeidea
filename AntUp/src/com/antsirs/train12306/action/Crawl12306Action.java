@@ -1,5 +1,7 @@
 package com.antsirs.train12306.action;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -231,5 +233,27 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			logger.info("ticket size "+ tickets.size());
 		}
 		return SUCCESS;
-	}		
+	}	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String convertData() {		
+		data = ZipUtils.decode64(data);
+		 try {
+			 data = ZipUtils.unCompress(data, "UTF-8");									
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		return SUCCESS;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String uploadData() {	
+		return SUCCESS;
+	}
 }

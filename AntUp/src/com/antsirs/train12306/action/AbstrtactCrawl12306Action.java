@@ -18,6 +18,16 @@ public abstract class AbstrtactCrawl12306Action extends BaseActionSupport{
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
 	}
+
+	public String data;
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
 	
 	
 }

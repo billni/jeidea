@@ -8,6 +8,10 @@
 	height:100px
 }
 
+body {
+	width :95%;
+	margin: 3px auto;	
+}
 
 a {text-decoration:none;}
 

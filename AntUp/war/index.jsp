@@ -11,8 +11,8 @@
 <script type="text/javascript"
 	src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
 <script type="text/javascript"
-	src="/js/jquery-easyui-1.3.1/jquery.easyui.min.js"></script>
-
+	src="/js/jquery-easyui-1.3.1/jquery.easyui.min.js"></script>	
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

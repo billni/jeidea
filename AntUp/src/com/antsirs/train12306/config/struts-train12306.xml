@@ -24,7 +24,15 @@
    	   
    	   <action name="listExtractData" class="com.antsirs.train12306.action.Crawl12306Action" method="listExtractData">
    	   		<result name="success">/train12306/listExtractData.jsp</result>	
-   	   </action>   
+   	   </action>
+   	   
+   	   <action name="convertData" class="com.antsirs.train12306.action.Crawl12306Action" method="convertData">
+   	   		<result name="success">/train12306/convertData.jsp</result>	
+   	   </action> 
+   	   
+   	   <action name="uploadData" class="com.antsirs.train12306.action.Crawl12306Action" method="uploadData">
+   	   		<result name="success">/train12306/uploadData.jsp</result>	
+   	   </action>    	   
    </package>
 
 </struts>
