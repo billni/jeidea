@@ -173,7 +173,6 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			buff.append(IOUtils.LINE_SEPARATOR);
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {
-
 					for (Ticket ticket : future.get()) {
 						buff.append(i++);
 						buff.append(",");
@@ -185,14 +184,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						buff.append(",");
 						buff.append(ticket.getCount());
 						buff.append(",");
-						buff.append(ticket.getInsertTime());
-						buff.append(",");
-						buff.append(ticket.getTicketId());						
+						buff.append(ticket.getInsertTime());											
 						buff.append(IOUtils.LINE_SEPARATOR);
-						logger.info(" i: " + i + " ticket: "
-								+ ticket.getTrainNo() + " , count: "
-								+ ticket.getCount());
 					}
+					logger.info("ticket count: " + future.get().size());
 				}
 				String msgContent = ZipUtils.compress(buff.toString());
 				msgContent = ZipUtils.encode64(msgContent);
@@ -200,7 +195,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			logger.info("Extracted Data have mailed special mailbox. " + new Date());
+			logger.info("Extracted Data have mailed special mailbox. " + new Date(GregorianCalendar.getInstance(Locale.CHINA).getTimeInMillis()));
 			synchronized (ticketlist) {
 				ticketlist = new ArrayList<Future<List<Ticket>>>();
 				ServletActionContext.getServletContext().setAttribute(
