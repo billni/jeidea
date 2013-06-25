@@ -10,8 +10,7 @@
 	<table border="">
 	     <tr>
         		<td>
-        			<textarea name="data" rows="15" cols="20" style="height:800px; width:900px">        		
-        			</textarea>
+        			<textarea name="data" style="height:800px; width:900px"></textarea>
         		</td>
 		 </tr>
      </table>
