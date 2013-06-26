@@ -1,0 +1,35 @@
+<meta charset="utf-8"/>			
+<div class="rightbg">
+	<div class="leftbg">
+		<div class="padding">
+			<ul>
+				<li><a id="mIndex" href="/index.jsp">首页</a></li>
+				<li><a id="mNews" href="/news/news.jsp">新闻中心</a></li>
+				<li><a id="mInstitute" href="/institute/institute.jsp">博胜学院</a></li>
+				<li><a id="mConsult" href="/consult/consult.jsp">咨询服务</a></li>
+				<li><a id="mDevelop" href="/develop/develop.jsp">产品研发</a></li>	
+				<li><a id="mContact" href="/messagemanager/contact.jsp">联系我们</a></li>
+			</ul>
+			<br class="clear" />
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	if ($("meta[name='pagename']").attr("content") == "index") {		
+		$("#mIndex").css("font-weight" ,900);
+	} else if ($("meta[name='pagename']").attr("content") == "news") {		
+		$("#mNews").css("font-weight" ,900);
+	} else if ($("meta[name='pagename']").attr("content") == "institute") {		
+		$("#mInstitute").css("font-weight" ,900);
+	} else if ($("meta[name='pagename']").attr("content") == "consult") {		
+		$("#mConsult").css("font-weight" ,900);
+	} else if ($("meta[name='pagename']").attr("content") == "develop") {		
+		$("#mDevelop").css("font-weight" ,900);
+	} else if ($("meta[name='pagename']").attr("content") == "contact") {		
+		$("#mContact").css("font-weight" ,900);
+	}
+	
+});
+</script>
