@@ -171,7 +171,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
 		if (ticketlist != null) {
-			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime,TicketId");
+			buff.append("SerialNo,TrainNo,DepartureDate,Grade,Count,InsertTime");
 			buff.append(IOUtils.LINE_SEPARATOR);
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {
@@ -242,7 +242,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String convertData() {		
 		data = ZipUtils.decode64(data);
 		 try {
-			 data = ZipUtils.unCompress(data, "UTF-8");									
+			 data = ZipUtils.unCompress(data, "ISO-8859-1");									
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	

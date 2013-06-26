@@ -56,7 +56,7 @@ public class ZipUtils {
 	 * @return 返回解压缩后的字符串
 	 * @throws IOException
 	 */
-	public static String unCompress(String str, String charsetName) throws IOException {
+	public static String unCompress(String str, String charsetName) throws IOException {		
 	    if (str == null || str.length() == 0) {   
 	        return str;   
 	    }   
