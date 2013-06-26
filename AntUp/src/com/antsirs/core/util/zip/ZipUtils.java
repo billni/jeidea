@@ -127,6 +127,12 @@ public class ZipUtils {
 	 * @return
 	 */
 	public static String decode64(String str) {
-		return new String(Base64.decodeBase64(str));
+		String ret = "";
+		try {
+			ret = new String(Base64.decodeBase64(str), "UTF-8");
+		} catch (UnsupportedEncodingException e) {			
+			e.printStackTrace();
+		}
+		return ret;
 	}
 }

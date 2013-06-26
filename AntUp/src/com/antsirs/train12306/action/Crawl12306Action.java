@@ -242,7 +242,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String convertData() {		
 		data = ZipUtils.decode64(data);
 		 try {
-			 data = ZipUtils.unCompress(data, "ISO-8859-1");									
+			 data = ZipUtils.unCompress(data, "UTF-8");									
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
