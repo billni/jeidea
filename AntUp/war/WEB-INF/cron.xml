@@ -9,8 +9,8 @@
   
   <cron>
     <url>/train12306/extractData.action</url>
-    <description>populate the cache every 3 hours</description>
-    <schedule>every 3 hours</schedule>    
+    <description>populate the cache every 2 hours</description>
+    <schedule>every 2 hours</schedule>    
      <timezone>Asia/Shanghai</timezone>       
   </cron>  
 </cronentries>
