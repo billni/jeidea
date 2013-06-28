@@ -19,4 +19,7 @@
 	<static-files>
 		<include path="/favicon.ico" />
 	</static-files>
+	<inbound-services>
+		<service>mail_bounce</service>
+	</inbound-services>
 </appengine-web-app>
