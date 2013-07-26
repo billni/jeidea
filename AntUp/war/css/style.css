@@ -8,11 +8,18 @@
 	height:100px
 }
 
-body {
-	width :80%;
-	margin: 15px auto;	
-	padding:0;
-	border:0;	
+html,body {
+	background-image: -moz-linear-gradient(top, #8fa1ff, #3757fa); /* Firefox */
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff4f02), color-stop(1, #8f2c00)); /* Saf4+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFCC99', endColorstr='#CCFF66', GradientType='0'); /* IE*/
+	height:100%;		
+}
+
+html,#body {
+	margin: 0px 80px 0px 80px;	
+	padding: 0px;
+	background:#fff;
+	height:100%;	
 }
 
 a {text-decoration:none;}
@@ -24,7 +31,7 @@ ul { list-style:none;}
 
 .left { float:left;}
 .right {float:right;}
-.clear  { clear:both;}
+.clear  {clear:both;}
 
 
 html, input, textarea
