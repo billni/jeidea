@@ -1,12 +1,9 @@
 package com.antsirs.train12306.action;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,9 +14,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
-
-import javax.transaction.Synchronization;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -29,7 +23,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.struts2.ServletActionContext;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.antsirs.core.util.zip.ZipUtils;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
@@ -147,9 +140,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		ServletActionContext.getServletContext().setAttribute("ticketlist",
 				ticketlist);
 
-		return SUCCESS;
+		return NONE;
 	}
-
+	
 	/**
 	 * 列出ticket
 	 * 
@@ -255,6 +248,40 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * @return
 	 */
 	public String uploadData() {	
+		return SUCCESS;
+	}
+
+	/**
+     * output to highcharts
+     */
+	@SuppressWarnings("unchecked")
+	public String drawTicket() throws Exception {
+		StringBuffer xAxis = new StringBuffer("[");
+		for (String date : getFutureDays()) {			
+			xAxis.append("'" + date + "',");			
+		};
+		xAxis.deleteCharAt(xAxis.capacity()-1);
+		xAxis.append("]");
+		
+		StringBuffer buff = new StringBuffer();		
+		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext.getServletContext().getAttribute("ticketlist");
+		if (ticketlist != null) {			
+			try {
+				for (Future<List<Ticket>> future : ticketlist) {
+					for (Ticket ticket : future.get()) {				
+						buff.append(ticket.getTrainNo());
+						buff.append(",");
+						buff.append(ticket.getDepartureDate());
+						buff.append(",");
+						buff.append(ticket.getGrade());
+						buff.append(",");
+						buff.append(ticket.getCount());						
+					}					
+				}				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
+		}
 		return SUCCESS;
 	}
 }
