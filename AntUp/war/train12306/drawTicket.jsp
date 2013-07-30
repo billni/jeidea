@@ -6,17 +6,16 @@
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/highcharts/highcharts.js"></script>	
 <script type="text/javascript">
-$(function () {
-	    var t5HardSleepTicketCount = "<s:property value='t5HardSleepTicketCount'/>";
-	    var startDate = new Date("<s:property value='drawChartStartDate'/>");
+$(function () {	   		
+	    var startDate = new Date("<s:property value='drawChartStartDate'/>");	    
 	    
-        $('#container').highcharts({
+        var options = {
             chart: {
                 zoomType: 'x',
+                renderTo: 'container',
                 spacingRight: 20
             },
-            title: {
-                text: 'Ticket Change Trend'
+            title: {               
             },
             subtitle: {
                 text: document.ontouchstart === undefined ?
@@ -25,11 +24,11 @@ $(function () {
             },
             xAxis: {
                 type: 'datetime',
-                minRange: 12 * 3600 * 1000,
+                minRange: 4 * 3600 * 1000,
                 title: {
                     text: null
                 },
-                minTickInterval : 15 *60 * 1000
+                minTickInterval : 15 * 60 * 1000
             },
             yAxis: {
                 title: {
@@ -46,10 +45,70 @@ $(function () {
                 type: 'line',
                 name: 'T5-HardSleep',
                 pointInterval:  900 * 1000,
-                pointStart: Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate()),
-                data: t5HardSleepTicketCount
-            }]
-        });
+                data: [<s:property value='t5HardSleepTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'T5-SoftSleep',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='t5SoftSleepTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'T5-HardSeat',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='t5HardSeatTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'T189-HardSleep',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='t189HardSleepTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'T189-SoftSleep',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='t189SoftSleepTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'T189-HardSeat',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='t189HardSeatTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'K157-HardSleep',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='k157HardSleepTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'K157-SoftSleep',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='k157SoftSleepTicketCount'/>]
+            },
+            {
+                type: 'line',
+                name: 'K157-HardSeat',
+                pointInterval:  900 * 1000,
+                data: [<s:property value='k157HardSeatTicketCount'/>]
+            }
+            
+            ]
+        };
+        options.series[0].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        options.series[1].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        options.series[2].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());     
+        options.series[3].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        options.series[4].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        options.series[5].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()); 
+        options.series[6].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        options.series[7].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        options.series[8].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()); 
+        options.title.text = "<s:property value='drawChartEndDate'/>"+ " Ticket Change Trend";
+        var chart = new Highcharts.Chart(options);
 });​
 
 </script>	 		

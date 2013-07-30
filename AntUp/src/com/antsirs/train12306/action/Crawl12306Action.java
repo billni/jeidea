@@ -107,7 +107,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String getEndDate(int special) {
 		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
 		calendar.setTime(new Date());
-		calendar.add(Calendar.DATE, special);
+		calendar.add(Calendar.DATE, special-1);
 		return DateUtils.format(calendar.getTime(), "yyyy-MM-dd");
 	}
 
@@ -131,12 +131,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			//-- dev in office , use it.
-//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
 //			deploy gae produce server , need use it
-			task.initParameters(URL, date, null, null);
+//			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
@@ -152,6 +152,102 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		ServletActionContext.getServletContext().setAttribute("ticketlist",
 				ticketlist);
 
+		//-------------for draw highcharts----------------
+		drawChartStartDate = (String)ServletActionContext.getServletContext().getAttribute("drawChartStartDate");
+		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
+			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
+			ServletActionContext.getServletContext().setAttribute("drawChartStartDate", drawChartStartDate);
+		}
+	
+		drawChartEndDate = getEndDate(20);
+
+		if (ticketlist != null) {			
+			try {
+				for (Future<List<Ticket>> future : ticketlist) {
+					for (Ticket ticket : future.get()) {
+						if (drawChartEndDate.equals(ticket.getDepartureDate())){												
+							if ("T5".equals(ticket.getTrainNo())) {
+								if ("HardSleepClass".equals(ticket.getGrade())) {
+									if (t5HardSleepTicketCount == null || t5HardSleepTicketCount.equals("")) {
+										t5HardSleepTicketCount = ticket.getCount();
+									}  else {
+										t5HardSleepTicketCount = t5HardSleepTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("t5HardSleepTicketCount", t5HardSleepTicketCount);
+								} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+									if (t5SoftSleepTicketCount == null || t5SoftSleepTicketCount.equals("")) {
+										t5SoftSleepTicketCount = ticket.getCount();
+									} else {
+										t5SoftSleepTicketCount = t5SoftSleepTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("t5SoftSleepTicketCount", t5SoftSleepTicketCount);
+								} else if ("HardSeatClass".equals(ticket.getGrade())) {
+									if (t5HardSeatTicketCount == null || t5HardSeatTicketCount.equals("")) {
+										t5HardSeatTicketCount = ticket.getCount();
+									} else {
+										t5HardSeatTicketCount = t5HardSeatTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("t5HardSeatTicketCount", t5HardSeatTicketCount);
+								}
+							}
+							if ("T189".equals(ticket.getTrainNo())) {
+								if ("HardSleepClass".equals(ticket.getGrade())) {
+									if (t189HardSleepTicketCount == null || t189HardSleepTicketCount.equals("")) {
+										t189HardSleepTicketCount = ticket.getCount();
+									}  else {
+										t189HardSleepTicketCount = t189HardSleepTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("t189HardSleepTicketCount", t189HardSleepTicketCount);
+								} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+									if (t189SoftSleepTicketCount == null || t189SoftSleepTicketCount.equals("")) {
+										t189SoftSleepTicketCount = ticket.getCount();
+									} else {
+										t189SoftSleepTicketCount = t189SoftSleepTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("t189SoftSleepTicketCount", t189SoftSleepTicketCount);
+								} else if ("HardSeatClass".equals(ticket.getGrade())) {
+									if (t189HardSeatTicketCount == null || t189HardSeatTicketCount.equals("")) {
+										t189HardSeatTicketCount = ticket.getCount();
+									} else {
+										t189HardSeatTicketCount = t189HardSeatTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("t189HardSeatTicketCount", t189HardSeatTicketCount);
+								}
+							}
+							if ("K157".equals(ticket.getTrainNo())) {
+								if ("HardSleepClass".equals(ticket.getGrade())) {
+									if (k157HardSleepTicketCount == null || k157HardSleepTicketCount.equals("")) {
+										k157HardSleepTicketCount = ticket.getCount();
+									}  else {
+										k157HardSleepTicketCount = k157HardSleepTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("k157HardSleepTicketCount", k157HardSleepTicketCount);
+								} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+									if (k157SoftSleepTicketCount == null || k157SoftSleepTicketCount.equals("")) {
+										k157SoftSleepTicketCount = ticket.getCount();
+									} else {
+										k157SoftSleepTicketCount = k157SoftSleepTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("k157SoftSleepTicketCount", k157SoftSleepTicketCount);
+								} else if ("HardSeatClass".equals(ticket.getGrade())) {
+									if (k157HardSeatTicketCount == null || k157HardSeatTicketCount.equals("")) {
+										k157HardSeatTicketCount = ticket.getCount();
+									} else {
+										k157HardSeatTicketCount = k157HardSeatTicketCount + "," + ticket.getCount();
+									}
+									ServletActionContext.getServletContext().setAttribute("k157HardSeatTicketCount", k157HardSeatTicketCount);
+								}
+							}
+							
+						}
+					}					
+				}				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
+		}		
+		//-----------------------------
+		
 		return NONE;
 	}
 	
@@ -269,33 +365,16 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	@SuppressWarnings("unchecked")
 	public String drawTicket() throws Exception {
 		drawChartStartDate = (String)ServletActionContext.getServletContext().getAttribute("drawChartStartDate");
-		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
-			drawChartStartDate = DateUtils.format(new Date(), "yyyy-MM-dd");
-			ServletActionContext.getServletContext().setAttribute("drawChartStartDate", drawChartStartDate);
-		}
-			
-		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext.getServletContext().getAttribute("ticketlist");
-		if (ticketlist != null) {			
-			try {
-				for (Future<List<Ticket>> future : ticketlist) {
-					for (Ticket ticket : future.get()) {
-						if (getEndDate(20).equals(ticket.getDepartureDate())){												
-							if ("T5".equals(ticket.getTrainNo())) {
-								if ("HardSleepClass".equals(ticket.getGrade())) {
-									t5HardSleepTicketCount = t5HardSleepTicketCount + "," + ticket.getCount();
-								} else if ("SoftSleepClass".equals(ticket.getGrade())) {
-									t5SoftSleepTicketCount = t5SoftSleepTicketCount + "," + ticket.getCount();
-								} else if ("HardSeatClass".equals(ticket.getGrade())) {
-									t5HardSeatTicketCount = t5HardSeatTicketCount + "," + ticket.getCount();
-								}
-							}
-						}
-					}					
-				}				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}			
-		}
+		t5HardSleepTicketCount = (String)ServletActionContext.getServletContext().getAttribute("t5HardSleepTicketCount");
+		t5SoftSleepTicketCount = (String)ServletActionContext.getServletContext().getAttribute("t5SoftSleepTicketCount");
+		t5HardSeatTicketCount = (String)ServletActionContext.getServletContext().getAttribute("t5HardSeatTicketCount");
+		t189HardSleepTicketCount = (String)ServletActionContext.getServletContext().getAttribute("t189HardSleepTicketCount");
+		t189SoftSleepTicketCount = (String)ServletActionContext.getServletContext().getAttribute("t189SoftSleepTicketCount");
+		t189HardSeatTicketCount = (String)ServletActionContext.getServletContext().getAttribute("t189HardSeatTicketCount");	
+		k157HardSleepTicketCount = (String)ServletActionContext.getServletContext().getAttribute("k157HardSleepTicketCount");
+		k157SoftSleepTicketCount = (String)ServletActionContext.getServletContext().getAttribute("k157SoftSleepTicketCount");
+		k157HardSeatTicketCount = (String)ServletActionContext.getServletContext().getAttribute("k157HardSeatTicketCount");	
+		drawChartEndDate = getEndDate(20);				
 		return SUCCESS;
 	}
 }

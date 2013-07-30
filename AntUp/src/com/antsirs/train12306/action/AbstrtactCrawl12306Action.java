@@ -40,6 +40,7 @@ public abstract class AbstrtactCrawl12306Action extends BaseActionSupport{
 	public String k157HardSleepTicketCount;
 	public String k157HardSeatTicketCount;	
 	public String drawChartStartDate;
+	public String drawChartEndDate;
 
 	public String getT189SoftSleepTicketCount() {
 		return t189SoftSleepTicketCount;
@@ -119,6 +120,14 @@ public abstract class AbstrtactCrawl12306Action extends BaseActionSupport{
 
 	public void setDrawChartStartDate(String drawChartStartDate) {
 		this.drawChartStartDate = drawChartStartDate;
+	}
+
+	public String getDrawChartEndDate() {
+		return drawChartEndDate;
+	}
+
+	public void setDrawChartEndDate(String drawChartEndDate) {
+		this.drawChartEndDate = drawChartEndDate;
 	}
 
 	
