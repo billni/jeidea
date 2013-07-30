@@ -97,4 +97,3 @@
  <property name="datanucleus.appengine.datastoreEnableXGTransactions" value="true"/>
 2. junit set HRD for XG transactions
 	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));   
-	    

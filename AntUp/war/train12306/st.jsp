@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>		 	
-	<script type="text/javascript" src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>  
+	<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>  
 	<script src="http://code.highcharts.com/highcharts.js"></script>	
 </head>
 <body>

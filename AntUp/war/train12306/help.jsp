@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>Stand On Cloud</title>
-<script type="text/javascript" src="/js/jquery-easyui-1.3.1/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css"/>
 <script type="text/javascript" src="/js/decorate.js"></script>
 </head>
@@ -20,12 +20,6 @@
 			<li>This website source code use git to manage and architecture
 				use SSJ (Spring, Struts2, JPA).</li>
 		</ul>
-    </div>
-    <div>
-    	<div>统计图表</div>
-    	<div>列表</div>
-    	<div>明细</div>
-    	<div>其他</div>
     </div>
 </body>
 </html>

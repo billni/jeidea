@@ -20,7 +20,7 @@
 }
 #menu a span {
     display:block;
-    padding:30px 33px 37px 2px;
+    padding:30px 33px 37px 0px;
     white-space:nowrap;
 }
 #menu li {
