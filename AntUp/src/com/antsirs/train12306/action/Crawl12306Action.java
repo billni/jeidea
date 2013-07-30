@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -97,6 +98,17 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			list.add(DateUtils.format(calendar.getTime(), "yyyy-MM-dd"));
 		}
 		return list;
+	}
+	
+	/**
+	 * 获得指定天后的日期
+	 * @return
+	 */
+	public String getEndDate(int special) {
+		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
+		calendar.setTime(new Date());
+		calendar.add(Calendar.DATE, special);
+		return DateUtils.format(calendar.getTime(), "yyyy-MM-dd");
 	}
 
 	/**
@@ -256,26 +268,28 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String drawTicket() throws Exception {
-		StringBuffer xAxis = new StringBuffer("[");
-		for (String date : getFutureDays()) {			
-			xAxis.append("'" + date + "',");			
-		};
-		xAxis.deleteCharAt(xAxis.capacity()-1);
-		xAxis.append("]");
-		
-		StringBuffer buff = new StringBuffer();		
+		drawChartStartDate = (String)ServletActionContext.getServletContext().getAttribute("drawChartStartDate");
+		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
+			drawChartStartDate = DateUtils.format(new Date(), "yyyy-MM-dd");
+			ServletActionContext.getServletContext().setAttribute("drawChartStartDate", drawChartStartDate);
+		}
+			
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext.getServletContext().getAttribute("ticketlist");
 		if (ticketlist != null) {			
 			try {
 				for (Future<List<Ticket>> future : ticketlist) {
-					for (Ticket ticket : future.get()) {				
-						buff.append(ticket.getTrainNo());
-						buff.append(",");
-						buff.append(ticket.getDepartureDate());
-						buff.append(",");
-						buff.append(ticket.getGrade());
-						buff.append(",");
-						buff.append(ticket.getCount());						
+					for (Ticket ticket : future.get()) {
+						if (getEndDate(20).equals(ticket.getDepartureDate())){												
+							if ("T5".equals(ticket.getTrainNo())) {
+								if ("HardSleepClass".equals(ticket.getGrade())) {
+									t5HardSleepTicketCount = t5HardSleepTicketCount + "," + ticket.getCount();
+								} else if ("SoftSleepClass".equals(ticket.getGrade())) {
+									t5SoftSleepTicketCount = t5SoftSleepTicketCount + "," + ticket.getCount();
+								} else if ("HardSeatClass".equals(ticket.getGrade())) {
+									t5HardSeatTicketCount = t5HardSeatTicketCount + "," + ticket.getCount();
+								}
+							}
+						}
 					}					
 				}				
 			} catch (Exception e) {

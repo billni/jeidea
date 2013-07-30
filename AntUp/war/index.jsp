@@ -13,6 +13,7 @@
 	<div id="body">
 		<div id="site-logo"></div>
 		<div id="site-menu"></div>
-	</div>
+		<div id="site-content"></div>
+	</div>	
 </body>
 </html>
