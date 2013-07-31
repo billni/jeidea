@@ -118,9 +118,17 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String execute() throws Exception {
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
+		
+		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
+				.getServletContext().getAttribute("tickets");
+		
 		if (ticketlist == null) {
 			logger.info("This tickets is null in web application, and new one at once now.");
 			ticketlist = new ArrayList<Future<List<Ticket>>>();
+		}
+		
+		if (tickets == null) {
+			tickets = new ArrayList<Future<List<Ticket>>>();
 		}
 		Crawl12306Task task = null;
 		ExecutorService executor = Executors.newCachedThreadPool(ThreadManager
@@ -149,8 +157,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		}
 		logger.info("After Task executed, the count of active thread is: "
 				+ Thread.activeCount());
-		ServletActionContext.getServletContext().setAttribute("ticketlist",
-				ticketlist);
+		ServletActionContext.getServletContext().setAttribute("ticketlist", ticketlist);
+		tickets.addAll(ticketlist);
+		ServletActionContext.getServletContext().setAttribute("tickets", tickets);
 
 		//-------------for draw highcharts----------------
 		drawChartStartDate = (String)ServletActionContext.getServletContext().getAttribute("drawChartStartDate");
@@ -161,9 +170,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	
 		drawChartEndDate = getEndDate(20);
 
-		if (ticketlist != null) {			
+		if (tickets != null) {			
 			try {
-				for (Future<List<Ticket>> future : ticketlist) {
+				for (Future<List<Ticket>> future : tickets) {
 					for (Ticket ticket : future.get()) {
 						if (drawChartEndDate.equals(ticket.getDepartureDate())){												
 							if ("T5".equals(ticket.getTrainNo())) {
