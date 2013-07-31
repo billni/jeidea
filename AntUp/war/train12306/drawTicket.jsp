@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/highcharts/highcharts.js"></script>	
+<script type="text/javascript" src="/js/decorate.js"></script>
 <script type="text/javascript">
 $(function () {	   		
 	    var startDate = new Date("<s:property value='drawChartStartDate'/>");	    
@@ -114,6 +116,13 @@ $(function () {
 </script>	 		
 </head>
 <body>
-<div id="container" style="width:100%; height:400px;"></div>
+	<div id="body">
+		<div id="site-logo"></div>
+		<div id="site-menu"></div>
+		<div id="site-content">
+			<div id="container" style="width:100%; height:600px;"></div>
+		</div>
+	</div>	
+
 </body>
 </html>
