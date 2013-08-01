@@ -358,7 +358,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 		List<Ticket> ticketList = new ArrayList<Ticket>();
 		//deploy on gae produce server ,use it
 		String info = crawlTrainTicketInfo(getUrl(), null);
-		//-----dev in home, use it
+		//-----dev in home or office, use it
 //		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
 		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {

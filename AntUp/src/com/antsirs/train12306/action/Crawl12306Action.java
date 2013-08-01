@@ -208,7 +208,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 									} else {
 										t5HardSeatTicketCount[i] = t5HardSeatTicketCount[i] + "," + ticket.getCount();
 									}
-									ServletActionContext.getServletContext().setAttribute("t5HardSeatTicketCount"+drawChartEndDate, t5HardSeatTicketCount[i]);
+									ServletActionContext.getServletContext().setAttribute("t5HardSeatTicketCount"+drawChartEndDate, t5HardSeatTicketCount[i]);								
 								}
 							}
 							if ("T189".equals(ticket.getTrainNo())) {
@@ -257,11 +257,13 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										k157HardSeatTicketCount[i] = k157HardSeatTicketCount[i]+ "," + ticket.getCount();
 									}
 									ServletActionContext.getServletContext().setAttribute("k157HardSeatTicketCount"+drawChartEndDate, k157HardSeatTicketCount[i]);
+									
 								}
 							}
 							
 						}
-					}					
+					}
+					i++;
 				}				
 			} catch (Exception e) {
 				e.printStackTrace();
