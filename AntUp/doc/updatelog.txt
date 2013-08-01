@@ -26,3 +26,6 @@ menu.css
 ----------------------------------------------------
 https://niyong2008@code.google.com/p/jeidea/
 aJ4AF4Av3gS2
+
+-------------------------------------------------20130801
+Update Struts2 version to 2.3.15.1
