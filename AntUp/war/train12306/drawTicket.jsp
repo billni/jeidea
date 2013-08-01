@@ -47,55 +47,55 @@ $(function () {
                 type: 'line',
                 name: 'T5-HardSleep',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='t5HardSleepTicketCount'/>]
+                data: [<s:property value='t5HardSleepTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'T5-SoftSleep',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='t5SoftSleepTicketCount'/>]
+                data: [<s:property value='t5SoftSleepTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'T5-HardSeat',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='t5HardSeatTicketCount'/>]
+                data: [<s:property value='t5HardSeatTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'T189-HardSleep',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='t189HardSleepTicketCount'/>]
+                data: [<s:property value='t189HardSleepTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'T189-SoftSleep',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='t189SoftSleepTicketCount'/>]
+                data: [<s:property value='t189SoftSleepTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'T189-HardSeat',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='t189HardSeatTicketCount'/>]
+                data: [<s:property value='t189HardSeatTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'K157-HardSleep',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='k157HardSleepTicketCount'/>]
+                data: [<s:property value='k157HardSleepTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'K157-SoftSleep',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='k157SoftSleepTicketCount'/>]
+                data: [<s:property value='k157SoftSleepTicketCountSpecialDate'/>]
             },
             {
                 type: 'line',
                 name: 'K157-HardSeat',
                 pointInterval:  900 * 1000,
-                data: [<s:property value='k157HardSeatTicketCount'/>]
+                data: [<s:property value='k157HardSeatTicketCountSpecialDate'/>]
             }
             
             ]
