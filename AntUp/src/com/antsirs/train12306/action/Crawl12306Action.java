@@ -116,6 +116,16 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
+		String[] t189SoftSleepTicketCount = new String[20]; 
+		String[] t189HardSleepTicketCount = new String[20];
+		String[] t189HardSeatTicketCount = new String[20];
+		String[] t5SoftSleepTicketCount = new String[20];
+		String[] t5HardSleepTicketCount = new String[20];
+		String[] t5HardSeatTicketCount = new String[20];
+		String[] k157SoftSleepTicketCount = new String[20];
+		String[] k157HardSleepTicketCount = new String[20];
+		String[] k157HardSeatTicketCount = new String[20];
+		
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
 		
@@ -166,17 +176,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
 			ServletActionContext.getServletContext().setAttribute("drawChartStartDate", drawChartStartDate);
 		}
-	
-		t189SoftSleepTicketCount = new String[20]; 
-		t189HardSleepTicketCount = new String[20]; 
-		t189HardSeatTicketCount = new String[20];
-		t5SoftSleepTicketCount = new String[20];
-		t5HardSleepTicketCount = new String[20];
-		t5HardSeatTicketCount = new String[20];
-		k157SoftSleepTicketCount = new String[20];
-		k157HardSleepTicketCount = new String[20];
-		k157HardSeatTicketCount = new String[20];
-		
+			
 		int i = 0;
 		if (tickets != null) {			
 			try {
