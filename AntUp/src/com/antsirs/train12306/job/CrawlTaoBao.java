@@ -3,7 +3,7 @@ package com.antsirs.train12306.job;
 import java.io.InputStream;  
 import java.io.StringWriter;  
 import org.apache.commons.io.IOUtils;  
-import org.apache.commons.lang.StringUtils;  
+import org.apache.commons.lang3.StringUtils;  
 import org.apache.http.HttpEntity;  
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
