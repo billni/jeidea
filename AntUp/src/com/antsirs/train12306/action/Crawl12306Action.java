@@ -166,7 +166,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		executor.shutdown();
 		while (!executor.isTerminated()) {
 		}
-		logger.info("After Task executed, the count of active thread is: " + Thread.activeCount());
+		logger.info("After task executed, the count of active thread is: " + Thread.activeCount());
 		ServletActionContext.getServletContext().setAttribute("ticketlist", ticketlist);		
 		ServletActionContext.getServletContext().setAttribute("tickets", tickets);
 
@@ -178,7 +178,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		}
 			
 		int i = 0;
-		if (tickets != null) {			
+		if (tickets != null) {	
+			logger.info("Begin compute for drawing... tickets size: " + tickets.size());
 			try {
 				for (Future<List<Ticket>> future : tickets) {
 					if (i == 20) {
@@ -267,8 +268,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				}				
 			} catch (Exception e) {
 				e.printStackTrace();
+				logger.severe("Drawing compute error, several exception " + e.getMessage());
 			}			
 		}		
+		logger.info("Finish computing for drawing! ");
 		//-----------------------------
 		
 		return NONE;

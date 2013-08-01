@@ -38,7 +38,7 @@ $(function () {
                 }
             },
             tooltip: {
-                shared: true
+                shared: false
             },
             legend: {
                 enabled: true
