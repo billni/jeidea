@@ -35,11 +35,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/quartz-2.1.6.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.5.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-log4j12-1.5.0.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-config-browser-plugin-2.2.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-core-2.2.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-json-plugin-2.2.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-spring-plugin-2.2.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/xwork-core-2.2.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ognl-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-test-3.0.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/junit-4.11.jar"/>
@@ -67,5 +62,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/test-lib/appengine-api-stubs.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/test-lib/appengine-testing.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.8.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-config-browser-plugin-2.3.15.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-core-2.3.15.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-json-plugin-2.3.15.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/struts2-spring-plugin-2.3.15.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/xwork-core-2.3.15.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
