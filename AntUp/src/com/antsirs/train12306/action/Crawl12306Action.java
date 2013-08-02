@@ -186,7 +186,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						i = 0;
 					}					
 					drawChartEndDate = getEndDate(i);
-					if (future != null) {
+					if (future != null && future.get()!= null) {
 						for (Ticket ticket : future.get()) {
 							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
 								if ("T5".equals(ticket.getTrainNo())) {
