@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +23,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.struts2.ServletActionContext;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.antsirs.core.util.exception.ExceptionConvert;
 import com.antsirs.core.util.zip.ZipUtils;
 import com.antsirs.train12306.model.Ticket;
@@ -133,7 +131,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		
 		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("tickets");
-		
+		Future<List<Ticket>> futureTask = null;
 		if (ticketlist == null) {
 			logger.info("This tickets is null in web application, and new one at once now.");
 			ticketlist = new ArrayList<Future<List<Ticket>>>();
@@ -160,9 +158,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
-			Future<List<Ticket>> future = executor.submit(task);
-			ticketlist.add(future);
-			tickets.add(future);
+			futureTask = executor.submit(task);
+			ticketlist.add(futureTask);
+			tickets.add(futureTask);
 			// executor.execute(task);
 		}
 		executor.shutdown();

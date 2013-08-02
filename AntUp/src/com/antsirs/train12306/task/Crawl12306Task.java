@@ -228,8 +228,8 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 	public Train createTrainInfo(TrainTicketInfo trainTicketInfo) {				
 		ApiProxy.setEnvironmentForCurrentThread(environment);
 		Train train = null;		
-		List list = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), trainTicketInfo.getDepartureDate() );
-		if (list == null || list.size() == 0) {
+		List<Train> trains = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), trainTicketInfo.getDepartureDate() );
+		if (trains == null || trains.size() == 0) {
 			logger.info("Create a train   - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
@@ -243,7 +243,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			trainTicketManagerService.createTrain(train);			
 			logger.info("Create a train completed  - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 		} else {
-			train = (Train) list.get(0);
+			train = trains.get(0);
 //			logger.info("find a train record - " + train.getTrainNo() + " DepartureDate - " + train.getDepartureDate() );
 		}
 		return train;
