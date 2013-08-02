@@ -14,6 +14,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import com.antsirs.core.util.exception.ExceptionConvert;
 import com.google.appengine.api.search.DateUtil;
 
 public class SendMultipartMessage {
@@ -83,8 +85,7 @@ public class SendMultipartMessage {
 			// msg.writeTo(ops);
 			// ops.close();
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.severe("邮件生成异常. " + e.getMessage());
+			logger.severe("sentMail exception: " + ExceptionConvert.getErrorInfoFromException(e));			
 		}
 	}
 	
@@ -107,9 +108,8 @@ public class SendMultipartMessage {
 					"ni_yong@hotmail.com", "Mr. niyong"));
 			msg.setText("<data>" +msgContent + "</data>");
 			Transport.send(msg);			
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.severe("邮件生成异常. " + e.getMessage());
+		} catch (Exception e) {			
+			logger.severe("sentSimpleMail exception: " + ExceptionConvert.getErrorInfoFromException(e));
 		}
 	}
 }

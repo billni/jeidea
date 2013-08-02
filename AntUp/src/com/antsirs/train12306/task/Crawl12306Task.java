@@ -20,6 +20,8 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.antsirs.core.util.exception.ExceptionConvert;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
@@ -97,8 +99,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 				logger.info("Http Status Code:" + resStatu);
 			}
 		} catch (Exception e) {
-			logger.severe(e.getMessage());			
-			e.printStackTrace();
+			logger.severe("getTrainTicketInfoByUrl exception: " + ExceptionConvert.getErrorInfoFromException(e));			
 		} finally {
 			logger.info("HttpClient连接关闭.");
 			httpClient.getConnectionManager().shutdown();
@@ -357,9 +358,9 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 	public List<Ticket> doCrawl() throws JSONException {
 		List<Ticket> ticketList = new ArrayList<Ticket>();
 		//deploy on gae produce server ,use it
-		String info = crawlTrainTicketInfo(getUrl(), null);
+//		String info = crawlTrainTicketInfo(getUrl(), null);
 		//-----dev in home or office, use it
-//		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
+		String info = getTrainTicketInfoByUrl(getUrl(), getHttpClient());
 		logger.info("crawlTrainTicketInfo: " + info);
 		if (!info.equals("")) {
 			JSONObject jsonObject = new JSONObject(info);
@@ -417,8 +418,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			sw.close();
 			insr.close();
         } catch (Exception e) {        	 
-			logger.severe(e.getMessage());			
-			e.printStackTrace();
+        	logger.severe("crawlTrainTicketInfo exception: " + ExceptionConvert.getErrorInfoFromException(e));							
 		}        
         logger.info("crawlTrainTicketInfo complete. Spend time(s): " + (System.currentTimeMillis() - startTime)/1000);
 		return sw.toString();
@@ -433,9 +433,8 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 		trainTicketManagerService = getTrainTicketManagerService();
 		try {			
 			tickets = doCrawl();			
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.severe("出现异常 - " + e.getMessage());
+		} catch (Exception e) {			
+			logger.severe("ansy call task exception: " + ExceptionConvert.getErrorInfoFromException(e));
 		}
 		return tickets;
 	}

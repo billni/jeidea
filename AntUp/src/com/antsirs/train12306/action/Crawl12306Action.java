@@ -24,6 +24,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.struts2.ServletActionContext;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.antsirs.core.util.exception.ExceptionConvert;
 import com.antsirs.core.util.zip.ZipUtils;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
@@ -149,12 +151,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			//-- dev in office , use it.
-//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
 //			deploy gae produce server , need use it
-			task.initParameters(URL, date, null, null);
+//			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
@@ -265,10 +267,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						}
 					}
 					i++;
-				}				
+				}	
+				i = 1/0;
 			} catch (Exception e) {
-				e.printStackTrace();
-				logger.severe("Drawing compute error, several exception " + e.getMessage());
+				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
 			}			
 		}		
 		logger.info("Finish computing for drawing! ");
