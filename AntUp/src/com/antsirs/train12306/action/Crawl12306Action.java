@@ -267,8 +267,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						}
 					}
 					i++;
-				}	
-				i = 1/0;
+				}				
 			} catch (Exception e) {
 				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
 			}			
