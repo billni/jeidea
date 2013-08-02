@@ -92,7 +92,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		EntityManager em = getEntityManager();		
 		EntityTransaction et = em.getTransaction();		
 		et.begin();
-		int batchSize = 100;		
+		int batchSize = 30;		
 		int i = 0;
 		logger.info("batch insert ticket count - " + tickets.size());
 		for(Ticket ticket : tickets){
