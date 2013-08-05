@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -116,21 +117,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
-		String[] t189SoftSleepTicketCount = new String[20]; 
-		String[] t189HardSleepTicketCount = new String[20];
-		String[] t189HardSeatTicketCount = new String[20];
-		String[] t5SoftSleepTicketCount = new String[20];
-		String[] t5HardSleepTicketCount = new String[20];
-		String[] t5HardSeatTicketCount = new String[20];
-		String[] k157SoftSleepTicketCount = new String[20];
-		String[] k157HardSleepTicketCount = new String[20];
-		String[] k157HardSeatTicketCount = new String[20];
 		
-		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
-				.getServletContext().getAttribute("ticketlist");
+		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("ticketlist");
 		
-		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext
-				.getServletContext().getAttribute("tickets");
+		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("tickets");
 		Future<List<Ticket>> futureTask = null;
 		if (ticketlist == null) {
 			logger.info("This tickets is null in web application, and new one at once now.");
@@ -149,12 +139,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			//-- dev in office , use it.
-//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
 //			deploy gae produce server , need use it
-			task.initParameters(URL, date, null, null);
+//			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
@@ -167,114 +157,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		while (!executor.isTerminated()) {
 		}
 		logger.info("After task executed, the count of active thread is: " + Thread.activeCount());
-		ServletActionContext.getServletContext().setAttribute("ticketlist", ticketlist);		
-		ServletActionContext.getServletContext().setAttribute("tickets", tickets);
-
-		//-------------for draw highcharts----------------
-		drawChartStartDate = (String)ServletActionContext.getServletContext().getAttribute("drawChartStartDate");
-		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
-			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
-			ServletActionContext.getServletContext().setAttribute("drawChartStartDate", drawChartStartDate);
-		}
-			
-		int i = 0;
-		if (tickets != null) {	
-			logger.info("Begin compute for drawing... tickets size: " + tickets.size());
-			try {
-				for (Future<List<Ticket>> future : tickets) {
-					if (i == 20) {
-						i = 0;
-					}					
-					drawChartEndDate = getEndDate(i);
-					if (future != null && future.get()!= null) {
-						for (Ticket ticket : future.get()) {
-							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
-								if ("T5".equals(ticket.getTrainNo())) {
-									if ("HardSleepClass".equals(ticket.getGrade())) {
-										if (t5HardSleepTicketCount[i] == null || "".equals(t5HardSleepTicketCount[i])) {
-											t5HardSleepTicketCount[i] = ticket.getCount();
-										}  else {
-											t5HardSleepTicketCount[i] = t5HardSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("t5HardSleepTicketCount"+drawChartEndDate, t5HardSleepTicketCount[i]);									
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										if (t5SoftSleepTicketCount[i] == null || "".equals(t5SoftSleepTicketCount[i])) {
-											t5SoftSleepTicketCount[i] = ticket.getCount();
-										} else {
-											t5SoftSleepTicketCount[i] = t5SoftSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("t5SoftSleepTicketCount"+drawChartEndDate, t5SoftSleepTicketCount[i]);
-									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										if (t5HardSeatTicketCount[i] == null || "".equals(t5HardSeatTicketCount[i])) {
-											t5HardSeatTicketCount[i] = ticket.getCount();
-										} else {
-											t5HardSeatTicketCount[i] = t5HardSeatTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("t5HardSeatTicketCount"+drawChartEndDate, t5HardSeatTicketCount[i]);								
-									}
-								}
-								if ("T189".equals(ticket.getTrainNo())) {
-									if ("HardSleepClass".equals(ticket.getGrade())) {
-										if (t189HardSleepTicketCount[i] == null || "".equals(t189HardSleepTicketCount[i])) {
-											t189HardSleepTicketCount[i] = ticket.getCount();
-										}  else {
-											t189HardSleepTicketCount[i] = t189HardSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("t189HardSleepTicketCount"+drawChartEndDate, t189HardSleepTicketCount[i]);
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										if (t189SoftSleepTicketCount[i] == null || "".equals(t189SoftSleepTicketCount[i])) {
-											t189SoftSleepTicketCount[i] = ticket.getCount();
-										} else {
-											t189SoftSleepTicketCount[i] = t189SoftSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("t189SoftSleepTicketCount"+drawChartEndDate, t189SoftSleepTicketCount[i]);
-									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										if (t189HardSeatTicketCount[i] == null || "".equals(t189HardSeatTicketCount[i])) {
-											t189HardSeatTicketCount[i] = ticket.getCount();
-										} else {
-											t189HardSeatTicketCount[i] = t189HardSeatTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("t189HardSeatTicketCount"+drawChartEndDate, t189HardSeatTicketCount[i]);
-									}
-								}
-								if ("K157".equals(ticket.getTrainNo())) {
-									if ("HardSleepClass".equals(ticket.getGrade())) {
-										if (k157HardSleepTicketCount[i] == null || "".equals(k157HardSleepTicketCount[i])) {
-											k157HardSleepTicketCount[i] = ticket.getCount();
-										}  else {
-											k157HardSleepTicketCount[i] = k157HardSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("k157HardSleepTicketCount"+drawChartEndDate, k157HardSleepTicketCount[i]);
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										if (k157SoftSleepTicketCount[i] == null || "".equals(k157SoftSleepTicketCount[i])) {
-											k157SoftSleepTicketCount[i] = ticket.getCount();
-										} else {
-											k157SoftSleepTicketCount[i] = k157SoftSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("k157SoftSleepTicketCount"+drawChartEndDate, k157SoftSleepTicketCount[i]);
-									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										if (k157HardSeatTicketCount[i] == null || "".equals(k157HardSeatTicketCount[i])) {
-											k157HardSeatTicketCount[i] = ticket.getCount();
-										} else {
-											k157HardSeatTicketCount[i] = k157HardSeatTicketCount[i]+ "," + ticket.getCount();
-										}
-										ServletActionContext.getServletContext().setAttribute("k157HardSeatTicketCount"+drawChartEndDate, k157HardSeatTicketCount[i]);
-										
-									}
-								}
-								
-							}
-						}
-					}
-					i++;
-				}				
-			} catch (Exception e) {
-				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
-			}			
-		}		
-		logger.info("Finish computing for drawing! ");
-		//-----------------------------
-		
+		ServletActionContext.getContext().getApplication().put("ticketlist", ticketlist);			
+		ServletActionContext.getContext().getApplication().put("tickets", tickets);			
 		return NONE;
 	}
 	
@@ -329,8 +213,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			logger.info("Extracted Data have mailed special mailbox. " + new Date(GregorianCalendar.getInstance(Locale.CHINA).getTimeInMillis()));
 			synchronized (ticketlist) {
 				ticketlist = new ArrayList<Future<List<Ticket>>>();
-				ServletActionContext.getServletContext().setAttribute(
-						"ticketlist", ticketlist);
+				ServletActionContext.getContext().getApplication().put("ticketlist", ticketlist);						
 				i = 0;
 			}
 			logger.info("Clean tickets from Application Context");
@@ -391,17 +274,128 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String drawTicket() throws Exception {
-		drawChartEndDate = getEndDate(specialDate);
-		t5HardSleepTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("t5HardSleepTicketCount"+drawChartEndDate);
-		t5SoftSleepTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("t5SoftSleepTicketCount"+drawChartEndDate);
-		t5HardSeatTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("t5HardSeatTicketCount"+drawChartEndDate);
-		t189HardSleepTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("t189HardSleepTicketCount"+drawChartEndDate);
-		t189SoftSleepTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("t189SoftSleepTicketCount"+drawChartEndDate);
-		t189HardSeatTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("t189HardSeatTicketCount"+drawChartEndDate);	
-		k157HardSleepTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("k157HardSleepTicketCount"+drawChartEndDate);
-		k157SoftSleepTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("k157SoftSleepTicketCount"+drawChartEndDate);
-		k157HardSeatTicketCountSpecialDate = (String)ServletActionContext.getServletContext().getAttribute("k157HardSeatTicketCount"+drawChartEndDate);			
-		drawChartStartDate = (String)ServletActionContext.getServletContext().getAttribute("drawChartStartDate");			
+		String[] t189SoftSleepTicketCount = new String[20]; 
+		String[] t189HardSleepTicketCount = new String[20];
+		String[] t189HardSeatTicketCount = new String[20];
+		String[] t5SoftSleepTicketCount = new String[20];
+		String[] t5HardSleepTicketCount = new String[20];
+		String[] t5HardSeatTicketCount = new String[20];
+		String[] k157SoftSleepTicketCount = new String[20];
+		String[] k157HardSleepTicketCount = new String[20];
+		String[] k157HardSeatTicketCount = new String[20];
+		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("tickets");
+
+		//-------------for draw highcharts----------------
+		drawChartStartDate = (String)ServletActionContext.getContext().getApplication().get("drawChartStartDate");
+		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
+			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
+			ServletActionContext.getContext().getApplication().put("drawChartStartDate", drawChartStartDate);
+		}
+		HashMap<String, String> hm = new HashMap<String, String>();
+		int i = 0;
+		if (tickets != null) {	
+			logger.info("Begin compute for drawing... tickets size: " + tickets.size());
+			try {
+				for (Future<List<Ticket>> future : tickets) {
+					if (i == 20) {
+						i = 0;
+					}					
+					drawChartEndDate = getEndDate(specialDate);
+					if (future != null && future.get()!= null) {
+						for (Ticket ticket : future.get()) {
+							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
+								if ("T5".equals(ticket.getTrainNo())) {
+									if ("HardSleepClass".equals(ticket.getGrade())) {
+										if (t5HardSleepTicketCount[i] == null || "".equals(t5HardSleepTicketCount[i])) {
+											t5HardSleepTicketCount[i] = ticket.getCount();
+										}  else {
+											t5HardSleepTicketCount[i] = t5HardSleepTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("t5HardSleepTicketCount"+drawChartEndDate, t5HardSleepTicketCount[i]);									
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+										if (t5SoftSleepTicketCount[i] == null || "".equals(t5SoftSleepTicketCount[i])) {
+											t5SoftSleepTicketCount[i] = ticket.getCount();
+										} else {
+											t5SoftSleepTicketCount[i] = t5SoftSleepTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("t5SoftSleepTicketCount"+drawChartEndDate, t5SoftSleepTicketCount[i]);
+									} else if ("HardSeatClass".equals(ticket.getGrade())) {
+										if (t5HardSeatTicketCount[i] == null || "".equals(t5HardSeatTicketCount[i])) {
+											t5HardSeatTicketCount[i] = ticket.getCount();
+										} else {
+											t5HardSeatTicketCount[i] = t5HardSeatTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("t5HardSeatTicketCount"+drawChartEndDate, t5HardSeatTicketCount[i]);								
+									}
+								}
+								if ("T189".equals(ticket.getTrainNo())) {
+									if ("HardSleepClass".equals(ticket.getGrade())) {
+										if (t189HardSleepTicketCount[i] == null || "".equals(t189HardSleepTicketCount[i])) {
+											t189HardSleepTicketCount[i] = ticket.getCount();
+										}  else {
+											t189HardSleepTicketCount[i] = t189HardSleepTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("t189HardSleepTicketCount"+drawChartEndDate, t189HardSleepTicketCount[i]);
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+										if (t189SoftSleepTicketCount[i] == null || "".equals(t189SoftSleepTicketCount[i])) {
+											t189SoftSleepTicketCount[i] = ticket.getCount();
+										} else {
+											t189SoftSleepTicketCount[i] = t189SoftSleepTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("t189SoftSleepTicketCount"+drawChartEndDate, t189SoftSleepTicketCount[i]);
+									} else if ("HardSeatClass".equals(ticket.getGrade())) {
+										if (t189HardSeatTicketCount[i] == null || "".equals(t189HardSeatTicketCount[i])) {
+											t189HardSeatTicketCount[i] = ticket.getCount();
+										} else {
+											t189HardSeatTicketCount[i] = t189HardSeatTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("t189HardSeatTicketCount"+drawChartEndDate, t189HardSeatTicketCount[i]);
+									}
+								}
+								if ("K157".equals(ticket.getTrainNo())) {
+									if ("HardSleepClass".equals(ticket.getGrade())) {
+										if (k157HardSleepTicketCount[i] == null || "".equals(k157HardSleepTicketCount[i])) {
+											k157HardSleepTicketCount[i] = ticket.getCount();
+										}  else {
+											k157HardSleepTicketCount[i] = k157HardSleepTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("k157HardSleepTicketCount"+drawChartEndDate, k157HardSleepTicketCount[i]);
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+										if (k157SoftSleepTicketCount[i] == null || "".equals(k157SoftSleepTicketCount[i])) {
+											k157SoftSleepTicketCount[i] = ticket.getCount();
+										} else {
+											k157SoftSleepTicketCount[i] = k157SoftSleepTicketCount[i] + "," + ticket.getCount();
+										}
+										hm.put("k157SoftSleepTicketCount"+drawChartEndDate, k157SoftSleepTicketCount[i]);
+									} else if ("HardSeatClass".equals(ticket.getGrade())) {
+										if (k157HardSeatTicketCount[i] == null || "".equals(k157HardSeatTicketCount[i])) {
+											k157HardSeatTicketCount[i] = ticket.getCount();
+										} else {
+											k157HardSeatTicketCount[i] = k157HardSeatTicketCount[i]+ "," + ticket.getCount();
+										}
+										hm.put("k157HardSeatTicketCount"+drawChartEndDate, k157HardSeatTicketCount[i]);										
+									}
+								}
+								
+							}
+						}
+					}
+					i++;
+				}				
+			} catch (Exception e) {
+				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
+			}			
+		}		
+		t5HardSleepTicketCountSpecialDate = hm.get("t5HardSleepTicketCount"+drawChartEndDate);
+		t5SoftSleepTicketCountSpecialDate = hm.get("t5SoftSleepTicketCount"+drawChartEndDate);
+		t5HardSeatTicketCountSpecialDate = hm.get("t5HardSeatTicketCount"+drawChartEndDate);
+		t189HardSleepTicketCountSpecialDate = hm.get("t189HardSleepTicketCount"+drawChartEndDate);
+		t189SoftSleepTicketCountSpecialDate = hm.get("t189SoftSleepTicketCount"+drawChartEndDate);
+		t189HardSeatTicketCountSpecialDate = hm.get("t189HardSeatTicketCount"+drawChartEndDate);	
+		k157HardSleepTicketCountSpecialDate = hm.get("k157HardSleepTicketCount"+drawChartEndDate);
+		k157SoftSleepTicketCountSpecialDate = hm.get("k157SoftSleepTicketCount"+drawChartEndDate);
+		k157HardSeatTicketCountSpecialDate = hm.get("k157HardSeatTicketCount"+drawChartEndDate);
+		logger.info("Finish computing for drawing! ");
 		return SUCCESS;
 	}
 }
