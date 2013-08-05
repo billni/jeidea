@@ -12,12 +12,5 @@
     <description>populate the cache every 2 hours</description>
     <schedule>every 2 hours</schedule>    
      <timezone>Asia/Shanghai</timezone>       
-  </cron>  
-  
-  <cron>
-    <url>/train12306/drawTicket.action</url>
-    <description>populate the cache every 10 minutes</description>
-    <schedule>every 10 minutes</schedule>    
-     <timezone>Asia/Shanghai</timezone>       
   </cron>   
 </cronentries>

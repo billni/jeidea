@@ -156,8 +156,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		executor.shutdown();
 		while (!executor.isTerminated()) {
 		}
-		logger.info("After task executed, the count of active thread is: " + Thread.activeCount());
-		ServletActionContext.getContext().getApplication().put("ticketlist", ticketlist);			
+		logger.info("After crawling task executed, the count of active thread is: " + Thread.activeCount());
+		ServletActionContext.getContext().getApplication().put("ticketlist", ticketlist);	
+		logger.info("After crawl Ticket, the tickets size: " + tickets.size());
 		ServletActionContext.getContext().getApplication().put("tickets", tickets);			
 		return NONE;
 	}
