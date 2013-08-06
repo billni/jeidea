@@ -105,7 +105,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * 获得指定天后的日期
 	 * @return
 	 */
-	public String getEndDate(int special) {
+	public String getSpecialDate(int special) {
 		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
 		calendar.setTime(new Date());
 		calendar.add(Calendar.DATE, special);
@@ -139,12 +139,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			//-- dev in office , use it.
-//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
 //			deploy gae produce server , need use it
-			task.initParameters(URL, date, null, null);
+//			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
@@ -158,7 +158,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		}
 		logger.info("After crawling task executed, the count of active thread is: " + Thread.activeCount());
 		ServletActionContext.getContext().getApplication().put("ticketlist", ticketlist);	
-		logger.info("After crawl Ticket, the tickets size: " + tickets.size());
+		logger.info("After crawl Ticket, we got " + tickets.size() + " days data.");
 		ServletActionContext.getContext().getApplication().put("tickets", tickets);			
 		return NONE;
 	}
@@ -295,13 +295,13 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		int i = 0;
 		if (tickets != null) {	
-			logger.info("Begin compute for drawing... tickets size: " + tickets.size());
+			logger.info("Begin compute for drawing... We have " + tickets.size() + " days data.");
 			try {
 				for (Future<List<Ticket>> future : tickets) {
 					if (i == 20) {
 						i = 0;
 					}					
-					drawChartEndDate = getEndDate(specialDate);
+					drawChartEndDate = getSpecialDate(specialDate);
 					if (future != null && future.get()!= null) {
 						for (Ticket ticket : future.get()) {
 							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
@@ -386,7 +386,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			} catch (Exception e) {
 				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
 			}			
-		}		
+		} else {
+			logger.info("I'm Sorry , this 'tickets' is null now! ");
+		}
 		t5HardSleepTicketCountSpecialDate = hm.get("t5HardSleepTicketCount"+drawChartEndDate);
 		t5SoftSleepTicketCountSpecialDate = hm.get("t5SoftSleepTicketCount"+drawChartEndDate);
 		t5HardSeatTicketCountSpecialDate = hm.get("t5HardSeatTicketCount"+drawChartEndDate);
