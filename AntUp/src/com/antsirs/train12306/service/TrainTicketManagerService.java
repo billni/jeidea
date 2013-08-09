@@ -2,14 +2,12 @@ package com.antsirs.train12306.service;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
+import com.antsirs.train12306.model.TicketContainer;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
 import com.google.appengine.api.datastore.Key;
@@ -81,4 +79,21 @@ public interface TrainTicketManagerService {
 	 * @return
 	 */
 	public List<Train> listTrain() ;
+
+	/**
+	 * persist ticketContainer
+	 */
+	public void createTicketContainer(TicketContainer ticketContainer);
+	
+	/**
+	 * 
+	 * @param key
+	 */
+	public void findTicketContainer(Key key);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TicketContainer> listTicketContainer();
 }

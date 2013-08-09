@@ -5,9 +5,9 @@
 <head>
 <link rel="stylesheet" type="text/css" href="/css/style.css"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript"><!--!window.jQuery && document.write('<script src=/js/jquery-1.10.2.min.js><\/script>');-></script>
-<script type="text/javascript" src="http://libs.baidu.com/highcharts/2.3.5/highcharts.js"></script>
-<script type="text/javascript"><!--!window.Highcharts && document.write('<script src=/js/highcharts/highcharts.js><\/script>');-></script>
+<script type="text/javascript"><!-- !window.jQuery && document.write('<script src=/js/jquery-1.10.2.min.js><\/script>');--></script>
+<script type="text/javascript" src="http://lib.sinaapp.com/js/highcharts/2.3.5/highcharts.js"></script>
+<script type="text/javascript"><!-- !window.Highcharts && document.write('<script src=/js/highcharts/highcharts.js><\/script>');--></script>
 <script type="text/javascript" src="/js/decorate.js"></script>
 <script type="text/javascript">
 $(function () {	
@@ -113,7 +113,6 @@ $(function () {
         options.title.text = "<s:property value='drawChartEndDate'/>"+ " Ticket Change Trend";
         var chart = new Highcharts.Chart(options);
 });​
-
 </script>	 		
 </head>
 <body>
