@@ -44,17 +44,13 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @return
 	 */
 	public List<Train> findTrain(String trainNo, String departureDate) {
-		List<Train> list = null;
 		String jpql = " SELECT train FROM Train train ";				
 		jpql += " WHERE train.trainNo = :trainNo";
 		jpql += " AND train.departureDate = :departureDate";
-		EntityManager entityManager= getDaoTemplate().getEntityManagerFactory().createEntityManager();
-		Query query = entityManager.createQuery(jpql);
+		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter("trainNo", trainNo);
 		query.setParameter("departureDate", departureDate);
-		list = query.getResultList();
-		entityManager.close();
-		return list;
+		return query.getResultList();		
 	}	
 	
 	public void deleteTrain(Train train){

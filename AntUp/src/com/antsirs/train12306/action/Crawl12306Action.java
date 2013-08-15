@@ -6,11 +6,8 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -141,12 +138,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			//-- dev in office , use it.
-			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
 //			deploy gae produce server , need use it
-//			task.initParameters(URL, date, null, null);
+			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
@@ -275,15 +272,15 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String drawTicket() throws Exception {
-		logger.info("Begin draw chart.");
+	
 		//-------------for draw highcharts----------------
 		drawChartStartDate = (String)ServletActionContext.getContext().getApplication().get("drawChartStartDate");
 		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
 			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
 			ServletActionContext.getContext().getApplication().put("drawChartStartDate", drawChartStartDate);
 		}
-		
 		drawChartEndDate = getSpecialDate(specialDate);
+		logger.info("Begin draw chart - " + drawChartEndDate);
 		TicketShelf ticketShelf = null;
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSleepClass");
 		if (ticketShelf != null) {
@@ -324,7 +321,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			k157HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount();
 		}
 	
-		logger.info("Finish draw chart! ");
+		logger.info("Finish draw chart - " + drawChartEndDate);
 		return SUCCESS;
 	}
 	
