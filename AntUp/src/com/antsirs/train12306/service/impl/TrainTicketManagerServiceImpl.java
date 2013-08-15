@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.antsirs.core.spring.daosupport.DaoTemplate;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
-import com.antsirs.train12306.model.TicketContainer;
+import com.antsirs.train12306.model.TicketShelf;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.api.datastore.Key;
@@ -124,24 +124,24 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	/**
 	 * persist ticketContainer
 	 */
-	public void createTicketContainer(TicketContainer ticketContainer){
-		getDaoTemplate().merge(ticketContainer);
+	public void createTicketShelf(TicketShelf ticketShelf){
+		getDaoTemplate().merge(ticketShelf);
 	}
 	
 	/**
 	 * 
 	 * @param key
 	 */
-	public TicketContainer findTicketContainer(String key){
-		return getDaoTemplate().find(TicketContainer.class, key);
+	public TicketShelf findTicketShelf(String key){
+		return getDaoTemplate().find(TicketShelf.class, key);
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public List<TicketContainer> listTicketContainer() {				
-		return getDaoTemplate().getEntityManagerFactory().createEntityManager().createNamedQuery("listTicketContainer").getResultList();				
+	public List<TicketShelf> listTicketShelf() {				
+		return getDaoTemplate().getEntityManagerFactory().createEntityManager().createNamedQuery("listTicketShelf").getResultList();				
 	}
 }
 

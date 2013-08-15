@@ -7,7 +7,7 @@ import javax.persistence.EntityTransaction;
 import org.springframework.transaction.annotation.Transactional;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
-import com.antsirs.train12306.model.TicketContainer;
+import com.antsirs.train12306.model.TicketShelf;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
 import com.google.appengine.api.datastore.Key;
@@ -81,19 +81,19 @@ public interface TrainTicketManagerService {
 	public List<Train> listTrain() ;
 
 	/**
-	 * persist ticketContainer
+	 * persist ticketShelf
 	 */
-	public void createTicketContainer(TicketContainer ticketContainer);
+	public void createTicketShelf(TicketShelf ticketShelf);
 	
 	/**
 	 * 
 	 * @param key
 	 */
-	public TicketContainer findTicketContainer(String key);
+	public TicketShelf findTicketShelf(String key);
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public List<TicketContainer> listTicketContainer();
+	public List<TicketShelf> listTicketShelf();
 }
