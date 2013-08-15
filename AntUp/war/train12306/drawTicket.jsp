@@ -16,15 +16,14 @@
 <script type="text/javascript">
 	window.onload = function(){		
 		if (window.Highcharts==undefined)
-			document.write('<script src=/js/highcharts/highcharts.js><\/script>');
+			document.write("<script src=/js/highcharts/highcharts.js><\/script>");
 	}
 </script>
-
 <script type="text/javascript" src="/js/decorate.js"></script>
 <script type="text/javascript">
 $(function () {	
-	    var startDate = new Date("<s:property value='drawChartStartDate'/>");
-        var options = {
+	    startDate = new Date("<s:property value='drawChartStartDate'/>");
+        options = {
             chart: {
                 zoomType: 'x',
                 renderTo: 'container',
@@ -123,16 +122,16 @@ $(function () {
         options.series[7].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
         options.series[8].pointStart = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()); 
         options.title.text = "<s:property value='drawChartEndDate'/>"+ " Ticket Change Trend";
-        var chart = new Highcharts.Chart(options);
-});​
-</script>	 		
+         var chart = new Highcharts.Chart(options);   
+});
+</script>
 </head>
 <body>
 	<div id="body">
 		<div id="site-logo"></div>
 		<div id="site-menu"></div>
 		<div id="site-content">
-			<div id="container" style="width:100%; height:600px;"></div>
+			<div id="container" style="width:auto; height:auto"></div>
 		</div>
 	</div>	
 
