@@ -6,6 +6,8 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -276,131 +278,56 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String drawTicket() throws Exception {
-		String[] t189SoftSleepTicketCount = new String[20]; 
-		String[] t189HardSleepTicketCount = new String[20];
-		String[] t189HardSeatTicketCount = new String[20];
-		String[] t5SoftSleepTicketCount = new String[20];
-		String[] t5HardSleepTicketCount = new String[20];
-		String[] t5HardSeatTicketCount = new String[20];
-		String[] k157SoftSleepTicketCount = new String[20];
-		String[] k157HardSleepTicketCount = new String[20];
-		String[] k157HardSeatTicketCount = new String[20];
-		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("tickets");
-
+		logger.info("Begin draw chart.");
 		//-------------for draw highcharts----------------
 		drawChartStartDate = (String)ServletActionContext.getContext().getApplication().get("drawChartStartDate");
 		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
 			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
 			ServletActionContext.getContext().getApplication().put("drawChartStartDate", drawChartStartDate);
 		}
-		HashMap<String, String> hm = new HashMap<String, String>();
-		int i = 0;
-		if (tickets != null) {	
-			logger.info("Begin compute for drawing... We have " + tickets.size() + " days data.");
-			try {
-				for (Future<List<Ticket>> future : tickets) {
-					if (i == 20) {
-						i = 0;
-					}					
-					drawChartEndDate = getSpecialDate(i);
-					if (future != null && future.get()!= null) {
-						for (Ticket ticket : future.get()) {
-							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
-								if ("T5".equals(ticket.getTrainNo())) {
-									if ("HardSleepClass".equals(ticket.getGrade())) {
-										
-										if (t5HardSleepTicketCount[i] == null || "".equals(t5HardSleepTicketCount[i])) {
-											t5HardSleepTicketCount[i] = ticket.getCount();
-										}  else {
-											t5HardSleepTicketCount[i] = t5HardSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("t5HardSleepTicketCount"+drawChartEndDate, t5HardSleepTicketCount[i]);									
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										if (t5SoftSleepTicketCount[i] == null || "".equals(t5SoftSleepTicketCount[i])) {
-											t5SoftSleepTicketCount[i] = ticket.getCount();
-										} else {
-											t5SoftSleepTicketCount[i] = t5SoftSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("t5SoftSleepTicketCount"+drawChartEndDate, t5SoftSleepTicketCount[i]);
-									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										if (t5HardSeatTicketCount[i] == null || "".equals(t5HardSeatTicketCount[i])) {
-											t5HardSeatTicketCount[i] = ticket.getCount();
-										} else {
-											t5HardSeatTicketCount[i] = t5HardSeatTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("t5HardSeatTicketCount"+drawChartEndDate, t5HardSeatTicketCount[i]);								
-									}
-								}
-								if ("T189".equals(ticket.getTrainNo())) {
-									if ("HardSleepClass".equals(ticket.getGrade())) {
-										if (t189HardSleepTicketCount[i] == null || "".equals(t189HardSleepTicketCount[i])) {
-											t189HardSleepTicketCount[i] = ticket.getCount();
-										}  else {
-											t189HardSleepTicketCount[i] = t189HardSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("t189HardSleepTicketCount"+drawChartEndDate, t189HardSleepTicketCount[i]);
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										if (t189SoftSleepTicketCount[i] == null || "".equals(t189SoftSleepTicketCount[i])) {
-											t189SoftSleepTicketCount[i] = ticket.getCount();
-										} else {
-											t189SoftSleepTicketCount[i] = t189SoftSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("t189SoftSleepTicketCount"+drawChartEndDate, t189SoftSleepTicketCount[i]);
-									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										if (t189HardSeatTicketCount[i] == null || "".equals(t189HardSeatTicketCount[i])) {
-											t189HardSeatTicketCount[i] = ticket.getCount();
-										} else {
-											t189HardSeatTicketCount[i] = t189HardSeatTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("t189HardSeatTicketCount"+drawChartEndDate, t189HardSeatTicketCount[i]);
-									}
-								}
-								if ("K157".equals(ticket.getTrainNo())) {
-									if ("HardSleepClass".equals(ticket.getGrade())) {
-										if (k157HardSleepTicketCount[i] == null || "".equals(k157HardSleepTicketCount[i])) {
-											k157HardSleepTicketCount[i] = ticket.getCount();
-										}  else {
-											k157HardSleepTicketCount[i] = k157HardSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("k157HardSleepTicketCount"+drawChartEndDate, k157HardSleepTicketCount[i]);
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										if (k157SoftSleepTicketCount[i] == null || "".equals(k157SoftSleepTicketCount[i])) {
-											k157SoftSleepTicketCount[i] = ticket.getCount();
-										} else {
-											k157SoftSleepTicketCount[i] = k157SoftSleepTicketCount[i] + "," + ticket.getCount();
-										}
-										hm.put("k157SoftSleepTicketCount"+drawChartEndDate, k157SoftSleepTicketCount[i]);
-									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										if (k157HardSeatTicketCount[i] == null || "".equals(k157HardSeatTicketCount[i])) {
-											k157HardSeatTicketCount[i] = ticket.getCount();
-										} else {
-											k157HardSeatTicketCount[i] = k157HardSeatTicketCount[i]+ "," + ticket.getCount();
-										}
-										hm.put("k157HardSeatTicketCount"+drawChartEndDate, k157HardSeatTicketCount[i]);										
-									}
-								}
-								
-							}
-						}
-					}
-					i++;
-				}				
-			} catch (Exception e) {
-				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
-			}			
-		} else {
-			logger.info("I'm Sorry , this 'tickets' is null now! ");
+		
+		drawChartEndDate = getSpecialDate(specialDate);
+		TicketContainer ticketContainer = null;
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-HardSleepClass");
+		if (ticketContainer != null) {
+			t5HardSleepTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-SoftSleepClass");
+		if (ticketContainer != null) {
+			t5SoftSleepTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-HardSeatClass");
+		if (ticketContainer != null) {
+			t5HardSeatTicketCountSpecialDate = ticketContainer.getTicketCount();
 		}
-		t5HardSleepTicketCountSpecialDate = hm.get("t5HardSleepTicketCount"+drawChartEndDate);
-		t5SoftSleepTicketCountSpecialDate = hm.get("t5SoftSleepTicketCount"+drawChartEndDate);
-		t5HardSeatTicketCountSpecialDate = hm.get("t5HardSeatTicketCount"+drawChartEndDate);
-		t189HardSleepTicketCountSpecialDate = hm.get("t189HardSleepTicketCount"+drawChartEndDate);
-		t189SoftSleepTicketCountSpecialDate = hm.get("t189SoftSleepTicketCount"+drawChartEndDate);
-		t189HardSeatTicketCountSpecialDate = hm.get("t189HardSeatTicketCount"+drawChartEndDate);	
-		k157HardSleepTicketCountSpecialDate = hm.get("k157HardSleepTicketCount"+drawChartEndDate);
-		k157SoftSleepTicketCountSpecialDate = hm.get("k157SoftSleepTicketCount"+drawChartEndDate);
-		k157HardSeatTicketCountSpecialDate = hm.get("k157HardSeatTicketCount"+drawChartEndDate);
-		logger.info("Finish computing for drawing! ");
+		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-HardSleepClass");
+		if (ticketContainer != null) {
+			t189HardSleepTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-SoftSleepClass");
+		if (ticketContainer != null) {
+			t189SoftSleepTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-HardSeatClass");
+		if (ticketContainer != null) {
+			t189HardSeatTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}
+		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-HardSleepClass");
+		if (ticketContainer != null) {
+			k157HardSleepTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-SoftSleepClass");
+		if (ticketContainer != null) {
+			k157SoftSleepTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}		
+		ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-HardSeatClass");
+		if (ticketContainer != null) {
+			k157HardSeatTicketCountSpecialDate = ticketContainer.getTicketCount();
+		}
+	
+		logger.info("Finish draw chart! ");
 		return SUCCESS;
 	}
 	
@@ -428,27 +355,27 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-T5-HardSleepClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
 										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-SoftSleepClass");
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-T5-SoftSleepClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
 										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-HardSeatClass");
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-T5-HardSeatClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);							
 									}
 								}
@@ -458,27 +385,27 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-T189-HardSleepClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
 										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-SoftSleepClass");
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-T189-SoftSleepClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
 										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-HardSeatClass");
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-T189-HardSeatClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									}
 								}
@@ -488,27 +415,27 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-K157-HardSleepClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
 										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-SoftSleepClass");
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-K157-SoftSleepClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
 										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-HardSeatClass");
 										if (ticketContainer == null) {
 											ticketContainer =  new TicketContainer();
 											ticketContainer.setTicketContainerId(drawChartEndDate + "-K157-HardSeatClass");
-											ticketContainer.setCountList(new ArrayList<String>());
+											ticketContainer.setTicketCount("");
 										}
-										ticketContainer.getCountList().add(ticket.getCount());
+										ticketContainer.setTicketCount(ticketContainer.getTicketCount() + "," + ticket.getCount());
 										trainTicketManagerService.createTicketContainer(ticketContainer);								
 									}
 								}
