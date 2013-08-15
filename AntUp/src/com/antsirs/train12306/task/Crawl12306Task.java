@@ -377,7 +377,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 						ticketList.addAll(createTicketInfo(train, trainTicketInfo));						
 					}
 				}				
-				trainTicketManagerService.batchInsert(ticketList);
+				trainTicketManagerService.batchInsertTicket(ticketList);
 			}
 		}
 		return ticketList;

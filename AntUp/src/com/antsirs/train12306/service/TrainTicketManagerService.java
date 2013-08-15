@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.TicketShelf;
+import com.antsirs.train12306.model.TicketStock;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
 import com.google.appengine.api.datastore.Key;
@@ -72,7 +73,7 @@ public interface TrainTicketManagerService {
 	 * 
 	 * @param object
 	 */
-	public void batchInsert(List<Ticket> tickets);
+	public void batchInsertTicket(List<Ticket> tickets);
 	
 	/**
 	 * list train
@@ -96,4 +97,28 @@ public interface TrainTicketManagerService {
 	 * @return
 	 */
 	public List<TicketShelf> listTicketShelf();
+
+	/**
+	 * persist ticketStock
+	 */
+	public void createTicketStock(TicketStock ticketStock);
+	
+	/**
+	 * 
+	 * @param key
+	 */
+	public TicketStock findTicketStock(String key);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TicketStock> listTicketStock() ;
+
+	/**
+	 * 
+	 * @param object
+	 */
+	@Transactional
+	public void batchInsertShelf(List<TicketShelf> ticketShelfs);
 }

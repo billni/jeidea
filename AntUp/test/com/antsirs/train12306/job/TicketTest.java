@@ -197,7 +197,7 @@ public class TicketTest extends AbstractTest {
 		// ticket.setTrain(train);
 		tickets.add(ticket);
 
-		trainTicketManagerService.batchInsert(tickets);
+		trainTicketManagerService.batchInsertTicket(tickets);
 
 		List<Ticket> ts = trainTicketManagerService.listTicket();
 		logger.info("ticket count is " + ts.size());

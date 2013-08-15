@@ -12,28 +12,32 @@ import javax.persistence.NamedQuery;
 
 import org.datanucleus.jpa.annotations.Extension;
 
+import com.google.appengine.api.datastore.Key;
+
 @Entity
 @NamedQueries(@NamedQuery(name = "listTicketShelf", query = "SELECT m FROM TicketShelf m"))
 public class TicketShelf {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String ticketShelfId;
+	private Key ticketShelfId;
+	
+	private String ticketShelfLabel;
 	
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String ticketCount;
 
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
-	@ManyToOne(cascade = {CascadeType.REFRESH }, fetch=FetchType.LAZY)   
-	private TicketStock container;
+	@ManyToOne(cascade = {CascadeType.MERGE}, fetch=FetchType.LAZY)   
+	private TicketStock ticketStock;
 	
 	public TicketShelf() {
 	}
 
-	public String getTicketShelfId() {
+	public Key getTicketShelfId() {
 		return ticketShelfId;
 	}
 
-	public void setTicketShelfId(String ticketShelfId) {
+	public void setTicketShelfId(Key ticketShelfId) {
 		this.ticketShelfId = ticketShelfId;
 	}
 
@@ -43,6 +47,22 @@ public class TicketShelf {
 
 	public void setTicketCount(String ticketCount) {
 		this.ticketCount = ticketCount;
+	}
+
+	public TicketStock getTicketStock() {
+		return ticketStock;
+	}
+
+	public void setTicketStock(TicketStock ticketStock) {
+		this.ticketStock = ticketStock;
+	}
+
+	public String getTicketShelfLabel() {
+		return ticketShelfLabel;
+	}
+
+	public void setTicketShelfLabel(String ticketShelfLabel) {
+		this.ticketShelfLabel = ticketShelfLabel;
 	}
 	
 	

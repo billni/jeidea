@@ -1,7 +1,6 @@
 package com.antsirs.train12306.service.impl;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -11,6 +10,7 @@ import com.antsirs.core.spring.daosupport.DaoTemplate;
 import com.antsirs.core.spring.daosupport.Pagination;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.TicketShelf;
+import com.antsirs.train12306.model.TicketStock;
 import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.google.appengine.api.datastore.Key;
@@ -44,13 +44,17 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @return
 	 */
 	public List<Train> findTrain(String trainNo, String departureDate) {
+		List<Train> list = null;
 		String jpql = " SELECT train FROM Train train ";				
 		jpql += " WHERE train.trainNo = :trainNo";
-		jpql += " AND train.departureDate = :departureDate";		
-		Query query = getEntityManager().createQuery(jpql);
+		jpql += " AND train.departureDate = :departureDate";
+		EntityManager entityManager= getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		Query query = entityManager.createQuery(jpql);
 		query.setParameter("trainNo", trainNo);
 		query.setParameter("departureDate", departureDate);
-		return query.getResultList();		
+		list = query.getResultList();
+		entityManager.close();
+		return list;
 	}	
 	
 	public void deleteTrain(Train train){
@@ -73,15 +77,20 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	/**
 	 * list tickets
 	 */
-	public List listTicket(String trainNo, String grade) {				
+	public List<Ticket> listTicket(String trainNo, String grade) {
+		EntityManager entityManager= getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		List<Ticket> list = null;
 		String jpql = " SELECT ticket FROM Ticket ticket ";				
 		jpql += " WHERE ticket.trainNo = :trainNo";
 		jpql += " AND ticket.grade = :grade";
 		jpql += " ORDER BY trainNo, grade";	
-		Query query = getEntityManager().createQuery(jpql);
+		
+		Query query = entityManager.createQuery(jpql);
 		query.setParameter("trainNo", trainNo);
 		query.setParameter("grade", grade);
-		return query.getResultList();				
+		list = query.getResultList();
+		entityManager.close();
+		return list;
 	}
 	
 	/**
@@ -89,7 +98,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * @param object
 	 */
 	@Transactional
-	public void batchInsert(List<Ticket> tickets) {
+	public void batchInsertTicket(List<Ticket> tickets) {
 		EntityManager em = getEntityManager();		
 		EntityTransaction et = em.getTransaction();		
 		et.begin();
@@ -117,12 +126,16 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	/**
 	 * list tickets
 	 */
-	public List<Train> listTrain() {				
-		return getEntityManager().createNamedQuery("listTrain").getResultList();				
+	public List<Train> listTrain() {
+		List<Train> list = null;
+		EntityManager entityManager = getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		list = entityManager.createNamedQuery("listTrain").getResultList();
+		entityManager.close();
+		return list;
 	}
 	
 	/**
-	 * persist ticketContainer
+	 * persist ticketShelf
 	 */
 	public void createTicketShelf(TicketShelf ticketShelf){
 		getDaoTemplate().merge(ticketShelf);
@@ -132,16 +145,80 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * 
 	 * @param key
 	 */
-	public TicketShelf findTicketShelf(String key){
-		return getDaoTemplate().find(TicketShelf.class, key);
+	public TicketShelf findTicketShelf(String shelfLabel){
+		TicketShelf ticketShelf = null;
+		EntityManager entityManager= getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		Query query = entityManager.createQuery("SELECT m FROM TicketShelf m where m.ticketShelfLabel = :ticketShelfLabel");
+		query.setParameter("ticketShelfLabel", shelfLabel);		
+		List<TicketShelf> list = query.getResultList();
+		if (list != null && list.size() >0) {			
+			ticketShelf = list.get(0);			
+		}
+		entityManager.close();
+		return ticketShelf;
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public List<TicketShelf> listTicketShelf() {				
-		return getDaoTemplate().getEntityManagerFactory().createEntityManager().createNamedQuery("listTicketShelf").getResultList();				
+	public List<TicketShelf> listTicketShelf() {
+		List<TicketShelf> list = null;
+		EntityManager entityManager = getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		list = entityManager.createNamedQuery("listTicketShelf").getResultList();
+		entityManager.close();
+		return list;				
+	}
+	
+	/**
+	 * persist ticketStock
+	 */
+	public void createTicketStock(TicketStock ticketStock){
+		getDaoTemplate().merge(ticketStock);
+	}
+	
+	/**
+	 * 
+	 * @param key
+	 */
+	public TicketStock findTicketStock(String key){
+		return getDaoTemplate().find(TicketStock.class, key);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TicketStock> listTicketStock() {		
+		List<TicketStock> list = null;
+		EntityManager entityManager = getDaoTemplate().getEntityManagerFactory().createEntityManager();
+		list =  entityManager.createNamedQuery("listTicketStock").getResultList();
+		entityManager.close();
+        return list;
+	}
+	
+	/**
+	 * 
+	 * @param object
+	 */
+	@Transactional
+	public void batchInsertShelf(List<TicketShelf> ticketShelfs) {
+		EntityManager em = getEntityManager();		
+		EntityTransaction et = em.getTransaction();		
+		et.begin();
+		int batchSize = 100;		
+		int i = 0;
+		logger.info("batch insert ticketShelf count - " + ticketShelfs.size());
+		for(TicketShelf ticketShelf : ticketShelfs){
+			em.merge(ticketShelf);
+			i++;
+			if( i % batchSize == 0 ){
+				em.flush();
+				em.clear();
+			} 
+		}
+		et.commit();
+		em.close();		
 	}
 }
 

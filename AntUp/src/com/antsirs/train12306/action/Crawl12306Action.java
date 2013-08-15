@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -30,6 +31,7 @@ import com.antsirs.core.util.exception.ExceptionConvert;
 import com.antsirs.core.util.zip.ZipUtils;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.TicketShelf;
+import com.antsirs.train12306.model.TicketStock;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.antsirs.train12306.task.SendMultipartMessage;
@@ -329,8 +331,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	/**
 	 * 计算票数,为了图表
 	 */
-	public void computeTicket(List<Future<List<Ticket>>> tickets) {
+	public void computeTicket(List<Future<List<Ticket>>> tickets) {		
 		TicketShelf ticketShelf = null;
+		TicketStock ticketStock = null;
+		List<TicketShelf> list = null;
 		int i = 0;
 		logger.info("Begin compute for drawing...");
 		if (tickets != null) {	
@@ -341,6 +345,14 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						i = 0;
 					}					
 					drawChartEndDate = getSpecialDate(i);
+					ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);
+					if (ticketStock == null) {
+						ticketStock = new TicketStock(); 
+						ticketStock.setDepartureDate(drawChartEndDate);
+						ticketStock.setTicketShelf(new HashSet<TicketShelf>());
+						trainTicketManagerService.createTicketStock(ticketStock);
+					}
+					list = new ArrayList<TicketShelf>();
 					if (future != null && future.get()!= null) {
 						for (Ticket ticket : future.get()) {
 							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
@@ -349,32 +361,35 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSleepClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-T5-HardSleepClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T5-HardSleepClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);									
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-SoftSleepClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-T5-SoftSleepClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T5-SoftSleepClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSeatClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-T5-HardSeatClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T5-HardSeatClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);							
+										list.add(ticketShelf);							
 									}
 								}
 								if ("T189".equals(ticket.getTrainNo())) {
@@ -382,32 +397,35 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSleepClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-T189-HardSleepClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T189-HardSleepClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-SoftSleepClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-T189-SoftSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T189-SoftSleepClass");
+											ticketShelf.setTicketCount(ticket.getCount());		
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSeatClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-T189-HardSeatClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T189-HardSeatClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}										
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);
 									}
 								}
 								if ("K157".equals(ticket.getTrainNo())) {
@@ -415,32 +433,35 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSleepClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-K157-HardSleepClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-K157-HardSleepClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-SoftSleepClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-K157-SoftSleepClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-K157-SoftSleepClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);
+										list.add(ticketShelf);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
 										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSeatClass");
 										if (ticketShelf == null) {
 											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfId(drawChartEndDate + "-K157-HardSeatClass");
+											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-K157-HardSeatClass");
 											ticketShelf.setTicketCount(ticket.getCount());
+											ticketShelf.setTicketStock(ticketStock);
 										} else {
 											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
 										}
-										trainTicketManagerService.createTicketShelf(ticketShelf);								
+										list.add(ticketShelf);								
 									}
 								}
 								
@@ -448,6 +469,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						}
 					}
 					i++;
+					trainTicketManagerService.batchInsertShelf(list);
 				}				
 			} catch (Exception e) {
 				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
