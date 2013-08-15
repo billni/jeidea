@@ -89,7 +89,7 @@ public interface TrainTicketManagerService {
 	 * 
 	 * @param key
 	 */
-	public void findTicketContainer(Key key);
+	public TicketContainer findTicketContainer(String key);
 	
 	/**
 	 * 

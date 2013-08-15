@@ -125,15 +125,15 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 	 * persist ticketContainer
 	 */
 	public void createTicketContainer(TicketContainer ticketContainer){
-		getDaoTemplate().persist(ticketContainer);
+		getDaoTemplate().merge(ticketContainer);
 	}
 	
 	/**
 	 * 
 	 * @param key
 	 */
-	public void findTicketContainer(Key key){
-		getDaoTemplate().find(TicketContainer.class, key);
+	public TicketContainer findTicketContainer(String key){
+		return getDaoTemplate().find(TicketContainer.class, key);
 	}
 	
 	/**

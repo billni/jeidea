@@ -4,9 +4,10 @@
 }
 
 html, body {	
+	background: -moz-linear-gradient(top, blue, white 80%, orange); /* Firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff4f02), color-stop(1, #8f2c00)); /* Saf4+, Chrome */	
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC00', endColorstr='#555', GradientType='0'); /* IE*/
 	height:100%;	
-	-ms-linear-gradient(top, #f8cbd6 0%,#edeeec 100%);	
 }
 
 html, #body {

@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.antsirs.core.util.exception.ExceptionConvert;
 import com.antsirs.core.util.zip.ZipUtils;
 import com.antsirs.train12306.model.Ticket;
+import com.antsirs.train12306.model.TicketContainer;
 import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.antsirs.train12306.task.SendMultipartMessage;
@@ -120,16 +121,16 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("ticketlist");
 		
-		List<Future<List<Ticket>>> tickets = (List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("tickets");
+		List<Future<List<Ticket>>> tickets = new ArrayList<Future<List<Ticket>>>();//(List<Future<List<Ticket>>>) ServletActionContext.getContext().getApplication().get("tickets");
 		Future<List<Ticket>> futureTask = null;
 		if (ticketlist == null) {
 			logger.info("This tickets is null in web application, and new one at once now.");
 			ticketlist = new ArrayList<Future<List<Ticket>>>();
 		}
 		
-		if (tickets == null) {
-			tickets = new ArrayList<Future<List<Ticket>>>();
-		}
+//		if (tickets == null) {
+//			tickets = new ArrayList<Future<List<Ticket>>>();
+//		}
 		Crawl12306Task task = null;
 		ExecutorService executor = Executors.newCachedThreadPool(ThreadManager
 				.currentRequestThreadFactory());
@@ -139,27 +140,27 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			task = new Crawl12306Task();
 			logger.info("Crawling - " + date);
 			//-- dev in office , use it.
-//			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
+			task.initParameters(URL, date,	getHttpClient(new DefaultHttpClient()), null);
 			//-------------------dev in home, use it-------------------------
 //			task.initParameters(URL, date,	new DefaultHttpClient(), null);
 			//----------------------------------------------
 //			deploy gae produce server , need use it
-			task.initParameters(URL, date, null, null);
+//			task.initParameters(URL, date, null, null);
 			 //-------------------------------------------------
 			task.setTrainTicketManagerService(trainTicketManagerService);
 			task.setEnvironment(ApiProxy.getCurrentEnvironment());
 			futureTask = executor.submit(task);
 			ticketlist.add(futureTask);
 			tickets.add(futureTask);
-			// executor.execute(task);
+			// executor.execute(task);					
 		}
 		executor.shutdown();
 		while (!executor.isTerminated()) {
 		}
 		logger.info("After crawling task executed, the count of active thread is: " + Thread.activeCount());
 		ServletActionContext.getContext().getApplication().put("ticketlist", ticketlist);	
-		logger.info("After crawl Ticket, we got " + tickets.size() + " days data.");
-		ServletActionContext.getContext().getApplication().put("tickets", tickets);			
+		logger.info("After crawl Ticket, we got " + tickets.size() + " days data.");				
+		computeTicket(tickets);
 		return NONE;
 	}
 	
@@ -301,12 +302,13 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 					if (i == 20) {
 						i = 0;
 					}					
-					drawChartEndDate = getSpecialDate(specialDate);
+					drawChartEndDate = getSpecialDate(i);
 					if (future != null && future.get()!= null) {
 						for (Ticket ticket : future.get()) {
 							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
 								if ("T5".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
+										
 										if (t5HardSleepTicketCount[i] == null || "".equals(t5HardSleepTicketCount[i])) {
 											t5HardSleepTicketCount[i] = ticket.getCount();
 										}  else {
@@ -400,5 +402,128 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		k157HardSeatTicketCountSpecialDate = hm.get("k157HardSeatTicketCount"+drawChartEndDate);
 		logger.info("Finish computing for drawing! ");
 		return SUCCESS;
+	}
+	
+	/**
+	 * 计算票数,为了图表
+	 */
+	public void computeTicket(List<Future<List<Ticket>>> tickets) {
+		TicketContainer ticketContainer = null;		
+//		HashMap<String, List<TicketContainer>> hm = new HashMap<String, List<TicketContainer>>();
+		int i = 0;
+		if (tickets != null) {	
+			logger.info("Begin compute for drawing... We have " + tickets.size() + " days data.");
+			try {
+				for (Future<List<Ticket>> future : tickets) {
+					if (i == 20) {
+						i = 0;
+					}					
+					drawChartEndDate = getSpecialDate(i);
+					if (future != null && future.get()!= null) {
+						for (Ticket ticket : future.get()) {
+							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
+								if ("T5".equals(ticket.getTrainNo())) {
+									if ("HardSleepClass".equals(ticket.getGrade())) {
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-HardSleepClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-T5-HardSleepClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-SoftSleepClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-T5-SoftSleepClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									} else if ("HardSeatClass".equals(ticket.getGrade())) {
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T5-HardSeatClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-T5-HardSeatClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);							
+									}
+								}
+								if ("T189".equals(ticket.getTrainNo())) {
+									if ("HardSleepClass".equals(ticket.getGrade())) {
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-HardSleepClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-T189-HardSleepClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-SoftSleepClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-T189-SoftSleepClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									} else if ("HardSeatClass".equals(ticket.getGrade())) {
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-T189-HardSeatClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-T189-HardSeatClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									}
+								}
+								if ("K157".equals(ticket.getTrainNo())) {
+									if ("HardSleepClass".equals(ticket.getGrade())) {
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-HardSleepClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-K157-HardSleepClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-SoftSleepClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-K157-SoftSleepClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);
+									} else if ("HardSeatClass".equals(ticket.getGrade())) {
+										ticketContainer = trainTicketManagerService.findTicketContainer(drawChartEndDate + "-K157-HardSeatClass");
+										if (ticketContainer == null) {
+											ticketContainer =  new TicketContainer();
+											ticketContainer.setTicketContainerId(drawChartEndDate + "-K157-HardSeatClass");
+											ticketContainer.setCountList(new ArrayList<String>());
+										}
+										ticketContainer.getCountList().add(ticket.getCount());
+										trainTicketManagerService.createTicketContainer(ticketContainer);								
+									}
+								}
+								
+							}
+						}
+					}
+					i++;
+				}				
+			} catch (Exception e) {
+				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
+			}			
+		} else {
+			logger.info("I'm Sorry , this 'tickets' is null now! ");
+		}
+		logger.info("Finish compute for drawing.");
 	}
 }
