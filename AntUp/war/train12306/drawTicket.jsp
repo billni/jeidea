@@ -133,6 +133,7 @@ $(function () {
 		<div id="site-content">
 			<div id="container" style="width:auto; height:auto"></div>
 		</div>
+		<div id="site-footer"></div>
 	</div>	
 
 </body>

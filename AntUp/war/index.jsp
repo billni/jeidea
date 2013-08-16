@@ -20,7 +20,12 @@
 	<div id="body">
 		<div id="site-logo"></div>
 		<div id="site-menu"></div>
-		<div id="site-content"></div>
+		<div id="site-content">
+			<div style="margin:0px 0px 0px 0px;">
+				<fieldset style="height:600px"></fieldset>
+			</div>
+		</div>
+		<div id="site-footer"></div>
 	</div>	
 </body>
 </html>

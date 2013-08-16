@@ -3,4 +3,5 @@ window.onload=function() {
 	$("#site-footer").load("/decorate/footer.html");
 	$("#site-logo").load("/decorate/logo.html");
 	$("#site-companycontent").load("/decorate/content.html");
+	$("#site-footer").load("/decorate/footer.html");
 }
