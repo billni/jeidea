@@ -73,6 +73,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>remoteapi</servlet-name>
-		<url-pattern>/remote_api</url-pattern>
+		<url-pattern>/_ah/remote_api</url-pattern>
 	</servlet-mapping>
 </web-app>
