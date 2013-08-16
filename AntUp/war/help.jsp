@@ -17,10 +17,11 @@
 			<div id="help">
 			<h1>Introduce</h1>
 			<hr/>
-				<h3>- Crawl a lot of thing for statistics.</h3>
-				<h3>- Generate more 1000 units data daily.</h3>
-				<h3>- Plan to run this website about 2 years.</h3>
-				<h3>- This website source code use git to manage and architecture use SSJ (Spring, Struts2, JPA).</h3>			
+				<h3>- Crawling ticket data for statistics </h3>
+				<h3>- Generating more 1000 units data daily </h3>
+				<h3>- Planing to run this website about 2 years </h3>
+				<h3>- Using GIT to manage source code </h3>
+				<h3>- Using MVC(Spring, Struts2, JPA) frameworks </h3>			
 			</div>
 		</div>
 	</div>	

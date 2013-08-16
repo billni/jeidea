@@ -29,3 +29,22 @@ aJ4AF4Av3gS2
 
 -------------------------------------------------20130801
 Update Struts2 version to 2.3.15.1
+
+------------------------------------------------20130816
+Gray ,Invert,Xray 滤镜
+语法：{filter:gray} ,{filter:invert},{filter:xray} 
+
+Gray滤镜是把一张图片变成灰度图；（汶川大地震后很多网站色调都变灰色，就是用的这一点代码实现的）
+Invert滤镜是把对象的可视化属性全部翻转，包括色彩、饱和度、和亮度值；
+Xray滤镜是让对象反映出它的轮廓并把这些轮廓加亮，也就是所谓的“X”光片。
+
+Wave 滤镜 语法：{filter:wave(add=add,freq=freq,lightstrength=strength,phase=phase,strength=strength)} 
+
+'wave' 属性把对象按垂直的波形样式打乱。默认是“TRUE（非0）”， 
+“ADD”表示是否要把对象按照波形样式打乱， 
+“FREQ”是波纹的频率，也就是指定在对象上一共需要产生多少个完整的波纹， 
+“LIGHTSTRENGTH”参数可以对于波纹增强光影的效果，范围0----100， 
+“PHASE”参数用来设置正弦波的偏移量。 
+“STRENGTH”代表振幅大小。 
+
+body{ filter:wave(add=add,freq=freq,lightstrength=strength,phase=phase,strength=20);}
