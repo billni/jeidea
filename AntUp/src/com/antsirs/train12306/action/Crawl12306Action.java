@@ -42,7 +42,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public static final String PROXY_HOST = "10.18.8.60";
 	public static final int PROXY_PORT = 8008;
 	public static final String PROXY_USERNAME = "niyong";
-	public static final String PROXY_PASSWORD = "Ny111111";
+	public static final String PROXY_PASSWORD = "nY111111";
 	public static final String PROXY_WORKSTATION = "isa06";
 	public static final String PROXY_DOMAIN = "ulic";
 	public static final String URL = "http://dynamic.12306.cn/otsquery/query/queryRemanentTicketAction.do";
@@ -112,6 +112,17 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.DATE, special);
 		return DateUtils.format(calendar.getTime(), "yyyy-MM-dd");
+	}
+	
+	/**
+	 * 获得指定天前的日期
+	 * @return
+	 */
+	public String getSpecialStartDate(int special) {
+		Calendar calendar = new GregorianCalendar(Locale.CHINESE);		
+		calendar.setTime(new Date());
+		calendar.add(Calendar.DATE, -special);
+		return DateUtils.format(calendar.getTime(), "yyyy/MM/dd");
 	}
 
 	/**
@@ -274,11 +285,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public String drawTicket() throws Exception {
 	
 		//-------------for draw highcharts----------------
-		drawChartStartDate = (String)ServletActionContext.getContext().getApplication().get("drawChartStartDate");
-		if (drawChartStartDate == null || drawChartStartDate.equals("") ) {
-			drawChartStartDate = DateUtils.format(new Date(), "yyyy/MM/dd"); //为了兼容js Date相关方法采用格式yyyy/mm/dd
-			ServletActionContext.getContext().getApplication().put("drawChartStartDate", drawChartStartDate);
-		}
+		drawChartStartDate = getSpecialStartDate(specialDate);
 		drawChartEndDate = getSpecialDate(specialDate);
 		logger.info("Begin draw chart - " + drawChartEndDate);
 		TicketShelf ticketShelf = null;
