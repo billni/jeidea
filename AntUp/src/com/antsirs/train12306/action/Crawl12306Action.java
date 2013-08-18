@@ -33,6 +33,7 @@ import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.antsirs.train12306.task.SendMultipartMessage;
 import com.google.appengine.api.ThreadManager;
+import com.google.appengine.api.datastore.Text;
 import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
@@ -291,41 +292,41 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		TicketShelf ticketShelf = null;
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSleepClass");
 		if (ticketShelf != null) {
-			t5HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount();
+			t5HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-SoftSleepClass");
 		if (ticketShelf != null) {
-			t5SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount();
+			t5SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSeatClass");
 		if (ticketShelf != null) {
-			t5HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount();
+			t5HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}
 		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSleepClass");
 		if (ticketShelf != null) {
-			t189HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount();
+			t189HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-SoftSleepClass");
 		if (ticketShelf != null) {
-			t189SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount();
+			t189SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSeatClass");
 		if (ticketShelf != null) {
-			t189HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount();
+			t189HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}
 		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSleepClass");
 		if (ticketShelf != null) {
-			k157HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount();
+			k157HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-SoftSleepClass");
 		if (ticketShelf != null) {
-			k157SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount();
+			k157SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
 		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSeatClass");
 		if (ticketShelf != null) {
-			k157HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount();
+			k157HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}
 	
 		logger.info("Finish draw chart - " + drawChartEndDate);
@@ -369,7 +370,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);									
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
@@ -380,7 +381,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
@@ -391,7 +392,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);							
 									}
@@ -405,7 +406,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
@@ -416,7 +417,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());		
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
@@ -427,7 +428,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}										
 										list.add(ticketShelf);
 									}
@@ -441,7 +442,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
@@ -452,7 +453,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
@@ -463,7 +464,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 											ticketShelf.setTicketCount(ticket.getCount());
 											ticketShelf.setTicketStock(ticketStock);
 										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount() + "," + ticket.getCount());
+											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 										}
 										list.add(ticketShelf);								
 									}

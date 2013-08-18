@@ -23,6 +23,12 @@
 				<h3>- Using GIT to manage source code </h3>
 				<h3>- Using MVC(Spring, Struts2, JPA) frameworks </h3>			
 			</div>
+			<div>
+				<div style="float:right"><img src="/img/gae.png" width="60px" height="50px"></div>
+				<div style="float:right"><img src="/img/highcharts.png" width="180px" height="50px"></div>
+				<div style="float:right"><img src="/img/java.png" width="60px" height="50px"></div>
+				<div style="float:right"><img src="/img/springsource.png" width="150px" height="50px"></div>
+			</div>
 		</div>
 	</div>	
 </body>

@@ -1,7 +1,9 @@
 package com.antsirs.train12306.model;
 
+import javax.jdo.annotations.Persistent;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,7 @@ import javax.persistence.NamedQuery;
 import org.datanucleus.jpa.annotations.Extension;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 
 @Entity
 @NamedQueries(@NamedQuery(name = "listTicketShelf", query = "SELECT m FROM TicketShelf m"))
@@ -23,8 +26,9 @@ public class TicketShelf {
 	
 	private String ticketShelfLabel;
 	
+	@Persistent(serialized="true", defaultFetchGroup="true") 
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
-	private String ticketCount;
+	private Text ticketCount;
 
 	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	@ManyToOne(cascade = {CascadeType.MERGE}, fetch=FetchType.LAZY)   
@@ -41,12 +45,12 @@ public class TicketShelf {
 		this.ticketShelfId = ticketShelfId;
 	}
 
-	public String getTicketCount() {
+	public Text getTicketCount() {
 		return ticketCount;
 	}
 
 	public void setTicketCount(String ticketCount) {
-		this.ticketCount = ticketCount;
+		this.ticketCount = new Text(ticketCount); ;
 	}
 
 	public TicketStock getTicketStock() {
