@@ -356,12 +356,18 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						i = 0;
 					}					
 					drawChartEndDate = getSpecialDate(i);
-					ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);
+					Future<Object> futureValue = (Future<Object>)asyncCache.get(drawChartEndDate+"-ticketStock");
+					ticketStock = (TicketStock) futureValue.get();
+					if (ticketStock == null) {
+						ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);	
+						asyncCache.put(drawChartEndDate +"-ticketStock", ticketStock);
+					}					
 					if (ticketStock == null) {
 						ticketStock = new TicketStock(); 
 						ticketStock.setDepartureDate(drawChartEndDate);
 						ticketStock.setTicketShelf(new HashSet<TicketShelf>());
 						trainTicketManagerService.createTicketStock(ticketStock);
+						asyncCache.put(drawChartEndDate +"-ticketStock", ticketStock);
 					}
 					list = new ArrayList<TicketShelf>();
 					if (future != null && future.get()!= null) {
