@@ -1,5 +1,6 @@
 package com.antsirs.train12306.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import org.datanucleus.jpa.annotations.Extension;
 @NamedQueries({
 		@NamedQuery(name = "listTicketStock", query = "SELECT m FROM TicketStock m"),
 		@NamedQuery(name = "findTicketStockById", query = "SELECT m FROM TicketStock m WHERE m.departureDate = :departureDate") })
-public class TicketStock {
+public class TicketStock implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

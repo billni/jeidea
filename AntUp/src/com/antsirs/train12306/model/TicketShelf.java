@@ -1,5 +1,7 @@
 package com.antsirs.train12306.model;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.Persistent;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,7 +21,7 @@ import com.google.appengine.api.datastore.Text;
 
 @Entity
 @NamedQueries(@NamedQuery(name = "listTicketShelf", query = "SELECT m FROM TicketShelf m"))
-public class TicketShelf {
+public class TicketShelf implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketShelfId;

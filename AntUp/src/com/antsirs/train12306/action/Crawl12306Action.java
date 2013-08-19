@@ -11,9 +11,11 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
@@ -34,6 +36,9 @@ import com.antsirs.train12306.task.Crawl12306Task;
 import com.antsirs.train12306.task.SendMultipartMessage;
 import com.google.appengine.api.ThreadManager;
 import com.google.appengine.api.datastore.Text;
+import com.google.appengine.api.memcache.AsyncMemcacheService;
+import com.google.appengine.api.memcache.ErrorHandlers;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
@@ -337,7 +342,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * 计算票数,为了图表
 	 */
 	public void computeTicket(List<Future<List<Ticket>>> tickets) {		
-		TicketShelf ticketShelf = null;
+		AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
+	    asyncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 		TicketStock ticketStock = null;
 		List<TicketShelf> list = null;
 		int i = 0;
@@ -363,110 +369,29 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
 								if ("T5".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSleepClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T5-HardSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);									
-									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-SoftSleepClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T5-SoftSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T5-HardSleepClass", ticket, ticketStock));
+									} else if ("SoftSleepClass".equals(ticket.getGrade())) {
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T5-SoftSleepClass", ticket, ticketStock));
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSeatClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T5-HardSeatClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);							
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T5-HardSeatClass", ticket, ticketStock));
 									}
 								}
 								if ("T189".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSleepClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T189-HardSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T189-HardSleepClass", ticket, ticketStock));
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-SoftSleepClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T189-SoftSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());		
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T189-SoftSleepClass", ticket, ticketStock));
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSeatClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-T189-HardSeatClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}										
-										list.add(ticketShelf);
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T189-HardSeatClass", ticket, ticketStock));
 									}
 								}
 								if ("K157".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSleepClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-K157-HardSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-K157-HardSleepClass", ticket, ticketStock));
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-SoftSleepClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-K157-SoftSleepClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-K157-SoftSleepClass", ticket, ticketStock));
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSeatClass");
-										if (ticketShelf == null) {
-											ticketShelf =  new TicketShelf();
-											ticketShelf.setTicketShelfLabel(drawChartEndDate + "-K157-HardSeatClass");
-											ticketShelf.setTicketCount(ticket.getCount());
-											ticketShelf.setTicketStock(ticketStock);
-										} else {
-											ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-										}
-										list.add(ticketShelf);								
+										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-K157-HardSeatClass", ticket, ticketStock));							
 									}
 								}
 								
@@ -483,5 +408,32 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			logger.info("I'm Sorry , this 'tickets' is null now! ");
 		}
 		logger.info("Finish compute for drawing.");
+	}
+	
+	public List<TicketShelf> saveTicketShelf(AsyncMemcacheService asyncCache, String label, Ticket ticket , TicketStock ticketStock){		
+		TicketShelf ticketShelf = null;
+		List<TicketShelf> list = new ArrayList<TicketShelf>();	
+		Future<Object> futureValue = (Future<Object>)asyncCache.get(label);
+		try {
+			ticketShelf = (TicketShelf) futureValue.get();
+		} catch (Exception e) {
+			logger.severe("saveTicketShelf exception: " + ExceptionConvert.getErrorInfoFromException(e));
+		}
+		if (ticketShelf == null) {
+			ticketShelf = trainTicketManagerService.findTicketShelf(label);
+		}										
+		if (ticketShelf == null) {
+			ticketShelf =  new TicketShelf();
+			ticketShelf.setTicketShelfLabel(label);
+			ticketShelf.setTicketCount(ticket.getCount());
+			ticketShelf.setTicketStock(ticketStock);
+		} else {
+			ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
+		}
+		asyncCache.put(label, ticketShelf);
+		list.add(ticketShelf);
+		return list;
+		
+		
 	}
 }
