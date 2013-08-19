@@ -240,7 +240,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			train.setDuring(trainTicketInfo.getDuring());
 			train.setDepartureDate(trainTicketInfo.getDepartureDate());
 			train.setInsertTime(new Date());			
-			trainTicketManagerService.createTrain(train);			
+//			trainTicketManagerService.createTrain(train);			
 			logger.info("Create a train completed  - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 		} else {
 			train = trains.get(0);
@@ -377,7 +377,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 						ticketList.addAll(createTicketInfo(train, trainTicketInfo));						
 					}
 				}				
-				trainTicketManagerService.batchInsertTicket(ticketList);
+//				trainTicketManagerService.batchInsertTicket(ticketList);
 			}
 		}
 		return ticketList;
