@@ -444,6 +444,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		ticketShelf = (TicketShelf)syncCache.get(label);
 		if (ticketShelf == null) {
 			ticketShelf = trainTicketManagerService.findTicketShelf(label);
+			syncCache.put(label, ticketShelf);
 			logger.info("In drawing, do not hit: " + label);
 		}
 		return ticketShelf;
