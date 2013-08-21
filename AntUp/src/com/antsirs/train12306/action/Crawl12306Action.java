@@ -11,7 +11,6 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -35,7 +34,6 @@ import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.antsirs.train12306.task.SendMultipartMessage;
 import com.google.appengine.api.ThreadManager;
-import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -356,18 +354,19 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						i = 0;
 					}					
 					drawChartEndDate = getSpecialDate(i);
-					Future<Object> futureValue = (Future<Object>)asyncCache.get(drawChartEndDate+"-ticketStock");
+					Future<Object> futureValue = (Future<Object>)asyncCache.get(drawChartEndDate+"-TicketStock");
 					ticketStock = (TicketStock) futureValue.get();
 					if (ticketStock == null) {
-						ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);	
-						asyncCache.put(drawChartEndDate +"-ticketStock", ticketStock);
+						ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);
+						logger.info("Do not hit: " + drawChartEndDate + "-TicketStock");
+						asyncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
 					}					
 					if (ticketStock == null) {
 						ticketStock = new TicketStock(); 
 						ticketStock.setDepartureDate(drawChartEndDate);
 						ticketStock.setTicketShelf(new HashSet<TicketShelf>());
-						trainTicketManagerService.createTicketStock(ticketStock);
-						asyncCache.put(drawChartEndDate +"-ticketStock", ticketStock);
+						trainTicketManagerService.createTicketStock(ticketStock);						
+						asyncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
 					}
 					list = new ArrayList<TicketShelf>();
 					if (future != null && future.get()!= null) {
@@ -427,6 +426,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		}
 		if (ticketShelf == null) {
 			ticketShelf = trainTicketManagerService.findTicketShelf(label);
+			logger.info("Do not hit: " + label);
 		}										
 		if (ticketShelf == null) {
 			ticketShelf =  new TicketShelf();
