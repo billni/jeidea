@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.antsirs.core.struts.actionsuppport.BaseActionSupport;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.service.TrainTicketManagerService;
+import com.google.appengine.api.memcache.AsyncMemcacheService;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 public abstract class AbstrtactCrawl12306Action extends BaseActionSupport{
 	
@@ -21,6 +24,8 @@ public abstract class AbstrtactCrawl12306Action extends BaseActionSupport{
 
 	public String data;
 
+	public MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	
 	public String getData() {
 		return data;
 	}

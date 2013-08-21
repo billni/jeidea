@@ -34,9 +34,8 @@ import com.antsirs.train12306.service.TrainTicketManagerService;
 import com.antsirs.train12306.task.Crawl12306Task;
 import com.antsirs.train12306.task.SendMultipartMessage;
 import com.google.appengine.api.ThreadManager;
-import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.ErrorHandlers;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.appengine.api.memcache.MemcacheService;
 import com.google.apphosting.api.ApiProxy;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
@@ -286,7 +285,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      * output to highcharts
      */
 	@SuppressWarnings("unchecked")
-	public String drawTicket() throws Exception {
+	public String drawTicket() throws Exception {		
 	
 		//-------------for draw highcharts----------------
 		drawChartStartDate = getSpecialStartDate(specialDate);
@@ -340,8 +339,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * 计算票数,为了图表
 	 */
 	public void computeTicket(List<Future<List<Ticket>>> tickets) {		
-		AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
-	    asyncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+		syncCache.get(drawChartEndDate+"-TicketStock");
+		syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 		TicketStock ticketStock = null;
 		List<TicketShelf> list = null;
 		int i = 0;
@@ -354,19 +353,18 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						i = 0;
 					}					
 					drawChartEndDate = getSpecialDate(i);
-					Future<Object> futureValue = (Future<Object>)asyncCache.get(drawChartEndDate+"-TicketStock");
-					ticketStock = (TicketStock) futureValue.get();
+					ticketStock = (TicketStock)syncCache.get(drawChartEndDate+"-TicketStock");
 					if (ticketStock == null) {
 						ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);
 						logger.info("Do not hit: " + drawChartEndDate + "-TicketStock");
-						asyncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
+						syncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
 					}					
 					if (ticketStock == null) {
 						ticketStock = new TicketStock(); 
 						ticketStock.setDepartureDate(drawChartEndDate);
 						ticketStock.setTicketShelf(new HashSet<TicketShelf>());
 						trainTicketManagerService.createTicketStock(ticketStock);						
-						asyncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
+						syncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
 					}
 					list = new ArrayList<TicketShelf>();
 					if (future != null && future.get()!= null) {
@@ -374,29 +372,29 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 							if (drawChartEndDate.equals(ticket.getDepartureDate())){												
 								if ("T5".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T5-HardSleepClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-T5-HardSleepClass", ticket, ticketStock));
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T5-SoftSleepClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-T5-SoftSleepClass", ticket, ticketStock));
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T5-HardSeatClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-T5-HardSeatClass", ticket, ticketStock));
 									}
 								}
 								if ("T189".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T189-HardSleepClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-T189-HardSleepClass", ticket, ticketStock));
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T189-SoftSleepClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-T189-SoftSleepClass", ticket, ticketStock));
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-T189-HardSeatClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-T189-HardSeatClass", ticket, ticketStock));
 									}
 								}
 								if ("K157".equals(ticket.getTrainNo())) {
 									if ("HardSleepClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-K157-HardSleepClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-K157-HardSleepClass", ticket, ticketStock));
 									} else if ("SoftSleepClass".equals(ticket.getGrade())) {									
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-K157-SoftSleepClass", ticket, ticketStock));
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-K157-SoftSleepClass", ticket, ticketStock));
 									} else if ("HardSeatClass".equals(ticket.getGrade())) {
-										list.addAll(saveTicketShelf(asyncCache, drawChartEndDate+"-K157-HardSeatClass", ticket, ticketStock));							
+										list.addAll(saveTicketShelf(syncCache, drawChartEndDate+"-K157-HardSeatClass", ticket, ticketStock));							
 									}
 								}
 								
@@ -415,15 +413,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		logger.info("Finish compute for drawing.");
 	}
 	
-	public List<TicketShelf> saveTicketShelf(AsyncMemcacheService asyncCache, String label, Ticket ticket , TicketStock ticketStock){		
+	public List<TicketShelf> saveTicketShelf(MemcacheService syncCache, String label, Ticket ticket , TicketStock ticketStock){		
 		TicketShelf ticketShelf = null;
 		List<TicketShelf> list = new ArrayList<TicketShelf>();	
-		Future<Object> futureValue = (Future<Object>)asyncCache.get(label);
-		try {
-			ticketShelf = (TicketShelf) futureValue.get();
-		} catch (Exception e) {
-			logger.severe("saveTicketShelf exception: " + ExceptionConvert.getErrorInfoFromException(e));
-		}
+		ticketShelf = (TicketShelf)syncCache.get(label);
 		if (ticketShelf == null) {
 			ticketShelf = trainTicketManagerService.findTicketShelf(label);
 			logger.info("Do not hit: " + label);
@@ -436,7 +429,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		} else {
 			ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 		}
-		asyncCache.put(label, ticketShelf);
+		syncCache.put(label, ticketShelf);
 		list.add(ticketShelf);
 		return list;
 		
