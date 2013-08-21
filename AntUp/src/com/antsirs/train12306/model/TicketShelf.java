@@ -26,6 +26,7 @@ public class TicketShelf implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketShelfId;
 	
+	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
 	private String ticketShelfLabel;
 	
 	@Persistent(serialized="true", defaultFetchGroup="true") 
