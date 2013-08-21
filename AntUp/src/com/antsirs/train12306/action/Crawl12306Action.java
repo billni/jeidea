@@ -292,41 +292,41 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		drawChartEndDate = getSpecialDate(specialDate);
 		logger.info("Begin draw chart - " + drawChartEndDate);
 		TicketShelf ticketShelf = null;
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSleepClass");
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-T5-HardSleepClass");				
 		if (ticketShelf != null) {
 			t5HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
-		}		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-SoftSleepClass");
+		}	
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-T5-SoftSleepClass");			
 		if (ticketShelf != null) {
 			t5SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T5-HardSeatClass");
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-T5-HardSeatClass");			
 		if (ticketShelf != null) {
 			t5HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}
 		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSleepClass");
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-T189-HardSleepClass");			
 		if (ticketShelf != null) {
 			t189HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-SoftSleepClass");
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-T189-SoftSleepClass");			
 		if (ticketShelf != null) {
 			t189SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
-		}		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-T189-HardSeatClass");
+		}
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-T189-HardSeatClass");			
 		if (ticketShelf != null) {
 			t189HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}
 		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSleepClass");
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-K157-HardSleepClass");				
 		if (ticketShelf != null) {
 			k157HardSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-SoftSleepClass");
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-K157-SoftSleepClass");		
 		if (ticketShelf != null) {
 			k157SoftSleepTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
-		}		
-		ticketShelf = trainTicketManagerService.findTicketShelf(drawChartEndDate + "-K157-HardSeatClass");
+		}
+		ticketShelf = getTicketShelfFromMemcache(drawChartEndDate + "-K157-HardSeatClass");			
 		if (ticketShelf != null) {
 			k157HardSeatTicketCountSpecialDate = ticketShelf.getTicketCount().getValue();
 		}
@@ -432,7 +432,20 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		syncCache.put(label, ticketShelf);
 		list.add(ticketShelf);
 		return list;
-		
-		
+	}
+	
+	/**
+	 * get ticket shelf from memcache
+	 * @param label
+	 * @return
+	 */
+	public TicketShelf getTicketShelfFromMemcache(String label){
+		TicketShelf ticketShelf = null;
+		ticketShelf = (TicketShelf)syncCache.get(label);
+		if (ticketShelf == null) {
+			ticketShelf = trainTicketManagerService.findTicketShelf(label);
+			logger.info("In drawing, do not hit: " + label);
+		}
+		return ticketShelf;
 	}
 }
