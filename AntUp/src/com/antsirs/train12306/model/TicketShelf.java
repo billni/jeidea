@@ -35,7 +35,8 @@ public class TicketShelf implements Serializable {
 	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value = "true")
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	private TicketStock ticketStock;
-
+	
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value = "true")
 	private String updateTime;
 
 	public TicketShelf() {
