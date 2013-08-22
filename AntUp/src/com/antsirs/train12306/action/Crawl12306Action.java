@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -413,21 +414,34 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		logger.info("Finish compute for drawing.");
 	}
 	
+	/**
+	 * 
+	 * @param syncCache
+	 * @param label
+	 * @param ticket
+	 * @param ticketStock
+	 * @return
+	 */
 	public List<TicketShelf> saveTicketShelf(MemcacheService syncCache, String label, Ticket ticket , TicketStock ticketStock){		
 		TicketShelf ticketShelf = null;
 		List<TicketShelf> list = new ArrayList<TicketShelf>();	
-		ticketShelf = (TicketShelf)syncCache.get(label);
-		if (ticketShelf == null) {
-			ticketShelf = trainTicketManagerService.findTicketShelf(label);
-			logger.info("Do not hit: " + label);
-		}										
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+//		ticketShelf = (TicketShelf)syncCache.get(label);
+//		if (ticketShelf == null) {
+		ticketShelf = trainTicketManagerService.findTicketShelf(label);
+//		logger.info("Do not hit: " + label);
+//		}		
 		if (ticketShelf == null) {
 			ticketShelf =  new TicketShelf();
 			ticketShelf.setTicketShelfLabel(label);
 			ticketShelf.setTicketCount(ticket.getCount());
 			ticketShelf.setTicketStock(ticketStock);
+
+			ticketShelf.setUpdateTime(DateUtils.format(cal.getTime(), "yyyy-MM-dd hh:mm:ss"));
 		} else {
 			ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
+			ticketShelf.setUpdateTime(DateUtils.format(cal.getTime(), "yyyy-MM-dd hh:mm:ss"));
 		}
 		syncCache.put(label, ticketShelf);
 		list.add(ticketShelf);

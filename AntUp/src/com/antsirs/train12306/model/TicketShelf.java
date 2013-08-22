@@ -21,21 +21,23 @@ import com.google.appengine.api.datastore.Text;
 
 @Entity
 @NamedQueries(@NamedQuery(name = "listTicketShelf", query = "SELECT m FROM TicketShelf m"))
-public class TicketShelf implements Serializable{
+public class TicketShelf implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key ticketShelfId;
-	
+
 	private String ticketShelfLabel;
-	
-	@Persistent(serialized="true", defaultFetchGroup="true") 
-	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
+
+	@Persistent(serialized = "true", defaultFetchGroup = "true")
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value = "true")
 	private Text ticketCount;
 
-	@Extension(vendorName="datanucleus", key="gae.unindexed", value="true")
-	@ManyToOne(cascade = {CascadeType.MERGE}, fetch=FetchType.LAZY)   
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value = "true")
+	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	private TicketStock ticketStock;
-	
+
+	private String updateTime;
+
 	public TicketShelf() {
 	}
 
@@ -52,7 +54,8 @@ public class TicketShelf implements Serializable{
 	}
 
 	public void setTicketCount(String ticketCount) {
-		this.ticketCount = new Text(ticketCount); ;
+		this.ticketCount = new Text(ticketCount);
+		;
 	}
 
 	public TicketStock getTicketStock() {
@@ -70,9 +73,14 @@ public class TicketShelf implements Serializable{
 	public void setTicketShelfLabel(String ticketShelfLabel) {
 		this.ticketShelfLabel = ticketShelfLabel;
 	}
-	
-	
 
+	
+	public String getUpdateTime() {
+		return updateTime;
+	}
 
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 
 }
