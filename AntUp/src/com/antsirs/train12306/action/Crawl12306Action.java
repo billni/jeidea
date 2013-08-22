@@ -425,24 +425,21 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public List<TicketShelf> saveTicketShelf(MemcacheService syncCache, String label, Ticket ticket , TicketStock ticketStock){		
 		TicketShelf ticketShelf = null;
 		List<TicketShelf> list = new ArrayList<TicketShelf>();	
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-//		ticketShelf = (TicketShelf)syncCache.get(label);
-//		if (ticketShelf == null) {
-		ticketShelf = trainTicketManagerService.findTicketShelf(label);
-//		logger.info("Do not hit: " + label);
-//		}		
+		Calendar cal = new GregorianCalendar(Locale.CHINESE);
+		ticketShelf = (TicketShelf)syncCache.get(label);
+		if (ticketShelf == null) {
+			ticketShelf = trainTicketManagerService.findTicketShelf(label);
+			logger.info("Do not hit: " + label);
+		}		
 		if (ticketShelf == null) {
 			ticketShelf =  new TicketShelf();
 			ticketShelf.setTicketShelfLabel(label);
 			ticketShelf.setTicketCount(ticket.getCount());
-			ticketShelf.setTicketStock(ticketStock);
-
-			ticketShelf.setUpdateTime(DateUtils.format(cal.getTime(), "yyyy-MM-dd hh:mm:ss"));
+			ticketShelf.setTicketStock(ticketStock);		
 		} else {
 			ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
-			ticketShelf.setUpdateTime(DateUtils.format(cal.getTime(), "yyyy-MM-dd hh:mm:ss"));
 		}
+		ticketShelf.setUpdateTime(DateUtils.format(cal.getTime(), "yyyy-MM-dd hh:mm:ss"));
 		syncCache.put(label, ticketShelf);
 		list.add(ticketShelf);
 		return list;
