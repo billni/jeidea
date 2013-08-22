@@ -146,6 +146,7 @@ public class TrainTicketManagerServiceImpl extends DaoTemplate implements TrainT
 		EntityManager entityManager= getDaoTemplate().getEntityManagerFactory().createEntityManager();
 		Query query = entityManager.createQuery("SELECT m FROM TicketShelf m where m.ticketShelfLabel = :ticketShelfLabel");
 		query.setParameter("ticketShelfLabel", shelfLabel);		
+		query.setMaxResults(1);
 		List<TicketShelf> list = query.getResultList();
 		if (list != null && list.size() >0) {			
 			ticketShelf = list.get(0);			
