@@ -38,6 +38,7 @@ import com.google.appengine.api.ThreadManager;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.apphosting.api.ApiProxy;
+import com.opensymphony.xwork2.ActionContext;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
 
@@ -287,7 +288,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
      */
 	@SuppressWarnings("unchecked")
 	public String drawTicket() throws Exception {		
-	
+		logger.info("Remote ip: " + ServletActionContext.getRequest().getRemoteAddr());
 		//-------------for draw highcharts----------------
 		drawChartStartDate = getSpecialStartDate(specialDate);
 		drawChartEndDate = getSpecialDate(specialDate);
