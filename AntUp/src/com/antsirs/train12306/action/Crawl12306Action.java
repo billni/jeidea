@@ -405,6 +405,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 					}
 					i++;
 					trainTicketManagerService.batchInsertShelf(list);
+					//批量插入后，放入缓存中
+					for (TicketShelf ticketShelf : list) {						
+						syncCache.put(ticketShelf.getTicketShelfLabel(), ticketShelf);
+					}
 				}				
 			} catch (Exception e) {
 				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
@@ -441,7 +445,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			ticketShelf.setTicketCount(ticketShelf.getTicketCount().getValue() + "," + ticket.getCount());
 		}
 		ticketShelf.setUpdateTime(DateUtils.format(cal.getTime(), "yyyy-MM-dd hh:mm:ss"));
-		syncCache.put(label, ticketShelf);
+		//由于ticketShelf没有写入数据库，所以没有主键值,只能在批量插入后，在放入缓存中
+		//syncCache.put(label, ticketShelf);		
 		list.add(ticketShelf);
 		return list;
 	}
