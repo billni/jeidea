@@ -34,7 +34,7 @@ $.fn.openid = function() {
     $this.unbind('submit').submit(function() {
       $id.val($this.find("li.highlight span").text());
     });
-    $this.submit();    
+    $this.submit(); 
     return false;
   };
 

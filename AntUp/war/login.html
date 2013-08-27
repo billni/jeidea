@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/css/openid/openid.css" />    
-<form class="openid" method="post"> 
+<form id="loginform" class="openid" method="post"> 
   <div><ul class="providers"> 
   <li class="openid" title="OpenID"><img src="/img/openid/openidW.png" alt="icon" /> 
   <span><strong>http://www.jeidea.com</strong></span></li> 
@@ -50,6 +50,6 @@
 <script type="text/javascript" src="/js/openid/jquery.openid.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$("form").openid();
+		$("#loginform").openid();
 	});
 </script>
