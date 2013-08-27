@@ -1,13 +1,27 @@
 <meta charset="utf-8"/>
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+ function userlogin(){
+		$.ajax({ 
+			type: "post",			
+			url: "/login.html",
+			success:function(t){
+				 $("#login").append(t);	 				 
+			}
+		}); 
+ }
+</script>
 <div style="padding:5px 5px 5px 5px;">
 	<div class="left"><img alt="" src="/img/logo.png" width="80px" height="80px"/><br /></div>
-	<div class="right" id="logo2" style=" padding:5px 15px 5px 15px; background-color:#DCDCDC" >注册&nbsp;&nbsp;|&nbsp;&nbsp;登录&nbsp;&nbsp;
+	<div class="right" id="logo2" style=" padding:5px 15px 5px 15px; background-color:#DCDCDC" >注册&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" onclick="userlogin()">登录</a>&nbsp;&nbsp;
 		<div style="display:inline-block">
 			<form action="http://www.baidu.com/baidu" target="_blank">
 				<input name=tn type=hidden value=baidu>
 				<input type=text name=word size=30>
 				<input type="submit" value="&nbsp;搜索&nbsp;">
 			</form>
+		</div>
+		<div id="login">
 		</div>
 	</div>
 </div>

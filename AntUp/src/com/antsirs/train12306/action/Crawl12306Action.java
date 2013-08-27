@@ -232,7 +232,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 			}
 			logger.info("Clean tickets from Application Context");
 		}
-		return SUCCESS;
+		return NONE;
 	}
 
 	/**

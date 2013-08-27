@@ -22,6 +22,6 @@
 		<div id="site-menu"></div>
 		<div id="site-content"></div>
 		<div id="site-footer"></div>
-	</div>	
+	</div>
 </body>
 </html>
