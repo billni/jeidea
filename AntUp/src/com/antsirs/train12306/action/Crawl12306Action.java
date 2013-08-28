@@ -231,7 +231,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 		        XMPPService xmpp = XMPPServiceFactory.getXMPPService();
 		        SendResponse status = xmpp.sendMessage(msg);
 		        messageSent = (status.getStatusMap().get(jid) == SendResponse.Status.SUCCESS);
-		        logger.info("xmpp sendResponse: " + status + ", messageSent: " + messageSent);
+		        logger.info("xmpp sendResponse: " + status.getStatusMap().get(jid) + ", messageSent: " + messageSent);
 			    if (!messageSent) {
 			    	SendMultipartMessage.sentSimpleMail(msgContent);
 			    }				
