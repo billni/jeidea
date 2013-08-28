@@ -245,7 +245,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				i = 0;
 			}
 			logger.info("Clean tickets from Application Context");
-		}
+		} else {
+			logger.info("Due to without ticket data to extract, ticketlist is null.");
+		}		
 		return NONE;
 	}
 
