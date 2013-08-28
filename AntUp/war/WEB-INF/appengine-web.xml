@@ -17,9 +17,13 @@
 		this feature enabled, there is a very small chance your app will see stale 
 		session data. For details, see http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions -->
 	<static-files>
-		<include path="/favicon.ico" />		
+		<include path="/favicon.ico" />
 	</static-files>
 	<inbound-services>
 		<service>mail_bounce</service>
+		<service>xmpp_message</service>
+		<service>xmpp_presence</service>
+		<service>xmpp_subscribe</service>
+		<service>xmpp_error</service>
 	</inbound-services>
 </appengine-web-app>

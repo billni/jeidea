@@ -11,7 +11,6 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -37,8 +36,13 @@ import com.antsirs.train12306.task.SendMultipartMessage;
 import com.google.appengine.api.ThreadManager;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.xmpp.JID;
+import com.google.appengine.api.xmpp.Message;
+import com.google.appengine.api.xmpp.MessageBuilder;
+import com.google.appengine.api.xmpp.SendResponse;
+import com.google.appengine.api.xmpp.XMPPService;
+import com.google.appengine.api.xmpp.XMPPServiceFactory;
 import com.google.apphosting.api.ApiProxy;
-import com.opensymphony.xwork2.ActionContext;
 
 public class Crawl12306Action extends AbstrtactCrawl12306Action {
 
@@ -192,7 +196,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public String extractData() {
+	public String extractTicket() {
 		int i = 0;
 		StringBuffer buff = new StringBuffer();		
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
@@ -218,9 +222,19 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 					}
 					logger.info("ticket count: " + future.get().size());
 				}
-				String msgContent = ZipUtils.compress(buff.toString());
+				String msgContent = ZipUtils.compress(buff.toString());							
 				msgContent = ZipUtils.encode64(msgContent);
-				SendMultipartMessage.sentSimpleMail(msgContent);
+				
+				JID jid = new JID("niyong2008@gmail.com");			    
+			    Message msg = new MessageBuilder().withRecipientJids(jid).withBody(msgContent).build();
+		        boolean messageSent = false;
+		        XMPPService xmpp = XMPPServiceFactory.getXMPPService();
+		        SendResponse status = xmpp.sendMessage(msg);
+		        messageSent = (status.getStatusMap().get(jid) == SendResponse.Status.SUCCESS);
+		        logger.info("xmpp sendResponse: " + status + ", messageSent: " + messageSent);
+			    if (!messageSent) {
+			    	SendMultipartMessage.sentSimpleMail(msgContent);
+			    }				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -241,7 +255,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public String listExtractData() {
+	public String listExtractTicket() {
 		List<Future<List<Ticket>>> ticketlist = (List<Future<List<Ticket>>>) ServletActionContext
 				.getServletContext().getAttribute("ticketlist");
 		if (ticketlist != null) {
