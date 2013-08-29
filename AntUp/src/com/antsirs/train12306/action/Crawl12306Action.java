@@ -381,9 +381,12 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						logger.info("No exist " + drawChartEndDate + "-TicketStock, new TicketStock().");
 						ticketStock = new TicketStock(); 
 						ticketStock.setDepartureDate(drawChartEndDate);
-						ticketStock.setTicketShelf(new HashSet<TicketShelf>());
+						ticketStock.setTicketShelfSet(new HashSet<TicketShelf>());
 						trainTicketManagerService.createTicketStock(ticketStock);						
 						syncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
+					}
+					if (ticketStock!=null){
+						logger.info("TicketStock id is " + ticketStock.getDepartureDate());
 					}
 					list = new ArrayList<TicketShelf>();
 					if (future != null && future.get()!= null) {

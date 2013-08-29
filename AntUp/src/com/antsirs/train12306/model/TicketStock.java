@@ -41,8 +41,9 @@ public class TicketStock implements Serializable{
 	public Set<TicketShelf> getTicketShelfSet() {
 		return ticketShelfSet;
 	}
+	
 
-	public void setTicketShelf(Set<TicketShelf> ticketShelfSet) {
+	public void setTicketShelfSet(Set<TicketShelf> ticketShelfSet) {
 		this.ticketShelfSet = ticketShelfSet;
 	}
 
