@@ -378,6 +378,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						syncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
 					}					
 					if (ticketStock == null) {
+						logger.info("No exist " + drawChartEndDate + "-TicketStock, new TicketStock().");
 						ticketStock = new TicketStock(); 
 						ticketStock.setDepartureDate(drawChartEndDate);
 						ticketStock.setTicketShelf(new HashSet<TicketShelf>());
