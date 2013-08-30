@@ -425,16 +425,16 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 					}
 					i++;
 					trainTicketManagerService.batchInsertShelf(list);
-					//批量插入后，放入缓存中
-					for (TicketShelf ticketShelf : list) {						
-						syncCache.put(ticketShelf.getTicketShelfLabel(), ticketShelf);
-					}
 				}				
 			} catch (Exception e) {
 				logger.severe("Drawing compute error, several exception: " + ExceptionConvert.getErrorInfoFromException(e));
 			}			
 		} else {
 			logger.info("I'm Sorry , this 'tickets' is null now! ");
+		}
+		//批量插入后，放入缓存中
+		for (TicketShelf ticketShelf : list) {						
+			syncCache.put(ticketShelf.getTicketShelfLabel(), ticketShelf);
 		}
 		logger.info("Finish compute for drawing.");
 	}
