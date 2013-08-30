@@ -230,7 +230,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 		Train train = null;		
 		List<Train> trains = trainTicketManagerService.findTrain(trainTicketInfo.getTrainNo(), trainTicketInfo.getDepartureDate() );
 		if (trains == null || trains.size() == 0) {
-			logger.info("Create a train   - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
+//			logger.info("Create a train   - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 			train = new Train();
 			train.setTrainNo(trainTicketInfo.getTrainNo());
 			train.setFromStation(trainTicketInfo.getFromStation());
@@ -241,7 +241,7 @@ public class Crawl12306Task extends AbstractCrawl12306Task implements Callable<L
 			train.setDepartureDate(trainTicketInfo.getDepartureDate());
 			train.setInsertTime(new Date());			
 //			trainTicketManagerService.createTrain(train);			
-			logger.info("Create a train completed  - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
+//			logger.info("Create a train completed  - " + trainTicketInfo.getTrainNo() + " DepartureDate - " + trainTicketInfo.getDepartureDate() );
 		} else {
 			train = trains.get(0);
 //			logger.info("find a train record - " + train.getTrainNo() + " DepartureDate - " + train.getDepartureDate() );
