@@ -359,6 +359,7 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 	public void computeTicket(List<Future<List<Ticket>>> tickets) {		
 		syncCache.get(drawChartEndDate+"-TicketStock");
 		syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+		
 		TicketStock ticketStock = null;
 		List<TicketShelf> list = null;
 		int i = 0;
@@ -382,7 +383,8 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 						ticketStock = new TicketStock(); 
 						ticketStock.setDepartureDate(drawChartEndDate);
 						ticketStock.setTicketShelfSet(new HashSet<TicketShelf>());
-						trainTicketManagerService.createTicketStock(ticketStock);						
+						trainTicketManagerService.createTicketStock(ticketStock);	
+						ticketStock = trainTicketManagerService.findTicketStock(drawChartEndDate);
 						syncCache.put(drawChartEndDate +"-TicketStock", ticketStock);
 					}
 					if (ticketStock!=null){
