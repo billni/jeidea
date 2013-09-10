@@ -60,3 +60,21 @@ strong {font-size:12px; color:#444444;}
 		padding:0px 15px 0px 15px;			
 		color: #f0f0f0;
 }
+
+#map_canvas {
+    width: 650px;
+    height: 450px;
+    margin-left: 20px;
+    float: left;
+    clear: both;
+}
+ 
+#marker_data {
+    width: 450px;
+    height: 450px;
+    float: left;
+    margin-left:20px;
+}
+input, textarea{
+	border:1px solid black
+}
