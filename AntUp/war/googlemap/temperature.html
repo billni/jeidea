@@ -2,24 +2,27 @@
 <html>
 <head>
 <title>Stand On Cloud</title>
-<link type="text/css" rel="stylesheet" href="/css/style.css"/>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript">
-	window.onload = function(){
-		if (window.jQuery==undefined) {
-			document.write("<script src=/js/jquery-1.10.2.min.js><\/script>");
-			layoutinit();
-	     }
-	 }
-</script>
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
 <script type="text/javascript" src="/js/decorate.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		if (window.jQuery == undefined) {
+			document.write("<script src=/js/jquery-1.10.2.min.js><\/script>");
+		}
+		layoutinit();
+	};
+</script>
 </head>
 <body>
 	<div id="body">
 		<div id="site-logo"></div>
 		<div id="site-menu"></div>
-		<div id="site-content"><iframe width="100%" height="600px" src="http://google.org/crisismap/2013-boulder-floods?hl=zh-CN&llbox=51.2984%2C51.856%2C39.9373%2C116.6054&t=ROADMAP&layers=4%2C1325831185426%2Clayer0%2C1330913892424%2C1330728463283&embedded=true" style="border: 1px solid #ccc"></iframe></div>
+		<div id="site-content">			
+			<iframe width="100%" height="600px" src="http://www.google.org/crisismap/weather_and_events"></iframe>			
+		</div>
 		<div id="site-footer"></div>
-	</div>    
+	</div>
 </body>
 </html>
