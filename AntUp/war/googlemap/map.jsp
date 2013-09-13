@@ -3,14 +3,16 @@
 <html>
 <head>
 <title>Mapping ducks</title>
-<meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script type="text/javascript" src="/js/decorate.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC3B3dOo-JW2NONXxRE29gpYGyVi8nLAbw&sensor=false"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
 	window.onload = function(){
 		if (window.jQuery==undefined) {
 			document.write("<script src=/js/jquery-1.10.2.min.js><\/script>");
 	     }
+		layoutinit();
 	 }
 </script>
 <script type="text/javascript">
@@ -18,7 +20,7 @@
     var geocoder; //2a
     var initialLocation;
     function initialize() {
-    	initialLocation = new google.maps.LatLng(-44.6895642,169.1320571);
+    	initialLocation = new google.maps.LatLng(40.18106193018659,116.64238214492798);
         geocoder = new google.maps.Geocoder(); //2b
         var duckOptions = {
             zoom: 12,
@@ -54,44 +56,36 @@
         map.setCenter(location);
     }
     
-    function loadScript() {
-    	  var script = document.createElement("script");
-    	  script.type = "text/javascript";
-    	  script.src = "http://maps.google.com/maps/api/js?key=AIzaSyC3B3dOo-JW2NONXxRE29gpYGyVi8nLAbw&sensor=false&callback=initialize";
-    	  document.body.appendChild(script);
-    	}
-    window.onload = loadScript;
+    $(function(){
+    	initialize();
+    	layoutinit();
+    });
 </script>
 </head>
 <body>
-    <h1>Mapping Ducks</h1>
-    <div id="map_canvas"></div>
-    <div id="marker_data">
-        <form id="createForm" action="/new" method="post" accept-charset="utf-8" style="background:white">
-            <table>
-                <tr>
-                    <td>Title</td>
-                    <td><input type="text" name="title" id="title" size="66"/></td>
-                </tr>
-                <tr>
-                    <td>Description</td>
-                    <td><textarea rows="4" cols="46" name="description" id="description"></textarea>
-                </tr>
-                <tr>
-                    <td>Latitude</td>
-                    <td><input type="text" name="latitude" id="latitude" size="66" /></td>
-                </tr>
-                <tr>
-                    <td>Longitude</td>
-                    <td><input type="text" name="longitude" id="longitude" size="66" /></td>
-                </tr>
-                <tr>
-                    <td>Address</td>
-                    <td><input type="text" name="longitude" id="gaddress" size="66" /></td>
-                </tr>
-            </table><br/><br/>
-            <input type="submit" value="Save"/>
-        </form>
-    </div>
+   	<div id="body">
+		<div id="site-logo"></div>
+		<div id="site-menu"></div>
+		<div id="site-content">
+			<div id="map_canvas" style="width:100%; height:600px"></div>
+		    <div id="marker_data">		        
+		            <table style="background:white; width:100%;">
+		                <tr>
+		                    <td>Latitude</td>
+		                    <td><input type="text" name="latitude" id="latitude" size="66" /></td>
+		                </tr>
+		                <tr>
+		                    <td>Longitude</td>
+		                    <td><input type="text" name="longitude" id="longitude" size="66" /></td>
+		                </tr>
+		                <tr>
+		                    <td>Address</td>
+		                    <td><input type="text" name="longitude" id="gaddress" size="66" /></td>
+		                </tr>
+		            </table>		       		 
+		    </div>
+		</div>
+		<div id="site-footer"></div>
+	</div>     
 </body>
 </html>
