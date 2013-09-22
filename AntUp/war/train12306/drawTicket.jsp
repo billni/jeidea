@@ -4,6 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<script type="text/javascript" src="/js/decorate.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
 	window.onload = function(){
@@ -17,9 +18,9 @@
 	window.onload = function(){		
 		if (window.Highcharts==undefined)
 			document.write("<script src=/js/highcharts/highcharts.js><\/script>");
+		layoutinit();
 	}
 </script>
-<script type="text/javascript" src="/js/decorate.js"></script>
 <script type="text/javascript">
 $(function () {	
 	    startDate = new Date("<s:property value='drawChartStartDate'/>");
