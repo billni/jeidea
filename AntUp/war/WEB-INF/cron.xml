@@ -11,6 +11,6 @@
 		<description>populate the cache every 2 hours</description>
 		<schedule>every 2 hours</schedule>
 		<timezone>Asia/Shanghai</timezone>
-		<target>pub</target>
+		<target>crawlpub</target>
 	</cron>
 </cronentries>
