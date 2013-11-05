@@ -44,9 +44,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jpa_3.0_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-commons-3.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-tree-3.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/json-lib-2.1-jdk15.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr107cache-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.12.jar"/>
@@ -69,5 +66,15 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/velocity-tools-2.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/datanucleus-appengine-1.0.10.final.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/datanucleus-core-1.1.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/datanucleus-jpa-1.1.5.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
