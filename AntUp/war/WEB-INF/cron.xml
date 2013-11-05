@@ -5,12 +5,6 @@
 		<description>populate the cache every 15 minutes</description>
 		<schedule>every 15 minutes</schedule>
 		<timezone>Asia/Shanghai</timezone>
-	</cron>
-	<cron>
-		<url>/train12306/extractTicket.action</url>
-		<description>populate the cache every 2 hours</description>
-		<schedule>every 2 hours</schedule>
-		<timezone>Asia/Shanghai</timezone>
 		<target>pub</target>
 	</cron>
 </cronentries>
