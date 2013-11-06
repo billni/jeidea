@@ -5,8 +5,8 @@
 	<version>1</version>
 	<instance-class>F1</instance-class>
 	<automatic-scaling>
-		<min-idle-instances>5</min-idle-instances>     <!-- ‘automatic’ is the default value. -->
-		<max-idle-instances>automatic</max-idle-instances>     <!-- ‘automatic’ is the default value. -->
+		<min-idle-instances>1</min-idle-instances>     <!-- ‘automatic’ is the default value. -->
+		<max-idle-instances>2</max-idle-instances>     <!-- ‘automatic’ is the default value. -->
 		<min-pending-latency>automatic</min-pending-latency>
 		<max-pending-latency>30ms</max-pending-latency>
 	</automatic-scaling>

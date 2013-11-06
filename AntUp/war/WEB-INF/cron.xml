@@ -5,6 +5,6 @@
 		<description>populate the cache every 15 minutes</description>
 		<schedule>every 15 minutes</schedule>
 		<timezone>Asia/Shanghai</timezone>
-		<target>pub</target>
+		<target>crawlor</target>
 	</cron>
 </cronentries>
