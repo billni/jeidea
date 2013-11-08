@@ -3,18 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	 	   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd         
-           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-  
+           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">  
+    <!-- Edit 'mail.properties' to set a valid user and password for the mail sender. 
+    <context:property-placeholder location="classpath:/mail.properties" />
+    -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" 
+          p:resourceLoaderPath="classpath:/com/antsirs/email/vm" 
+          p:preferFileSystemAccess="false"/>
+
+   <bean id="senderService" class="com.antsirs.email.service.impl.VelocityEmailSenderServiceImpl"/>
    
-	<bean id="trainTicketManagerService" class="com.antsirs.train12306.service.impl.TrainTicketManagerServiceImpl">  
-		<property name="entityManagerFactory" ref="entityManagerFactory" />    
-	</bean>
-	
-	<bean id="crawl12306Task" class="com.antsirs.train12306.task.Crawl12306Task"/>    
-				
 </beans>

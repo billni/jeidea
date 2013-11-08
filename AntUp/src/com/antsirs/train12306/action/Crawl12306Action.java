@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -27,6 +29,7 @@ import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.antsirs.core.util.exception.ExceptionConvert;
 import com.antsirs.core.util.zip.ZipUtils;
+import com.antsirs.email.service.SenderService;
 import com.antsirs.train12306.model.Ticket;
 import com.antsirs.train12306.model.TicketShelf;
 import com.antsirs.train12306.model.TicketStock;
@@ -58,9 +61,9 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 
 	@Autowired
 	public TrainTicketManagerService trainTicketManagerService;
-
+	
 	@Autowired
-	public Crawl12306Task task;
+	public SenderService senderService;
 
 	/**
 	 * 
@@ -224,17 +227,10 @@ public class Crawl12306Action extends AbstrtactCrawl12306Action {
 				}
 				String msgContent = ZipUtils.compress(buff.toString());							
 				msgContent = ZipUtils.encode64(msgContent);
+				Map<String, String> hTemplateVariables =  new HashMap<String, String>();
+				hTemplateVariables.put("data", msgContent);
+				senderService.sendMail(hTemplateVariables);
 				
-				JID jid = new JID("niyong2008@gmail.com");			    
-			    Message msg = new MessageBuilder().withRecipientJids(jid).withBody(msgContent).build();
-		        boolean messageSent = false;
-		        XMPPService xmpp = XMPPServiceFactory.getXMPPService();
-		        SendResponse status = xmpp.sendMessage(msg);
-		        messageSent = (status.getStatusMap().get(jid) == SendResponse.Status.SUCCESS);
-		        logger.info("xmpp sendResponse: " + status.getStatusMap().get(jid) + ", messageSent: " + messageSent);
-			    if (!messageSent) {
-			    	SendMultipartMessage.sentSimpleMail(msgContent);
-			    }				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

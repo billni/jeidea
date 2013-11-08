@@ -1,0 +1,8 @@
+<html>
+<body>
+<h3>Today Data</h3>
+<div>
+   ${data}
+</div>
+</body>
+</html>

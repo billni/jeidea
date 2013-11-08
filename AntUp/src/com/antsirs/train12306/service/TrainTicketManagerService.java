@@ -1,5 +1,6 @@
 package com.antsirs.train12306.service;
 
+
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -13,7 +14,7 @@ import com.antsirs.train12306.model.Train;
 import com.antsirs.train12306.model.TrainTicketInfo;
 import com.google.appengine.api.datastore.Key;
 
-public interface TrainTicketManagerService {
+public interface TrainTicketManagerService{
 	/**
 	 * insert and update ticket to db
 	 * @param object

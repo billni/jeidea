@@ -15,6 +15,7 @@
            
 	<import resource="com/antsirs/core/spring/config/applicationcontext-core.xml"/>	
 	<import resource="com/antsirs/train12306/config/applicationcontext-train12306.xml"/>
+	<import resource="com/antsirs/email/config/applicationcontext-email.xml"/>
 	<!-- 
 	<import resource="com/bossteach/job/config/applicationcontext-job.xml"/>
 	 -->

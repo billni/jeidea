@@ -7,6 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import org.springframework.orm.jpa.JpaTemplate;
 
+import com.antsirs.train12306.model.Ticket;
+import com.antsirs.train12306.model.Train;
+import com.google.appengine.api.datastore.Key;
+
 public class DaoTemplate extends JpaTemplate {
 
 	protected static EntityManagerFactory entityManagerFactory;
@@ -27,7 +31,7 @@ public class DaoTemplate extends JpaTemplate {
 		DaoTemplate.entityManagerFactory = entityManagerFactory;
 	}
 
-	public JpaTemplate getDaoTemplate() {
+	public static JpaTemplate getDaoTemplate() {
 		return new JpaTemplate(DaoTemplate.entityManagerFactory);
 	}
 
@@ -272,4 +276,33 @@ public class DaoTemplate extends JpaTemplate {
 		return prop;
 	}
 	
+	/**
+	 * 
+	 * @param entityClass
+	 * @param key
+	 * @return
+	 */
+	public <T> Object findOne(Class<?> entityClass, T key){
+		return getDaoTemplate().find(entityClass, key);
+	}
+	
+	/**
+	 * delete by class
+	 * @param entityClass
+	 */
+	public void deleteOne(Class<?> entityClass){
+		getDaoTemplate().remove(entityClass);
+	}
+	
+	/**
+	 * 
+	 * @param entityClass
+	 */
+	public void createOne(Class<?> entityClass){
+		getDaoTemplate().persist(entityClass);
+	}
+	
+	public void updateOne(Class<?> entityClass) {
+		getDaoTemplate().merge(entityClass);
+	}
 }
