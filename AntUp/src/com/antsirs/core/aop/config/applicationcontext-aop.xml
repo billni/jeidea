@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 	   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd         
+           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+           
+	<!-- alternative optional <aop:aspectj-autoproxy/> -->
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="auditAspect" ref="auditAction">
+			<aop:pointcut id="actionMethod"	expression="execution(* com.antsirs.*.action.*Action.*(..))" />			
+			<aop:before  pointcut-ref="actionMethod"  method="beforeAudit"/>
+			<aop:after pointcut-ref="actionMethod" method="afterAudit"/>	
+		</aop:aspect>
+	</aop:config>
+	<bean id="auditAction" class="com.antsirs.core.aop.audit.ActionAudit"/>	
+</beans>
