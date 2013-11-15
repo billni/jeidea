@@ -1,4 +1,2 @@
-bossteach
-=========
+from jeidea.com
 
-Boss Teach Co.Ltd
